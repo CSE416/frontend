@@ -1,0 +1,33 @@
+.modal-container{
+    display: inline-block;
+}
+
+#districting-modal img{
+    width: 40%;
+    height: auto;
+    float: right;
+}
+
+.menu-btn{
+    width: 200px;
+    height: 50px;
+}
+
+#districting-modal button{
+    width: 100px;
+    height: 50px;
+    background-color: antiquewhite;
+    border: 2px solid black;
+    margin: 10px 10px;
+    float: right;
+    clear: both;
+}
+
+#plan-container{
+    width: 30%;
+    float: left;
+}
+
+#plan-container li{
+    margin: 5%;
+}
