@@ -13,19 +13,20 @@ import useWindowDimensions from './utils/window_size';
 import React, { useState } from 'react';
 import { display } from '@mui/system';
 import gdata from './gz_2010_us_040_00_20m.json'
+import Stack from '@mui/material/Stack';
 
 function App() {
   const { _height, _width } = useWindowDimensions();
-  const [isSplit, setIsSplit] = useState(false);
+  const [isSplit, setIsSplit] = useState(true);
   const [currState, setCurrState] = useState(null);
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <div className="menu-bar">
+      <div className="menu-bar" style={{ display: 'flex' }}>
         <Autocomplete
           onChange={(e, v) => setCurrState(v)}
           id="state-select"
-          sx={{ width: '15em', padding: '0.5em' }}
+          sx={{ width: '15em', margin: '0.5em' }}
           options={['Nevada', 'S. Carolina']}
           autoHighlight
           renderOption={(props, option) => (
@@ -40,11 +41,19 @@ function App() {
             />
           )}
         />
-        <AddDistricting />
-        <AddGraph />
+        <Stack sx={{margin: "0.5em"}} direction="row" spacing={1}>
+          <AddDistricting />
+          <AddGraph />
+        </Stack>
       </div>
       <div style={{ flex: '1', display: 'flex' }}>
-        <div style={{ flex: '1' }}>
+        {isSplit && <div style={{ flex: '1' }}>
+        {/* @May
+        Your code can go here.
+        This is the empty tab on the left.
+        */}
+        </div>}
+        <div style={{ flex: '2' }}>
           <MapContainer center={[39, -98]} zoom={5} maxBounds={[[5.499550, -167.276413], [83.162102, -52.233040]]}
             // add max zoom
             style={{ height: '100%', width: '100%' }}
@@ -57,8 +66,6 @@ function App() {
             />
           </MapContainer>
         </div>
-        {isSplit && <div style={{ flex: '1' }}>
-        </div>}
       </div>
     </div>
   );
