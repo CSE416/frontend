@@ -7,20 +7,21 @@ export const PlanSummary = (props) => {
 
   const [data, setData] = useState(null);
 
-  const dummyPlanSummary = {
-    plan_name : "Republic Plan",
-    proposed_by: "Nevada Republicans",
-    proposed_date: new Date("11/13/2021"),
-    status: "Tabled",
-    num_of_districts: 4,
-    district_num_change: 0,
-    num_of_competitve_districts: 0,
-    num_of_split_counties: 0,
-    partisan_lean: 0,
-    population_equality: 0.02
-  };
+  // const dummyPlanSummary = {
+  //   plan_name : "Republic Plan",
+  //   proposed_by: "Nevada Republicans",
+  //   proposed_date: new Date("11/13/2021"),
+  //   status: "Tabled",
+  //   num_of_districts: 4,
+  //   district_num_change: 0,
+  //   num_of_competitve_districts: 0,
+  //   num_of_split_counties: 0,
+  //   partisan_lean: 0,
+  //   population_equality: 0.02
+  // };
 
   //data = dummyPlanSummary;
+  //props.setPlanName("Democratic Plan");
 
   useEffect(() => {
     axios.get(`http://localhost:8080/summary`, {params: {
@@ -29,6 +30,7 @@ export const PlanSummary = (props) => {
     }})
       .then(res => {
         setData(res.data);
+        props.setPlanName(res.data.plan_name);
       })
       .catch ((Error) => {
         //alert(Error);

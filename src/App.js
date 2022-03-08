@@ -24,6 +24,7 @@ function App() {
   const [isSplit, setIsSplit] = useState(true);
   const [currState, setCurrState] = useState('null');
   const [planId, setPlanId] = useState(0);
+  const [planName, setPlanName] = useState('');
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -46,7 +47,8 @@ function App() {
             />
           )}
         />
-        <Stack sx={{margin: "0.5em"}} direction="row" spacing={1}>
+        <Stack sx={{margin: "0.5em", marginLeft: "auto"}} direction="row" spacing={1}>
+          <h5 id="plan-name">{planName}</h5>
           <AddDistricting />
           <AddGraph />
         </Stack>
@@ -57,8 +59,7 @@ function App() {
         Your code can go here.
         This is the empty tab on the left.
         */
-          <InformationTab stateId={currState} planId={planId}/>
-        
+          <InformationTab stateId={currState} planId={planId} setPlanName={setPlanName}/>
         }
         </div>}
         <div style={{ flex: '2' }}>

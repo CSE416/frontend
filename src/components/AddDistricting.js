@@ -10,7 +10,7 @@ export const AddDistricting = () => {
   
     return (
       <div className='modal-container'>
-        <button className='menu-btn' onClick={onOpenModal}>Add Districting</button>
+        <button className='menu-btn' onClick={onOpenModal}>Change Plan</button>
         <Modal open={open} onClose={onCloseModal} center>
           <div id='districting-modal'>
             <h3>Choose Districtings to Display</h3>

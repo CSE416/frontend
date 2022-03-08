@@ -6,7 +6,7 @@ import { PlanSummary } from './PlanSummary';
 export const InformationTab = (props) => {
 
   const tabContent = {
-    "Summary": <PlanSummary stateId={props.stateId} planId={props.planId}/>,
+    "Summary": <PlanSummary stateId={props.stateId} planId={props.planId} setPlanName={props.setPlanName}/>,
     "Measures": <Measures stateId={props.stateId} planId={props.planId}/>
   }
 
