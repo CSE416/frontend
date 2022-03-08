@@ -48,7 +48,7 @@ export const PlanSummary = (props) => {
         <p>Status: <span className='plan-summary-data'>{data.status}</span></p>
         <p>Number of Districts: <span className='plan-summary-data'>{data.num_of_districts}</span></p>
         <p>Change in Number of Districts: <span className='plan-summary-data'>{data.district_num_change}</span></p>
-        <p>Number of Competitive Districts: <span className='plan-summary-data'>{data.num_of_competitve_districts}</span></p>
+        <p>Number of Competitive Districts: <span className='plan-summary-data'>{data.num_of_competitive_districts}</span></p>
         <p>Number of Split Counties: <span className='plan-summary-data'>{data.num_of_split_counties}</span></p>
         <p>Partisan Lean: <span className='plan-summary-data'>{data.partisan_lean}</span></p>
         <p>Population Equality: <span className='plan-summary-data'>{data.population_equality}</span></p>
