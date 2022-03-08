@@ -17,7 +17,7 @@ import Stack from '@mui/material/Stack';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [isSplit, setIsSplit] = useState(true);
+  const [isSplit, setIsSplit] = useState(false);
   const [planId, setPlanId] = useState(0);
   const [planName, setPlanName] = useState('');
   const [currUSstate, setCurrUSstate] = useState(null);
@@ -35,11 +35,13 @@ function App() {
     if (USmap && mapGJSONref.current){
       // if a state has been selected, zoom in on the state
       if (currUSstate != null){
+        setIsSplit(true);
         USmap.fitBounds(mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currUSstate.fipsCode).getBounds());
       }
       // else show US map
       else{
-
+        setIsSplit(false);
+        // USmap.fitbounds(mapGJSONref.current.getBounds());
       }
     }
   }, [currUSstate]);
@@ -54,6 +56,7 @@ function App() {
           options={mapGJSONref.current.getLayers().map((layer) => ({name: layer.feature.properties.NAME, fipsCode: layer.feature.properties.STATE}))}
           autoHighlight
           autoComplete
+          clearOnEscape
           getOptionLabel={(option) => option.name}
           isOptionEqualToValue={(option, value) => parseInt(option.fipsCode) == parseInt(value.fipsCode)}
           renderOption={(props, option) => (
@@ -76,16 +79,15 @@ function App() {
       </div>
       <div style={{ flex: '1', display: 'flex' }}>
         {isSplit && <div style={{ flex: '1' }}>
-        {/* @May
-        Your code can go here.
-        This is the empty tab on the left.
-        */
           <InformationTab stateId={currUSstate} planId={planId} setPlanName={setPlanName}/>
-        }
         </div>}
         <div style={{ flex: '2' }}>
-          <MapContainer center={[39, -98]} zoom={5} maxBounds={[[5.499550, -167.276413], [83.162102, -52.233040]]} whenCreated={setUSMap}
-            // add max zoom
+          <MapContainer
+            center={[38, -98]} 
+            zoom={5} 
+            minZoom={4} 
+            // maxBounds={[[5.499550, -167.276413], [83.162102, -52.233040]]}
+            whenCreated={setUSMap}
             style={{ height: '100%', width: '100%' }}
           >
             <TileLayer
