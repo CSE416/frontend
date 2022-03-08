@@ -5,7 +5,7 @@ export const PlanSummary = (props) => {
 
   const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
 
-  let data;
+  const [data, setData] = useState(null);
 
   const dummyPlanSummary = {
     plan_name : "Republic Plan",
@@ -28,7 +28,7 @@ export const PlanSummary = (props) => {
       planid: props.planId
     }})
       .then(res => {
-        data = res.data;
+        setData(res.data);
       })
       .catch ((Error) => {
         //alert(Error);
@@ -42,7 +42,7 @@ export const PlanSummary = (props) => {
         <div id="plan-summary-container">
         <p>Plan Name: <span className='plan-summary-data'>{data.plan_name}</span></p>
         <p>Proposed By: <span className='plan-summary-data'>{data.proposed_by}</span></p>
-        <p>Proposed Date: <span className='plan-summary-data'>{data.proposed_date.toLocaleDateString()}</span></p>
+        <p>Proposed Date: <span className='plan-summary-data'>{data.proposed_date}</span></p>
         <p>Status: <span className='plan-summary-data'>{data.status}</span></p>
         <p>Number of Districts: <span className='plan-summary-data'>{data.num_of_districts}</span></p>
         <p>Change in Number of Districts: <span className='plan-summary-data'>{data.district_num_change}</span></p>
