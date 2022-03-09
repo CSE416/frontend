@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import React, { useEffect, useState, useRef } from 'react';
-import USstatesGJSONdata from './gz_2010_us_040_00_20m.json'
+import USstatesGJSONdata from './gz_2010_us_040_00_20m_clipped.json'
 import Stack from '@mui/material/Stack';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -25,26 +25,46 @@ function App() {
   const [USstatesGJSON, setUSstatesGJSON] = useState(null);
   const mapGJSONref = useRef();
 
+  // fetch data from API to display US states
   useEffect(() => {
     // Get GEOJSON data for the US states
     // GET /us_states
     setUSstatesGJSON(USstatesGJSONdata);
   }, []);
 
+  // set default parameters for US map with states
   useEffect(() => {
-    if (USmap && mapGJSONref.current){
-      // if a state has been selected, zoom in on the state
+    if (mapGJSONref.current) {
+      USmap.setMaxBounds(mapGJSONref.current.getBounds().pad(0.1));
+    }
+  }, [USmap]);
+
+  // show split-pane and zoom in on state when selected
+  useEffect(() => {
+    if (mapGJSONref.current){
+      // if a state has been selected, split pane should be open
       if (currUSstate != null){
-        setIsSplit(true);
-        USmap.fitBounds(mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currUSstate.fipsCode).getBounds());
+        if (!isSplit)
+          setIsSplit(true);
+        else{
+          // zoom in on the state
+          USmap.invalidateSize();
+          //todo: set max bounds to the state when a state is selected?
+          USmap.flyToBounds(mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currUSstate.fipsCode).getBounds());  
+        }
       }
-      // else show US map
+      // else the split pane should be closed
       else{
-        setIsSplit(false);
-        // USmap.fitbounds(mapGJSONref.current.getBounds());
+        if (isSplit)
+          setIsSplit(false);
+        else{
+          // reset map view
+          USmap.invalidateSize();
+          USmap.setView([38,-98], 5);
+        }
       }
     }
-  }, [currUSstate]);
+  }, [currUSstate, isSplit]);
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -57,6 +77,7 @@ function App() {
           autoHighlight
           autoComplete
           clearOnEscape
+          includeInputInList
           getOptionLabel={(option) => option.name}
           isOptionEqualToValue={(option, value) => parseInt(option.fipsCode) == parseInt(value.fipsCode)}
           renderOption={(props, option) => (
@@ -86,7 +107,7 @@ function App() {
             center={[38, -98]} 
             zoom={5} 
             minZoom={4} 
-            // maxBounds={[[5.499550, -167.276413], [83.162102, -52.233040]]}
+            zoomSnap={0.25}
             whenCreated={setUSMap}
             style={{ height: '100%', width: '100%' }}
           >
