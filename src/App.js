@@ -44,13 +44,15 @@ function App() {
     if (mapGJSONref.current){
       // if a state has been selected, split pane should be open
       if (currUSstate != null){
-        if (!isSplit)
+        if (!isSplit){
           setIsSplit(true);
+        }
         else{
-          // zoom in on the state
+          // split pane has been opened
           USmap.invalidateSize();
-          //todo: set max bounds to the state when a state is selected?
-          USmap.flyToBounds(mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currUSstate.fipsCode).getBounds());  
+          // zoom in on the state
+          let state_bounds = mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currUSstate.fipsCode).getBounds();
+          USmap.flyToBounds(state_bounds);
         }
       }
       // else the split pane should be closed
@@ -65,6 +67,18 @@ function App() {
       }
     }
   }, [currUSstate, isSplit]);
+
+  // fetch state map and display it
+  useEffect(() => {
+    if (mapGJSONref.current){
+      if (currUSstate != null){
+        // fetch state map
+        //  then stop the pannnig animation?
+        //  then setMaxBounds on the state map
+        //  and set Zoom levels
+      }
+    }
+  }, [currUSstate]);
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -107,6 +121,7 @@ function App() {
             center={[38, -98]} 
             zoom={5} 
             minZoom={4} 
+            maxZoom={7}
             zoomSnap={0.25}
             whenCreated={setUSMap}
             style={{ height: '100%', width: '100%' }}
