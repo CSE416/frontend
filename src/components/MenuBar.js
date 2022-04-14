@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Stack from '@mui/material/Stack';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -7,7 +6,7 @@ import TextField from '@mui/material/TextField';
 const MenuBar = React.forwardRef((props, mapGJSONref) => {
 
     return(
-        <div className="menu-bar" style={{ display: 'flex' }}>
+        <div className="menu-bar" style={{ display: 'block', width: '100%' }}>
             {mapGJSONref.current && <Autocomplete
                 onChange={(event, value) => {props.setCurrUSstate(value?{name: value.name, fipsCode: value.fipsCode}:null)}}
                 id="state-select"
@@ -31,9 +30,7 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                     />
                 )}
             />}
-            <Stack sx={{margin: "0.5em", marginLeft: "auto"}} direction="row" spacing={1}>
             <h5 id="plan-name">{props.planName}</h5>
-            </Stack>
         </div>
     );
 });

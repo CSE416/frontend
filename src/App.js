@@ -3,17 +3,11 @@ import './styles/districtingModal.css';
 import './styles/graphModal.css';
 import './styles/informationTab.css';
 import './styles/planSummary.css';
-import { AddDistricting } from './components/AddDistricting';
-import { AddGraph } from './components/AddGraph';
 import { InformationTab } from './components/InformationTab';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import React, { useEffect, useState, useRef } from 'react';
 import USstatesGJSONdata from './data/stateBoundaries.json'
-import Stack from '@mui/material/Stack';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MenuBar from './components/MenuBar';
 
@@ -92,7 +86,7 @@ function App() {
         {isSplit && <div style={{ flex: '1' }}>
           <InformationTab stateId={currUSstate} planId={planId} setPlanName={setPlanName}/>
         </div>}
-        <div style={{ flex: '2' }}>
+        <div style={{ flex: '1' }}>
           <MapContainer
             center={[38, -98]} 
             zoom={5} 
