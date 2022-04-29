@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export const PlanSummary = (props) => {
-
   const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
-
   const [data, setData] = useState(null);
 
   // const dummyPlanSummary = {
@@ -24,16 +22,14 @@ export const PlanSummary = (props) => {
   //props.setPlanName("Democratic Plan");
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/summary`, {params: {
-      stateid: props.stateId,
-      planid: props.planId
+    axios.get(`https://redistricting-fever.herokuapp.com/planSummary`, {params: {
+      planId: props.planId
     }})
       .then(res => {
         setData(res.data);
-        props.setPlanName(res.data.plan_name);
-      })
+        props.setPlanName(res.data.planName);
+      }) 
       .catch ((Error) => {
-        //alert(Error);
         setNullDataMsg(<p>Data Failed to Load.</p>);
       })
   }, []);
@@ -42,16 +38,16 @@ export const PlanSummary = (props) => {
     <div>
       {(data) ? (
         <div id="plan-summary-container">
-        <p>Plan Name: <span className='plan-summary-data'>{data.plan_name}</span></p>
-        <p>Proposed By: <span className='plan-summary-data'>{data.proposed_by}</span></p>
-        <p>Proposed Date: <span className='plan-summary-data'>{data.proposed_date}</span></p>
-        <p>Status: <span className='plan-summary-data'>{data.status}</span></p>
-        <p>Number of Districts: <span className='plan-summary-data'>{data.num_of_districts}</span></p>
-        <p>Change in Number of Districts: <span className='plan-summary-data'>{data.district_num_change}</span></p>
-        <p>Number of Competitive Districts: <span className='plan-summary-data'>{data.num_of_competitive_districts}</span></p>
-        <p>Number of Split Counties: <span className='plan-summary-data'>{data.num_of_split_counties}</span></p>
-        <p>Partisan Lean: <span className='plan-summary-data'>{data.partisan_lean}</span></p>
-        <p>Population Equality: <span className='plan-summary-data'>{data.population_equality}</span></p>
+        <p>Plan Name: <span className='plan-summary-data'>{data.planName}</span></p>
+        <p>Proposed By: <span className='plan-summary-data'>{data.proposedBy}</span></p>
+        <p>Proposed Date: <span className='plan-summary-data'>{data.proposedDate}</span></p>
+        <p>Status: <span className='plan-summary-data'>{data.planStatus}</span></p>
+        <p>Number of Districts: <span className='plan-summary-data'>{data.numOfDistricts}</span></p>
+        <p>Change in Number of Districts: <span className='plan-summary-data'>{data.districNnumChange}</span></p>
+        <p>Number of Competitive Districts: <span className='plan-summary-data'>{data.numOfCompetitiveDistricts}</span></p>
+        <p>Number of Split Counties: <span className='plan-summary-data'>{data.numSplitCounties}</span></p>
+        <p>Partisan Lean: <span className='plan-summary-data'>{data.partisanLean}</span></p>
+        <p>Population Equality: <span className='plan-summary-data'>{data.populationEquality}</span></p>
         </div>
       ) : nullDataMsg}
     </div>

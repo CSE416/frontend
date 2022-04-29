@@ -4,21 +4,28 @@ import './styles/graphModal.css';
 import './styles/informationTab.css';
 import './styles/planSummary.css';
 import { InformationTab } from './components/InformationTab';
+import { StatePlans } from './components/StatePlans';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useState, useRef } from 'react';
 import USstatesGJSONdata from './data/stateBoundaries.json'
+import nvPlan0GJSON from './data/nv_plan0.json'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MenuBar from './components/MenuBar';
+import axios from 'axios';
 
 function App() {  
+  const mapGJSONref = useRef();
   const [isSplit, setIsSplit] = useState(false);
+  const [isPlanSelected, setIsPlanSelected] = useState(false);
+  const [isPlotSelected, setIsPlotSelected] = useState(false);
   const [planId, setPlanId] = useState(0);
   const [planName, setPlanName] = useState('');
-  const [currUSstate, setCurrUSstate] = useState(null);
+  const [planStatus, setPlanStatus] = useState('');
+  const [currState, setcurrState] = useState(null);
   const [USmap, setUSMap] = useState(null);
   const [USstatesGJSON, setUSstatesGJSON] = useState(null);
-  const mapGJSONref = useRef();
+  const [planGJSON, setPlanGJSON] = useState(null);
 
   // fetch data from API to display US states
   useEffect(() => {
@@ -38,7 +45,7 @@ function App() {
   useEffect(() => {
     if (mapGJSONref.current){
       // if a state has been selected, split pane should be open
-      if (currUSstate != null){
+      if (currState != null){
         if (!isSplit){
           setIsSplit(true);
         }
@@ -46,7 +53,7 @@ function App() {
           // split pane has been opened
           USmap.invalidateSize();
           // zoom in on the state
-          let state_bounds = mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currUSstate.fipsCode).getBounds();
+          let state_bounds = mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currState.fipsCode).getBounds();
           USmap.flyToBounds(state_bounds);
         }
       }
@@ -61,50 +68,102 @@ function App() {
         }
       }
     }
-  }, [currUSstate, isSplit]);
+  }, [currState, isSplit]);
 
   // fetch state map and display it
   useEffect(() => {
     if (mapGJSONref.current){
-      if (currUSstate != null){
+      if (currState != null){
         // fetch state map
         //  then stop the pannnig animation?
         //  then setMaxBounds on the state map
         //  and set Zoom levels
       }
     }
-  }, [currUSstate]);
+  }, [currState]);
+
+  // display district boundaries // dummy
+  // useEffect(() => {
+  //   setPlanGJSON(nvPlan0GJSON);
+  // }, []);
+
+   // Get the district plan boundaries (default: plan=0)
+   const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
+   
+   useEffect(() => {
+    if (currState != null){
+    axios.get(`https://redistricting-fever.herokuapp.com/defaultPlanBoundaries`, {params: {
+      stateFipsId: currState.fipsCode
+    }})
+      .then(res => {
+        console.log(res.data);
+        setPlanGJSON(res.data);
+      }) 
+      .catch ((Error) => {
+        //alert(Error);
+        setNullDataMsg(<p>Data Failed to Load.</p>);
+      })
+    }
+  }, []);
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <MenuBar
         ref={mapGJSONref}
-        setCurrUSstate={setCurrUSstate}
         planName={planName}
+        isPlanSelected={isPlanSelected}
+        setIsPlanSelected={setIsPlanSelected}
+        setcurrState={setcurrState}
+        //planStatus={planStatus}
       />
       <div style={{ flex: '1', display: 'flex' }}>
-        {isSplit && <div style={{ flex: '1' }}>
-          <InformationTab stateId={currUSstate} planId={planId} setPlanName={setPlanName}/>
+        { // inital state: show districting plan cards
+        isSplit && !isPlanSelected && <div style={{ flex: '1'}}> 
+          <StatePlans 
+            setIsPlanSelected={setIsPlanSelected} 
+            setPlanId={setPlanId} 
+            setPlanName={setPlanName} 
+            setPlanStatus={setPlanStatus}
+            stateFipsId={currState.fipsCode}/>
         </div>}
-        <div style={{ flex: '1' }}>
-          <MapContainer
-            center={[38, -98]} 
-            zoom={5} 
-            minZoom={4} 
-            maxZoom={7}
-            zoomSnap={0.25}
-            whenCreated={setUSMap}
-            style={{ height: '100%', width: '100%' }}
-          >
-            <TileLayer
-              url="http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
-            />
-            {USstatesGJSON && <GeoJSON
-              data={USstatesGJSON}
-              ref={mapGJSONref}
-            />}
-          </MapContainer>
-        </div>
+
+        { // When a plan is selected: show detailed information
+        isSplit && isPlanSelected && <div style={{ flex: '1' }}> 
+          <InformationTab stateId={currState} planId={planId} setPlanName={setPlanName} />
+        </div>}
+
+          { /* map part */ }
+          { // Show Map, when plot button is not selected
+          !isPlotSelected && <div style={{ flex: '1'}}>
+            <MapContainer
+              center={[38, -98]} 
+              zoom={5} 
+              minZoom={4} 
+              maxZoom={7}
+              zoomSnap={0.25}
+              whenCreated={setUSMap}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <TileLayer
+                url="http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+              />
+              {USstatesGJSON && <GeoJSON
+                  data={USstatesGJSON}
+                  ref={mapGJSONref}
+              />}
+              {
+                
+              }
+              <GeoJSON data={planGJSON}/>
+            </MapContainer>
+          </div>
+          
+          }
+
+          { // Show Plots, when plot button isselected
+          isPlotSelected && <div style={{ flex: '1'}}>
+           {/*<Plots stateFipsId={currState.fipsCode} />*/}
+          </div>}
       </div>
     </div>
   );

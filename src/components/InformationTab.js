@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { Tabs, Tab, Fade } from 'react-bootstrap';
 import { Measures } from './Measures';
 import { PlanSummary } from './PlanSummary';
+import { DemographicData } from './DemographicData';
 
 export const InformationTab = (props) => {
 
   const tabContent = {
     "Summary": <PlanSummary stateId={props.stateId} planId={props.planId} setPlanName={props.setPlanName}/>,
-    "Measures": <Measures stateId={props.stateId} planId={props.planId}/>
+    "Demographic Data": <Measures stateId={props.stateId} />,//<DemographicData planId={props.planId}/>,
+    "Measures": <Measures stateId={props.stateId} />
   }
-
 
   return (
     <div id="information-tab-container">
