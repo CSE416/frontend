@@ -12,7 +12,7 @@ export const Plots = (props) => {
 
     const tabContent = {
     "Radar Plot": <RadarPlot stateId={props.stateId} planIdList={props.planIdList} />,
-    "Box and Whisker Plot": <BoxWhiskerPlot stateId={props.stateId} planId={props.planId} category={props.category}/>,
+    "Box and Whisker Plot": <BoxWhisker stateId={props.stateId} />,
     "Vote Seat Share": <VoteSeatShare stateId={props.stateId
                                             /*TODO: */} />
   }

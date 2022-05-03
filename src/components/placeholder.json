@@ -1,0 +1,113 @@
+{
+    "Republican Population Share": {
+        "1": {
+            "min": 1,
+            "max": 3,
+            "median": 2,
+            "lowerQuartile": 1.5,
+            "upperQuartile": 2.5
+        },
+        "2": {
+            "min": 2,
+            "max": 4,
+            "median": 3,
+            "lowerQuartile": 2.5,
+            "upperQuartile": 3.5
+        },
+        "3": {
+            "min": 3,
+            "max": 5,
+            "median": 4,
+            "lowerQuartile": 3.5,
+            "upperQuartile": 4.5
+        },
+        "4": {
+            "min": 4,
+            "max": 6,
+            "median": 5,
+            "lowerQuartile": 4.5,
+            "upperQuartile": 5.5
+        },
+        "5": {
+            "min": 5,
+            "max": 7,
+            "median": 6,
+            "lowerQuartile": 5.5,
+            "upperQuartile": 6.5
+        }
+    },
+    "Democractic Population Share": {
+        "1": {
+            "min": 1,
+            "max": 3,
+            "median": 2,
+            "lowerQuartile": 1.5,
+            "upperQuartile": 2.5
+        },
+        "2": {
+            "min": 2,
+            "max": 4,
+            "median": 3,
+            "lowerQuartile": 2.5,
+            "upperQuartile": 3.5
+        },
+        "3": {
+            "min": 3,
+            "max": 5,
+            "median": 4,
+            "lowerQuartile": 3.5,
+            "upperQuartile": 4.5
+        },
+        "4": {
+            "min": 4,
+            "max": 6,
+            "median": 5,
+            "lowerQuartile": 4.5,
+            "upperQuartile": 5.5
+        },
+        "5": {
+            "min": 5,
+            "max": 7,
+            "median": 6,
+            "lowerQuartile": 5.5,
+            "upperQuartile": 6.5
+        }
+    },
+    "African-American Population": {
+        "1": {
+            "min": 1,
+            "max": 3,
+            "median": 2,
+            "lowerQuartile": 1.5,
+            "upperQuartile": 2.5
+        },
+        "2": {
+            "min": 2,
+            "max": 4,
+            "median": 3,
+            "lowerQuartile": 2.5,
+            "upperQuartile": 3.5
+        },
+        "3": {
+            "min": 3,
+            "max": 5,
+            "median": 4,
+            "lowerQuartile": 3.5,
+            "upperQuartile": 4.5
+        },
+        "4": {
+            "min": 4,
+            "max": 6,
+            "median": 5,
+            "lowerQuartile": 4.5,
+            "upperQuartile": 5.5
+        },
+        "5": {
+            "min": 5,
+            "max": 7,
+            "median": 6,
+            "lowerQuartile": 5.5,
+            "upperQuartile": 6.5
+        }
+    }
+}

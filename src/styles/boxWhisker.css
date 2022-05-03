@@ -1,0 +1,14 @@
+.js-plotly-plot {
+    float: left;
+}
+
+#box-whisker-container {
+    position: relative;
+}
+
+#box-whisker-dropdown {
+    position: absolute;
+    top: 1.5rem;
+    right: 0.5rem;
+    z-index: 3;
+}

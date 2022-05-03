@@ -1,5 +1,5 @@
 import './App.css';
-import './styles/districtingModal.css';
+import './styles/boxWhisker.css'
 import './styles/graphModal.css';
 import './styles/informationTab.css';
 import './styles/planSummary.css';
@@ -155,7 +155,7 @@ function App() {
             setPlanId={setPlanId} 
             setPlanName={setPlanName} 
             setPlanStatus={setPlanStatus}
-            stateFipsId={currState.fipsCode}/>
+            stateFipsId={currState.fipsCode}/>       
         </div>}
 
         { // When a plan is selected: show detailed information
