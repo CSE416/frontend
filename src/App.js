@@ -3,6 +3,7 @@ import './styles/boxWhisker.css'
 import './styles/graphModal.css';
 import './styles/informationTab.css';
 import './styles/planSummary.css';
+import './styles/voteSeatShare.css';
 import { InformationTab } from './components/InformationTab';
 import { StatePlans } from './components/StatePlans';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
@@ -24,6 +25,8 @@ import Stack from '@mui/material/Stack';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import RadarPlot from './components/RadarPlot';
+import { VoteSeatShare } from './components/VoteSeatShare';
+import { BoxWhisker } from './components/BoxWhisker';
 
 function App() {  
   const mapGJSONref = useRef();

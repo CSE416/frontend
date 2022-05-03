@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {RadarPlot } from './RadarPlot';
 import { BoxWhiskerPlot } from './BoxWhiskerPlot';
-import { VoteSeatShare } from './VoteSeatShare';
+import { VoteSeatShare } from './VoteSeatShare.js';
 
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";

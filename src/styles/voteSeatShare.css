@@ -1,0 +1,12 @@
+#vote-seat-measure-container {
+    display: inline-block;
+    position: absolute;
+    left: 70%;
+    top: 15rem;
+    text-align: left;
+}
+
+#vote-seat-container {
+    position: relative;
+    max-height: 40%;
+}
