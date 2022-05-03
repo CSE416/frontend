@@ -65,9 +65,26 @@ export const StatePlans= (props) => {
     setAge(event.target.value);
   };
 
+  function createData(tag, value1,value2,value3,value4) {
+    return { tag, value1, value2, value3, value4 };
+  }
+
+  const rows = [
+    
+    createData("plan No.", "plan1", "plan2", "plan3", "plan4"),
+    createData("Status","INLITIGATION", "PROPOSED","PROPOSED","PROPOSED"),
+  
+    createData("Number of Districts", "4", "4","4","4"),
+    createData("Change in Number of Districts", "0","0","0","0"),
+    createData("Number of Competitive Districts","2","2","1","2"),
+    createData("Number of Split Counties","0","0","0","0"),
+    createData("Partisan Lean", "R+1","R+1","R+2","R+1"),
+    createData("Population Equality", "0.5","0.7","0.4","0.5")
+  ];
+
     return(
     <div>
-      <Box sx={{ minWidth: 200, margin: '15px', align:'left'}}>
+      <Box sx={{ minWidth: 200, margin: '15px'}} size="small">
       <FormControl sx={{minWidth: 150}} >
         <InputLabel id="demo-simple-select-label">List View</InputLabel>
         <Select
@@ -83,8 +100,8 @@ export const StatePlans= (props) => {
       </FormControl>
     </Box>
 
-        {(plan1 && !listMode) ? (  
-        <Paper style={{maxHeight: 600, overflow: 'auto'}}>
+        {(plan1 && (age==10)) ? (  
+        <Paper style={{maxHeight: 550, overflow: 'auto'}}>
             <PlanComparisonCard 
               planId ={props.stateFipsId + '0'}
               name={plan1.planName}
@@ -151,9 +168,27 @@ export const StatePlans= (props) => {
         
           </Paper>) : nullDataMsg}
 
-          {(plan1 && listMode)? (
-            <div>
-
+          {(plan1 && (age==20))? (
+            <div style={{maxHeight: 600, overflow: 'auto'}}>
+              <TableContainer component={Paper}>
+            <Table sx={{ maxWidth: 600 }} aria-label="simple table"> 
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow
+                    key={row.tag}
+                    sx={{ border: 0 }}>
+                    <TableCell component="th" scope="row">
+                      {row.tag}
+                    </TableCell>
+                    <TableCell align="right">{row.value1}</TableCell>
+                    <TableCell align="right">{row.value2}</TableCell>
+                    <TableCell align="right">{row.value3}</TableCell>
+                    <TableCell align="right">{row.value4}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
             </div>
           ) : nullDataMsg}
     </div>);

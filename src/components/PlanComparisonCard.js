@@ -34,7 +34,9 @@ export const PlanComparisonCard = (props) => {
     createData("Number of Majority-Minority Districts", props.numOfMajMinDistricts)];
     return(
         <Card align='left' sx={{m:1, bgcolor: clicked ? '#e0e0e0' : 'white'}} >
-      <CardActionArea onClick={()=>{cardClicked(); props.setPlanId(props.planId);}}>
+      <CardActionArea onClick={()=>{cardClicked(); props.setPlanId(props.planId); 
+                                                    props.setPlanName(props.name);
+                                                    props.setPlanStatus(props.status);}}>
         <CardContent>
         {(props.status=='INLITIGATION') && 
           <Chip label={props.status} color='success' />
@@ -46,7 +48,7 @@ export const PlanComparisonCard = (props) => {
             {props.name}
           </Typography>
           <TableContainer component={Paper}>
-            <Table sx={{ maxWidth: 350 }} aria-label="simple table"> 
+            <Table sx={{ maxWidth: 450 }} aria-label="simple table"> 
               <TableBody>
                 {rows.map((row) => (
                   <TableRow

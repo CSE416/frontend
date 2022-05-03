@@ -23,7 +23,7 @@ ChartJS.register(
 
 const RadarPlot = (props) => {
     const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
-    const [radarData, setRadarData] = useState(null);
+    const [radarData, setRadarData] = useState([5,4,5,6]);
 
     useEffect(() => {
         axios.get(`https://redistricting-fever.herokuapp.com/radarPlot`, {params: {
