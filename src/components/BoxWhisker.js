@@ -161,7 +161,7 @@ export const BoxWhisker = (props) => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              race: {category}
+              {category}
             </button>
             <div className="dropdown-menu">
               {Object.keys(data).map((category) => {
