@@ -20,8 +20,10 @@ import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
-
+import Stack from '@mui/material/Stack';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import RadarPlot from './components/RadarPlot';
 
 function App() {  
   const mapGJSONref = useRef();
@@ -121,6 +123,16 @@ function App() {
     setIsPlotSelected(open);
   };
 
+  const [alignment, setAlignment] = useState('radar');
+
+  const handleChange = (
+    event,
+    newAlignment
+  ) => {
+    setAlignment(newAlignment);
+    return (<div>hi</div>);
+  };
+
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <MenuBar
@@ -130,12 +142,14 @@ function App() {
         isPlotSelected={isPlotSelected}
         setIsPlanSelected={setIsPlanSelected}
         setcurrState={setcurrState}
+        currState={currState}
+        planStatus={planStatus}
         setIsPlotSelected={setIsPlotSelected}
         //planStatus={planStatus}
       />
       <div style={{ flex: '1', display: 'flex' }}>
         { // inital state: show districting plan cards
-        isSplit && !isPlanSelected && <div style={{ flex: '1'}}> 
+        isSplit && !isPlanSelected && <div style={{ flex: '1', maxHeight: '100%' ,overflowY: 'scroll'}}> 
           <StatePlans 
             setIsPlanSelected={setIsPlanSelected} 
             setPlanId={setPlanId} 
@@ -179,21 +193,39 @@ function App() {
 
           { // Show Plots, when plot button isselected
           isPlotSelected && <div >
-            <SwipeableDrawer
+            <SwipeableDrawer 
            variant='persistent'
-           sx={{position: 'relative', }}
+           sx={{position: 'relative'}}
               BackdropProps={{ style: { opacity: 0 } }}
               anchor="right"
               open={isPlotSelected}
               onClose={toggleDrawer(false)}
               onOpen={toggleDrawer(true)}
+              PaperProps={{ style: { position: "fixed", top: 70, left: 600, m: 0 }}}
             >
-              <Box sx={{ width: 700}}>
-                <Typography>there</Typography>
-                <Button>it is</Button>
+              <Box sx={{ width: 700,backgroundColor: 'e0e0e0'}}>
+                <Typography variant='h6'>Nevada</Typography>
+                </Box>
+                <Box sx={{ width: 700, height: 700,backgroundColor:'#eeeeee', maxHeight: 600, overflow: 'auto'}}>
+                <ToggleButtonGroup sx={{margin:'20px'}}
+                  color="primary"
+                  value={alignment}
+                  exclusive
+                  onChange={handleChange}
+                >
+                  <ToggleButton value="radar">Radar</ToggleButton>
+                  <ToggleButton value="voteSeat">Vote/Seat Share</ToggleButton>
+                  <ToggleButton value="BoxWhisker">Box and Whisker</ToggleButton>
+                  <ToggleButton value="seawulf">Seawulf Ensemble</ToggleButton>
+                
+                </ToggleButtonGroup>
+                {(alignment==="radar") && <div>
+                <RadarPlot />
+              </div>}
               </Box>
+              
 
-              hi?
+              
             </SwipeableDrawer>
           </div>}
       </div>

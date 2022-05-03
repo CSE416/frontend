@@ -25,6 +25,7 @@ export const RacialData= (props) => {
                   color: "red"}]);
       })
     },[]);
+    
     return(
           <div>
               {Object.keys(demoData).map((districtData) => {

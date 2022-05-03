@@ -4,11 +4,12 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
+import Typography from '@mui/material/Typography';
 
 const MenuBar = React.forwardRef((props, mapGJSONref) => {
 
     return(
-        <div className="menu-bar" style={{ display: 'block', width: '60%', display: 'flex', flexDirection: 'row', }}>
+        <div className="menu-bar" style={{ display: 'block', width: '90%', display: 'flex', flexDirection: 'row', }}>
             {mapGJSONref.current && 
             <Autocomplete
                 onChange={(event, value) => {props.setcurrState(value?{name: value.name, fipsCode: value.fipsCode}:null)}}
@@ -33,11 +34,20 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                     </TextField>
                 )}>
             </Autocomplete>}
+            
+            {props.currState && <div style={{margin: '10px', display:'flex'}}>
+                <Chip label={props.planStatus} sx={{margin: '10px'}} color='success'/>
+                <Typography variant="h6" id="plan-name"><span>{props.planName}</span></Typography>
+                
+            </div>}
+            
             {!props.isPlanSelected && <div>
                 <Button variant="contained" 
                     style={{height:'70%', margin:'10px'}}
                      disabled>Change Districting</Button>
             </div>}
+
+            
             {props.isPlanSelected && <div>
                 <Button variant="contained" 
                     style={{height:'70%', margin:'10px'}}
@@ -52,11 +62,10 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
 
             {props.isPlotSelected && <div>
                 <Button variant="contained" 
-                    style={{height:'70%', margin:'10px', color:'greenyellow'}}
-                    onClick={()=>{props.setIsPlotSelected(false)}}>Plots</Button>
+                    style={{height:'70%', margin:'10px'}}
+                    onClick={()=>{props.setIsPlotSelected(false)}}>Map</Button>
             </div>}
-
-            <h4 id="plan-name"><span>{props.planName}</span></h4>
+            
             
         </div>
     );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Fade } from 'react-bootstrap';
 import { Measures } from './Measures';
+import { Measures2 } from './Measures2';
 import { PlanSummary } from './PlanSummary';
 import { DemographicData } from './DemographicData';
 
@@ -9,7 +10,7 @@ export const InformationTab = (props) => {
   const tabContent = {
     "Summary": <PlanSummary stateId={props.stateId} planId={props.planId} setPlanName={props.setPlanName}/>,
     "Demographic Data": <Measures stateId={props.stateId} />,//<DemographicData planId={props.planId}/>,
-    "Measures": <Measures stateId={props.stateId} />
+    "Measures": <Measures2 stateId={props.stateId} />
   }
 
   return (

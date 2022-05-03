@@ -21,7 +21,7 @@ ChartJS.register(
     Legend
   );
 
-export const RadarPlots = (props) => {
+const RadarPlot = (props) => {
     const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
     const [radarData, setRadarData] = useState(null);
 
@@ -63,3 +63,4 @@ export const RadarPlots = (props) => {
     </div>
     );
 };
+export default RadarPlot;

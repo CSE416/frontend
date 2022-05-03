@@ -3,7 +3,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 
-
+import HSBar from "react-horizontal-stacked-bar-chart";
+import { Typography } from '@mui/material';
 export const Measures = () => {
 
   const [panel1, setPanel1] = useState("Partisan Split Data");
@@ -46,7 +47,62 @@ export const Measures = () => {
             onChange={handleChange(title)}
           >
             <AccordionSummary id={title}>{title}</AccordionSummary>
-            <AccordionDetails>{accordionContent[title]}</AccordionDetails>
+            <AccordionDetails>{accordionContent[title]}
+              <div>
+                <div style={{display: 'flex', flexDirection: 'row' }}>
+                <Typography>District 1</Typography>
+                <HSBar width={100}
+                data={[
+                  { value: 1000, color: '#ff80ab' },
+                  { value: 5000, description: "5.000", color: "#66bb6a" },
+                  { value: 3000, description: "3.000", color: "#ffee58" },
+                  { value: 2000, description: "3.000", color: "#ff8a80" },
+                  { value: 500, description: "3.000", color: "#5b7bb2" },
+                  { value: 300, description: "3.000", color: "#9778ce" }
+                ]} />
+                </div>
+
+                <div style={{display: 'flex', flexDirection: 'row' }}>
+                <Typography>District 2</Typography>
+                <HSBar width={100}
+                data={[
+                  { value: 3000, color: '#ff80ab' },
+                  { value: 800, description: "5.000", color: "#66bb6a" },
+                  { value: 3000, description: "3.000", color: "#ffee58" },
+                  { value: 1000, description: "3.000", color: "#ff8a80" },
+                  { value: 1000, description: "3.000", color: "#5b7bb2" },
+                  { value: 300, description: "3.000", color: "#9778ce" }
+                ]} />
+                </div>
+
+                <div style={{display: 'flex', flexDirection: 'row' }}>
+                <Typography>District 3</Typography>
+                <HSBar width={50}
+                data={[
+                  { value: 2500, color: '#ff80ab' },
+                  { value: 3000, description: "5.000", color: "#66bb6a" },
+                  { value: 900, description: "3.000", color: "#ffee58" },
+                  { value: 2000, description: "3.000", color: "#ff8a80" },
+                  { value: 2000, description: "3.000", color: "#5b7bb2" },
+                  { value: 800, description: "3.000", color: "#9778ce" }
+                ]} />
+                </div>
+
+                <div style={{display: 'flex', flexDirection: 'row' }}>
+                <Typography>District 4</Typography>
+                <HSBar width={100}
+                data={[
+                  { value: 1800, color: '#ff80ab' },
+                  { value: 2000, description: "5.000", color: "#66bb6a" },
+                  { value: 1000, description: "3.000", color: "#ffee58" },
+                  { value: 5000, description: "3.000", color: "#ff8a80" },
+                  { value: 500, description: "3.000", color: "#5b7bb2" },
+                  { value: 1000, description: "3.000", color: "#9778ce" }
+                ]} />
+                </div>
+                
+              </div>
+            </AccordionDetails>
           </Accordion>
         );
       })}

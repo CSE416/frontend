@@ -1,3 +1,4 @@
+          
 import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -17,7 +18,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 
-export const PlanComparisonCard = (props) => {
+export const PlanComparisonTable = (props) => {
   const [clicked, setClicked] = useState(false)
   const cardClicked = () => setClicked((prev) => !prev)
 
@@ -33,20 +34,15 @@ export const PlanComparisonCard = (props) => {
     createData("polsbyPopper",props.polsbyPopper),
     createData("Number of Majority-Minority Districts", props.numOfMajMinDistricts)];
     return(
-        <Card align='left' sx={{m:1, bgcolor: clicked ? '#e0e0e0' : 'white'}} >
+        <Card align='left' sx={{m:1, bgcolor: clicked ? 'grey' : 'white'}} >
       <CardActionArea onClick={()=>{cardClicked(); props.setPlanId(props.planId);}}>
         <CardContent>
-        {(props.status=='INLITIGATION') && 
-          <Chip label={props.status} color='success' />
-          }
-          {!(props.status=='INLITIGATION') && 
-          <Chip label={props.status} />
-          }
+        <Chip label={props.status} />
           <Typography gutterBottom variant="h6" component="div">
             {props.name}
           </Typography>
           <TableContainer component={Paper}>
-            <Table sx={{ maxWidth: 350 }} aria-label="simple table"> 
+            <Table sx={{ maxWidth: 300 }} aria-label="simple table"> 
               <TableBody>
                 {rows.map((row) => (
                   <TableRow
@@ -66,10 +62,7 @@ export const PlanComparisonCard = (props) => {
         </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" onClick={()=>{props.setIsPlanSelected(true);
-                                            props.setPlanId(props.planId);
-                                            props.setPlanName(props.name);
-                                            props.setPlanStatus(props.status);}}>Show Details</Button>
+          <Button size="small" onClick={()=>{props.setIsPlanSelected(true);}}>Show Details</Button>
         </CardActions>
       
     </Card>
