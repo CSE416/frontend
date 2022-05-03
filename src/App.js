@@ -12,7 +12,16 @@ import USstatesGJSONdata from './data/stateBoundaries.json'
 import nvPlan0GJSON from './data/nv_plan0.json'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MenuBar from './components/MenuBar';
+import SidePanel from './components/SidePanel';
 import axios from 'axios';
+import SlidingPane from "react-sliding-pane";
+//plot comp
+import Box from "@mui/material/Box";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+
 
 function App() {  
   const mapGJSONref = useRef();
@@ -83,28 +92,34 @@ function App() {
   }, [currState]);
 
   // display district boundaries // dummy
-  // useEffect(() => {
-  //   setPlanGJSON(nvPlan0GJSON);
-  // }, []);
+  useEffect(() => {
+    setPlanGJSON(nvPlan0GJSON);
+  }, []);
 
    // Get the district plan boundaries (default: plan=0)
    const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
    
-   useEffect(() => {
-    if (currState != null){
-    axios.get(`https://redistricting-fever.herokuapp.com/defaultPlanBoundaries`, {params: {
-      stateFipsId: currState.fipsCode
-    }})
-      .then(res => {
-        console.log(res.data);
-        setPlanGJSON(res.data);
-      }) 
-      .catch ((Error) => {
-        //alert(Error);
-        setNullDataMsg(<p>Data Failed to Load.</p>);
-      })
-    }
-  }, []);
+  //  useEffect(() => {
+  //   if (currState != null){
+  //   axios.get(`https://redistricting-fever.herokuapp.com/defaultPlanBoundaries`, {params: {
+  //     stateFipsId: currState.fipsCode
+  //   }})
+  //     .then(res => {
+  //       console.log(res.data);
+  //       setPlanGJSON(res.data);
+  //     }) 
+  //     .catch ((Error) => {
+  //       //alert(Error);
+  //       setNullDataMsg(<p>Data Failed to Load.</p>);
+  //     })
+  //   }
+  // }, []);
+
+  //plot componet
+
+  const toggleDrawer = (open) => (event) => {
+    setIsPlotSelected(open);
+  };
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -112,8 +127,10 @@ function App() {
         ref={mapGJSONref}
         planName={planName}
         isPlanSelected={isPlanSelected}
+        isPlotSelected={isPlotSelected}
         setIsPlanSelected={setIsPlanSelected}
         setcurrState={setcurrState}
+        setIsPlotSelected={setIsPlotSelected}
         //planStatus={planStatus}
       />
       <div style={{ flex: '1', display: 'flex' }}>
@@ -134,7 +151,7 @@ function App() {
 
           { /* map part */ }
           { // Show Map, when plot button is not selected
-          !isPlotSelected && <div style={{ flex: '1'}}>
+          <div style={{ flex: '1'}}>
             <MapContainer
               center={[38, -98]} 
               zoom={5} 
@@ -154,15 +171,30 @@ function App() {
               {
                 
               }
-              <GeoJSON data={planGJSON}/>
+              {isSplit && <GeoJSON data={planGJSON}/>}
             </MapContainer>
           </div>
           
           }
 
           { // Show Plots, when plot button isselected
-          isPlotSelected && <div style={{ flex: '1'}}>
-           {/*<Plots stateFipsId={currState.fipsCode} />*/}
+          isPlotSelected && <div >
+            <SwipeableDrawer
+           variant='persistent'
+           sx={{position: 'relative', }}
+              BackdropProps={{ style: { opacity: 0 } }}
+              anchor="right"
+              open={isPlotSelected}
+              onClose={toggleDrawer(false)}
+              onOpen={toggleDrawer(true)}
+            >
+              <Box sx={{ width: 700}}>
+                <Typography>there</Typography>
+                <Button>it is</Button>
+              </Box>
+
+              hi?
+            </SwipeableDrawer>
           </div>}
       </div>
     </div>

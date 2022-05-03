@@ -43,7 +43,19 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                     style={{height:'70%', margin:'10px'}}
                     onClick={()=>{props.setIsPlanSelected(false)}}>Change Districting</Button>
             </div>}
-            
+
+            {!props.isPlotSelected && <div>
+                <Button variant="contained" 
+                    style={{height:'70%', margin:'10px'}}
+                    onClick={()=>{props.setIsPlotSelected(true)}}>Plots</Button>
+            </div>}
+
+            {props.isPlotSelected && <div>
+                <Button variant="contained" 
+                    style={{height:'70%', margin:'10px', color:'greenyellow'}}
+                    onClick={()=>{props.setIsPlotSelected(false)}}>Plots</Button>
+            </div>}
+
             <h4 id="plan-name"><span>{props.planName}</span></h4>
             
         </div>

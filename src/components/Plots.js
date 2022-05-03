@@ -3,6 +3,11 @@ import {RadarPlot } from './RadarPlot';
 import { BoxWhiskerPlot } from './BoxWhiskerPlot';
 import { VoteSeatShare } from './VoteSeatShare';
 
+import Box from "@mui/material/Box";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 export const Plots = (props) => {
 
     const tabContent = {
@@ -12,23 +17,8 @@ export const Plots = (props) => {
                                             /*TODO: */} />
   }
     return(
-    <div id="information-tab-container">
-    <Tabs
-      defaultActiveKey={Object.keys(tabContent)[0]}
-      transition={Fade}
-      id="information-tab"
-      className="mb-3"
-    >
-      {Object.keys(tabContent).map((title) => {
-        return (
-        <Tab
-        key={title} 
-        eventKey={title} 
-        title={title}>
-          {tabContent[title]}
-        </Tab>);
-      })}
-    </Tabs>
-  </div>
+    <div>
+      
+    </div>
     );
 };
