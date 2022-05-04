@@ -101,21 +101,21 @@ function App() {
    // Get the district plan boundaries (default: plan=0)
    const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
    
-  //  useEffect(() => {
-  //   if (currState != null){
-  //   axios.get(`https://redistricting-fever.herokuapp.com/defaultPlanBoundaries`, {params: {
-  //     stateFipsId: currState.fipsCode
-  //   }})
-  //     .then(res => {
-  //       console.log(res.data);
-  //       setPlanGJSON(res.data);
-  //     }) 
-  //     .catch ((Error) => {
-  //       //alert(Error);
-  //       setNullDataMsg(<p>Data Failed to Load.</p>);
-  //     })
-  //   }
-  // }, []);
+   useEffect(() => {
+    if (currState != null){
+    axios.get(`https://redistricting-fever.herokuapp.com/planBoundaries`, {params: {
+      planId: planId
+    }})
+      .then(res => {
+        console.log(res.data);
+        setPlanGJSON(res.data);
+      }) 
+      .catch ((Error) => {
+        //alert(Error);
+        setNullDataMsg(<p>Data Failed to Load.</p>);
+      })
+    }
+  }, [planId]);
 
   //plot componet
 
@@ -185,7 +185,7 @@ function App() {
               {
                 
               }
-              {isSplit && <GeoJSON data={planGJSON}/>}
+              {isSplit && <GeoJSON key={planId} data={planGJSON}/>}
             </MapContainer>
           </div>
           
