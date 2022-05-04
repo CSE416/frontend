@@ -27,6 +27,7 @@
     "react-dropdown": "^1.9.2",
     "react-horizontal-stacked-bar-chart": "^8.15.2",
     "react-leaflet": "^3.2.5",
+    "react-plotly.js": "^2.5.1",
     "react-responsive-modal": "^6.2.0",
     "react-scripts": "5.0.0",
     "react-sliding-pane": "^7.1.0",
