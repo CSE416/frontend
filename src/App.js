@@ -234,7 +234,7 @@ function App() {
       />
       <div style={{ flex: '1', display: 'flex' }}>
         { // inital state: show districting plan cards
-        isSplit && !isPlanSelected && <div style={{ flex: '3' ,overflow: 'auto'}}> 
+        isSplit && !isPlanSelected && <div style={{ flex: '1' ,overflow: 'auto'}}> 
           <StatePlans 
             setIsPlanSelected={setIsPlanSelected} 
             setPlanId={setPlanId} 
@@ -251,15 +251,20 @@ function App() {
         </div>}
 
         { // When a plan is selected: show detailed information
+<<<<<<< HEAD
         isSplit && isPlanSelected && <div style={{ flex: '4' }}> 
           <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} handleClickDemographics={handleClickDemographics}/>
+=======
+        isSplit && isPlanSelected && <div style={{ flex: '1' }}> 
+          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} />
+>>>>>>> 8d37ab7... added PlanMeasure tab in InformationTab. (removed from PlanSummary tab)
         </div>
    
       }
 
           { /* map part */ }
           { // Show Map, when plot button is not selected
-          <div style={{ flex: '3'}}>
+          <div style={{ flex: '1'}}>
             <MapContainer
               center={[38, -98]}
               zoom={5}

@@ -6,6 +6,7 @@ import { PlanSummary } from './PlanSummary';
 import { DemographicData } from './DemographicData';
 import { BoxWhisker} from './BoxWhisker';
 import { SeaWulfPlot } from './SeaWulfEnsemble';
+import { PlanMeasure } from './PlanMeasure';
 import '../styles/informationTab.css';
 
 
@@ -18,7 +19,10 @@ export const InformationTab = (props) => {
                             planId={props.planId} 
                             setPlanName={props.setPlanName}/>,
     //"Demographic Data": <Measures stateId={props.stateId} />,//<DemographicData planId={props.planId}/>,
-    
+    "Measures": <PlanMeasure stateId={props.stateId}
+                              planId={props.planId} 
+                              isSingleId={props.planIdList.size==1} 
+                              planIdList={props.planIdList}/>,
     "Demographic data":<BoxWhisker stateId={props.stateId}
                                     isSingleId={props.planIdList.size==1} 
                                     planIdList={props.planIdList} 
