@@ -53,7 +53,7 @@ export const InformationTab = (props) => {
           title={title}
           >
             <div id="tab-content"
-                  style={{display:'flex'}}>
+                  >
             {tabContent[title]}
             </div>
           </Tab>);

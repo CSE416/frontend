@@ -2,11 +2,14 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     border-collapse: collapse;
-    width: 80%;
+    width: 90%;
     align-items: center;
-    margin-left: 1.5em;
+    margin-left: 0.5em;
   }
-  
+  #districtInfo tr{
+    height:0.5em;
+  }
+
   #districtInfo td, #districtInfo th {
     border: 1px solid #ddd;
     padding: 8px;

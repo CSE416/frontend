@@ -112,7 +112,6 @@ export const PlanSummary = (props) => {
     <div style={{}}>
       {(data) ? (
         <div id="plan-summary-container">
-
           { // Single Plan detail Summary
             (props.isSingleId) && <div>
               <div id="single-title"
@@ -143,18 +142,27 @@ export const PlanSummary = (props) => {
                   flex: 1,
                   fontSize: '10px',
                   textAlign: 'left',
-                  margin: '1em'
+                  margin: '1em',
+                  display:"flex",
+                  flexDirection:"row"
                 }}>
-                <div id="single-plan-date-by"
-                  style={{ display: 'flex', flexDirection: 'column' }}>
+                <div id="single-plan-generalInfo"
+                  style={{ flex:1, display: 'flex', flexDirection: 'column' }}>
                   <Typography>
                     <b>Proposed By:</b> {data.proposedBy}
                   </Typography>
                   <Typography>
                     <b>Proposed Date:</b> {data.proposedDate.slice(0, 10)}
                   </Typography>
+                  <Typography>
+                    Population Equality: {data.populationEquality}
+                  </Typography>
+                  <Typography>
+                    Partisan Lean: Democrats +{data.partisanLean}
+                  </Typography>
                 </div>
-                <div id="single-plan-districtInfo-table">
+                <div id="single-plan-districtInfo-table"
+                      style={{flex:1}}>
                   <Typography>
                     <b>Districts Infos:</b>
                   </Typography>
@@ -176,6 +184,10 @@ export const PlanSummary = (props) => {
                       <td>{data.numMajMinDistricts}</td>
                     </tr>
                     <tr>
+                      <td>No. of Influence Districts</td>
+                      <td>{data.numInfluenceDistricts}</td>
+                    </tr>
+                    <tr>
                       <td>No. of Split counties</td>
                       <td>{data.numSplitCounties}</td>
                     </tr>
@@ -187,9 +199,7 @@ export const PlanSummary = (props) => {
                   {/* {data.efficiencyGap}
             {data.polsbyPopper}
             {data.planId} */}
-                  <Typography>
-                    Partisan Lean: Democrats +{data.partisanLean}
-                  </Typography>
+                  
                 </div>
               </div>
             </div>}
@@ -207,7 +217,6 @@ export const PlanSummary = (props) => {
         //   </Tab>);
         // })*/}
 
-
           { // when two plans selected: table
             !(props.isSingleId) &&
             <div style={{ flex: 1, fontSize: '10px' }}>
@@ -216,34 +225,34 @@ export const PlanSummary = (props) => {
               tempId = id;
 
             })} */}
-              <ThemeProvider theme={themeTable}>
-              <TableContainer component={Paper} sx={{padding:"none"}}>
-            <Table sx={{ width:'100%' }} aria-label="simple table"> 
-            <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell align="right">plan1</TableCell>
-            <TableCell align="right">plan2 </TableCell>
-          </TableRow>
-        </TableHead>
-              <TableBody sx={{fontSize:'10', padding:'0.5em'}}>
-                {row.map((r) => (
-                  <TableRow
-                    key={row.tag}
-                    sx={{ border: 0 }}>
-                    <TableCell component="th" scope="row">
-                      {r.tag}
-                    </TableCell>
-                    <TableCell align="right">{r.value1}</TableCell>
-                    <TableCell align="right">{r.value2}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          </ThemeProvider>
-            </div>
-          </div>}
+                <ThemeProvider theme={themeTable}>
+                  <TableContainer component={Paper} sx={{ padding: "none" }}>
+                    <Table sx={{ width: '100%' }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell></TableCell>
+                          <TableCell align="right">plan1</TableCell>
+                          <TableCell align="right">plan2 </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody sx={{ fontSize: '10', padding: '0.5em' }}>
+                        {row.map((r) => (
+                          <TableRow
+                            key={row.tag}
+                            sx={{ border: 0 }}>
+                            <TableCell component="th" scope="row">
+                              {r.tag}
+                            </TableCell>
+                            <TableCell align="right">{r.value1}</TableCell>
+                            <TableCell align="right">{r.value2}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </ThemeProvider>
+              </div>
+            </div>}
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
 

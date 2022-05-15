@@ -170,11 +170,11 @@ export const StatePlans = (props) => {
       {(planData && (mode == 'Card')) ? (
         <Paper class="plan-summary-card-container"
           sx={{
-            height: '100%',
-            width: '100%',
-            overflow: 'auto',
-            // display:"flex",
-            // flexDirection: "column"
+            height: '100vh',
+            width: '50vw',
+            display:"flex",
+            //flexWrap: 'wrap'
+            flexDirection: "column"
           }}>
           <div id="card-row-1"
             style={{ flex: 1, display: 'flex', flexDirection: 'row' }}>
@@ -224,7 +224,7 @@ export const StatePlans = (props) => {
               setPlanIdList={props.setPlanIdList}
               checkStatus={false} />
           </div>
-          <div class="card-row-2"
+          <div id="card-row-2"
             style={{ flex: 1, display: 'flex', flexDirection: 'row' }}>
             <PlanComparisonCard class='plan3'
               planId={planData[2].planId}
@@ -276,7 +276,7 @@ export const StatePlans = (props) => {
 
       {(planData && (mode == 'Table')) ? (
         <div class="plan-summary-table-container"
-          style={{ flex: 1, width: '100%', height: '100%', overflow: 'auto' }}>
+          style={{ flex: 1, width: '100%', height: '100%'}}>
           <ThemeProvider theme={themeTable}>
             <TableContainer component={Paper} sx={{ padding: "none" }}>
               <Table sx={{ width: '100%' }} aria-label="simple table">

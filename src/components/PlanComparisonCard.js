@@ -82,10 +82,10 @@ export const PlanComparisonCard = (props) => {
     <Card class="plan-summary-card"
       align='left'
       sx={{
-        width: '50%',
-        height: '50%',
+        width: '100%',
+        height: '100%',
         flex: 1, m: 0.5, p: 0.5,
-        border: (props.cardSelected == props.color) ? 3 : 0,
+        border: 3 ,
         borderColor: (props.cardSelected == props.color) ? '#c5cae9' : 'white'
       }} >
       <div id="card-top"
@@ -143,10 +143,10 @@ export const PlanComparisonCard = (props) => {
             </Typography>
           </ThemeProvider>
 
-          <div id="radar-plot"
+          {/* <div id="radar-plot"
             style={{}}>
             <RadarPlot width={100} height={100} planId={props.planId} />
-          </div>
+          </div> */}
         </CardContent>
       </CardActionArea>
     </Card>
