@@ -262,7 +262,7 @@ function App() {
         {
           // inital state: show districting plan cards
           isSplit && !isPlanSelected && (
-            <div style={{ flex: "1", overflow: "auto" }}>
+            <div style={{ flex: "3", overflow: "auto" }}>
               <StatePlans
                 setIsPlanSelected={setIsPlanSelected}
                 setPlanId={setPlanId}
@@ -281,17 +281,26 @@ function App() {
           )
         }
 
-        { // When a plan is selected: show detailed information
-        isSplit && isPlanSelected && <div style={{ flex: '1' }}> 
-          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} handleClickDemographics={handleClickDemographics} handleChangeDemoCategory={handleChangeDemoCategory}/>
-        </div>
-   
-      }
+        {
+          // When a plan is selected: show detailed information
+          isSplit && isPlanSelected && (
+            <div style={{ flex: "4" }}>
+              <InformationTab
+                stateId={currState.fipsCode}
+                planId={planId}
+                setPlanName={setPlanName}
+                planIdList={planIdList}
+                handleClickDemographics={handleClickDemographics}
+                handleChangeDemoCategory={handleChangeDemoCategory}
+              />
+            </div>
+          )
+        }
 
         {/* map part */}
         {
           // Show Map, when plot button is not selected
-          <div style={{ flex: "1" }}>
+          <div style={{ flex: "3" }}>
             <MapContainer
               center={[38, -98]}
               zoom={5}
