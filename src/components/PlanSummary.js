@@ -115,7 +115,7 @@ export const PlanSummary = (props) => {
           { // Single Plan detail Summary
             (props.isSingleId) && <div>
               <div id="single-title"
-                style={{ margin: 1, display: 'flex', alignItems: 'flex-start' }}>
+                style={{ margin: 1, display: 'flex', alignItems: 'flex-start', justifyContent:"flex-start" }}>
                 <Box id="status-tag"
                   sx={{
                     border: '1px solid',
@@ -155,10 +155,10 @@ export const PlanSummary = (props) => {
                     <b>Proposed Date:</b> {data.proposedDate.slice(0, 10)}
                   </Typography>
                   <Typography>
-                    Population Equality: {data.populationEquality}
+                    <b>Population Equality</b>: {data.populationEquality}
                   </Typography>
                   <Typography>
-                    Partisan Lean: Democrats +{data.partisanLean}
+                    <b>Partisan Lean:</b> Democrats +{data.partisanLean}
                   </Typography>
                 </div>
                 <div id="single-plan-districtInfo-table"

@@ -78,10 +78,10 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                 >Reset</Button>
             }
 
-            {props.currState &&
+            {/* {props.currState &&
                 // Choose Districting plan to display on map: up to 2
                 <Autocomplete
-                    sx={{ width: '30em', hieght: '0.5em', margin: '0.5em', marginTop: '0.3em', marginBottom: '0em', flex: 1 }}
+                    sx={{ maxWidth: '30em', hieght: '0.5em', margin: '0.5em', marginTop: '0.3em', marginBottom: '0em', flex: 1 }}
                     multiple
                     id="tags-standard"
                     //options={top100Films}
@@ -106,11 +106,11 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                             size="small"
                         />
                     )} />
-            }
+            } */}
             {props.currState &&
                 <Button variant="contained"
                     size="small"
-                    sx={{ maxHeight: '2rem', my: '1em', flex: 1, textTransform: "none" }}
+                    sx={{ maxHeight: '2rem',maxWidth: '8em', my: '1em', flex: 1, textTransform: "none" }}
                     onClick={() => {
                         props.setIsPlanSelected(true);
                         props.setPlanId(props.planId);
@@ -127,13 +127,14 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                 <div style={{ margin: 1, display: 'flex' }}>
                     <Box sx={{
                         border: '1px solid', borderRadius: 1, p: 0.4, px: 0.5,
-                        m: 1,
+                        m: '1em',
                         fontSize: '0.875rem',
                         fontWeight: '500',
                     }}>{props.planStatus} </Box>
 
                     <ThemeProvider theme={theme}>
-                        <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}><span>{props.planIdList}</span></Typography>
+                        <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}>
+                            <span>{props.planName}{props.planIdList}</span></Typography>
 
                     </ThemeProvider>
                 </div>}

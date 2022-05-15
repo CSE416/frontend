@@ -9,14 +9,6 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import RadarPlot from './RadarPlot';
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import {
   createTheme,
   ThemeProvider,
@@ -64,36 +56,24 @@ export const PlanComparisonCard = (props) => {
 
   }
 
-
-  function createData(summary, values) {
-    return { summary, values };
-  }
-
-  const rows = [
-
-    createData("Population Equality", props.populationEquality),
-    //createData("Partisan Lean",props.partisanLean),
-    createData("popular Vote", props.popularVote),
-    //createData("seat Share", props.seatShare),
-    createData("polsbyPopper", props.polsbyPopper),
-    //createData("Number of Majority-Minority Districts", props.numOfMajMinDistricts)
-  ];
   return (
     <Card class="plan-summary-card"
       align='left'
       sx={{
-        // width: '100%',
-        // height: '100%',
-        flex: 1, m: 0.5, p: 0.5,
-        border: 3 ,
-        borderColor: (props.cardSelected == props.color) ? '#c5cae9' : 'white'
+        flex: 1,
+        width:'50%',
+        //height:'50%'
+        //m: 0.5, p: 0.5,
+        //border: 3,
+        //borderColor: (props.cardSelected == props.color) ? '#e0e0e0' : 'white'
       }} >
       <div id="card-top"
         style={{
-          display: 'flex', flexDirection: 'row',
-          backgroundColor: (props.cardSelected == props.color) ? '#c5cae9' : 'white'
+          //display: 'flex', flexDirection: 'row',
+          backgroundColor: (props.cardSelected == props.color) ? '#e0e0e0' : 'white'
         }}>
-        <div id="card-checkbox" style={{ flex: 1 }}>
+        <div id="card-checkbox" //style={{ flex: 1 }}
+        >
           <Checkbox
             {...label}
             //defaultChecked
@@ -102,24 +82,26 @@ export const PlanComparisonCard = (props) => {
             onChange={handleChange}
           />
         </div>
-        <div id="card-title"
-          style={{
-            flex: 5, display: 'flex', flexDirection: 'row',
-            marginTop: '0.5em', marginBottom: '0.5em', marginLeft: '0em'
-          }}>
-          <ThemeProvider theme={theme} >
-            <Box sx={{
-              border: '1px solid', borderRadius: 1, p: 0.5, m: 0.5,
-              fontSize: '0.5rem',
-              fontWeight: '500',
-              textAlign: 'center',
-            }} alignItems="center">{props.status} </Box>
-            <Typography gutterBottom variant="h6" component="div" sx={{ flex: 1, fontWeight: '700', mx: 1 }}>
-              {props.planName}
-            </Typography>
-          </ThemeProvider>
-        </div>
       </div>
+
+      <div id="card-title"
+        style={{
+          flex: 5, display: 'flex', flexDirection: 'row',
+          marginTop: '0.5em', marginBottom: '0.5em', marginLeft: '0em'
+        }}>
+        <ThemeProvider theme={theme} >
+          <Box sx={{
+            border: '1px solid', borderRadius: 1, p: 0.5, m: 0.5,
+            fontSize: '0.5rem',
+            fontWeight: '500',
+            textAlign: 'center',
+          }} alignItems="center">{props.status} </Box>
+          <Typography gutterBottom variant="h6" component="div" sx={{ flex: 1, fontWeight: '700', mx: 1 }}>
+            {props.planName}
+          </Typography>
+        </ThemeProvider>
+      </div>
+
       <CardActionArea onClick={() => {
         cardClicked();
         props.setPlanId(props.planId);
@@ -137,16 +119,11 @@ export const PlanComparisonCard = (props) => {
             <Typography>
               Partisan Split
             </Typography>
-            <Typography> @@@@@@@@@@@@-----###########</Typography>
+
             <Typography>
               Number of Split counties: 3
             </Typography>
           </ThemeProvider>
-
-          <div id="radar-plot"
-            style={{}}>
-            <RadarPlot width={100} height={100} planId={props.planId} />
-          </div>
         </CardContent>
       </CardActionArea>
     </Card>

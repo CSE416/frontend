@@ -262,7 +262,7 @@ function App() {
         {
           // inital state: show districting plan cards
           isSplit && !isPlanSelected && (
-            <div style={{ flex: "3", overflow: "auto" }}>
+            <div style={{ flex: "1", overflow: "auto" }}>
               <StatePlans
                 setIsPlanSelected={setIsPlanSelected}
                 setPlanId={setPlanId}
@@ -291,7 +291,7 @@ function App() {
         {/* map part */}
         {
           // Show Map, when plot button is not selected
-          <div style={{ flex: "3" }}>
+          <div style={{ flex: "1" }}>
             <MapContainer
               center={[38, -98]}
               zoom={5}

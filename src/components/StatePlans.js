@@ -141,7 +141,7 @@ export const StatePlans = (props) => {
     <div class="state-plans-container"
       style={{ height: '100%', margin: '10px' }}>
       {/* flexDirection: 'column', alignItems:'flex-start', */}
-      <div class="card-table-mode-button">
+      {/* <div class="card-table-mode-button">
         <Button
           id="demo-customized-button"
           variant="outlined"
@@ -165,13 +165,13 @@ export const StatePlans = (props) => {
             Table
           </MenuItem>
         </StyledMenu>
-      </div>
+      </div> */}
 
       {(planData && (mode == 'Card')) ? (
         <Paper class="plan-summary-card-container"
           sx={{
-            height: '100vh',
-            width: '50vw',
+            // height: '100%',
+            // width: '100%',
             display:"flex",
             //flexWrap: 'wrap'
             flexDirection: "column"
@@ -276,7 +276,7 @@ export const StatePlans = (props) => {
           </div></div>
         </Paper>) : nullDataMsg}
 
-      {(planData && (mode == 'Table')) ? (
+      {/* {(planData && (mode == 'Table')) ? (
         <div class="plan-summary-table-container"
           style={{ flex: 1, width: '100%', height: '100%'}}>
           <ThemeProvider theme={themeTable}>
@@ -357,7 +357,7 @@ export const StatePlans = (props) => {
             </TableContainer>
           </ThemeProvider>
         </div>
-      ) : nullDataMsg}
+      ) : nullDataMsg} */}
     </div>);
 
 }
