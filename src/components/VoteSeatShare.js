@@ -12,7 +12,7 @@ export const VoteSeatShare = (props) => {
     axios
       .get(`https://redistricting-fever.herokuapp.com/voteSeatShare`, {
         params: {
-          planId: 320,
+          planId: props.planId,
         },
       })
       .then((res) => {
@@ -30,9 +30,9 @@ export const VoteSeatShare = (props) => {
       republicanData = [];
 
     points.forEach((point) => {
-      rangeData.push(point[0]);
-      democraticData.push(point[1]);
-      republicanData.push(point[2]);
+      rangeData.push(100 * point[0]);
+      democraticData.push(100 * point[1]);
+      republicanData.push(100 * point[2]);
     });
 
     let democraticPlot = {
@@ -105,9 +105,9 @@ export const VoteSeatShare = (props) => {
           </div>
           <p></p>
           <div id="vote-seat-measure-container" style={{ flex: 1 }}>
-            Bias: {data["bias"]}
-            Symmetry: {data["symmetry"]}
-            Responsiveness: {data["responsiveness"]}
+            Bias: {(100 * data["partisanBias"]).toFixed(2)} %
+            Symmetry: {(100 * data["symmetry"]).toFixed(2)} %
+            Responsiveness: {(100 * data["responsiveness"]).toFixed(2)} %
           </div>
         </>
       ) : (
