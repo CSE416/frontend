@@ -281,21 +281,12 @@ function App() {
           )
         }
 
-        {
-          // When a plan is selected: show detailed information
-          isSplit && isPlanSelected && (
-            <div style={{ flex: "4" }}>
-              <InformationTab
-                stateId={currState.fipsCode}
-                planId={planId}
-                setPlanName={setPlanName}
-                planIdList={planIdList}
-                handleClickDemographics={handleClickDemographics}
-                handleChangeDemoCategory={handleChangeDemoCategory}
-              />
-            </div>
-          )
-        }
+        { // When a plan is selected: show detailed information
+        isSplit && isPlanSelected && <div style={{ flex: '1' }}> 
+          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} handleClickDemographics={handleClickDemographics} handleChangeDemoCategory={handleChangeDemoCategory}/>
+        </div>
+   
+      }
 
         {/* map part */}
         {

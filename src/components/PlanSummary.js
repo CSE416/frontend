@@ -135,55 +135,70 @@ export const PlanSummary = (props) => {
                     {data.planName}
                   </Typography>
                 </ThemeProvider>
-            </div>
-        
-        <div id="single-plan-info-container"
-              style={{flex:1, 
-                    fontSize:'10px', 
-                    textAlign:'left', 
-                    margin:'1em'}}>
-          <div id="single-plan-date-by"
-                style={{display:'flex', flexDirection:'column'}}>
-            <Typography>
-              <b>Proposed By:</b> {data.proposedBy}
-            </Typography>
-            <Typography>
-              <b>Proposed Date:</b> {data.proposedDate.slice(0,10)}
-            </Typography>  
-          </div>
-          <div id="single-plan-districtInfo-table">
-            <Typography>
-              <b>Districts Infos:</b>
-            </Typography>
-            <table id="districtInfo">
-              <tbody>
-              <tr>
-                <td>No. of Districts</td>
-                <td>{data.numDistricts}</td>
-              </tr>
-              <tr>
-                <td>No. of District change</td>
-                <td>{data.districNumChange}</td>
-              </tr>
-              <tr>
-                <td>No. of Competitive Districts</td>
-                <td>{data.numCompetitiveDistricts}</td>
-              </tr>
-              <tr>
-                <td>No. of Majority-Minority Districts</td>
-                <td>{data.numMajMinDistricts}</td>
-              </tr>
-              <tr>
-                <td>No. of Split counties</td>
-                <td>{data.numSplitCounties}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-            <div id="single-other-info"
-                  style={{display:'flex', flexDirection:'row'}}>
-            {data.seatShare}
-            {/* {data.efficiencyGap}
+              </div>
+
+              <div id="single-plan-info-container"
+                style={{
+                  flex: 1,
+                  fontSize: '10px',
+                  textAlign: 'left',
+                  margin: '1em',
+                  display:"flex",
+                  flexDirection:"row"
+                }}>
+                <div id="single-plan-generalInfo"
+                  style={{ flex:1, display: 'flex', flexDirection: 'column' }}>
+                  <Typography>
+                    <b>Proposed By:</b> {data.proposedBy}
+                  </Typography>
+                  <Typography>
+                    <b>Proposed Date:</b> {data.proposedDate.slice(0, 10)}
+                  </Typography>
+                  <Typography>
+                    Population Equality: {data.populationEquality}
+                  </Typography>
+                  <Typography>
+                    Partisan Lean: Democrats +{data.partisanLean}
+                  </Typography>
+                </div>
+                <div id="single-plan-districtInfo-table"
+                      style={{flex:1}}>
+                  <Typography>
+                    <b>Districts Infos:</b>
+                  </Typography>
+                  <table id="districtInfo">
+                    <tbody>
+                    <tr>
+                      <td>No. of Districts</td>
+                      <td>{data.numDistricts}</td>
+                    </tr>
+                    <tr>
+                      <td>No. of District change</td>
+                      <td>{data.districNumChange}</td>
+                    </tr>
+                    <tr>
+                      <td>No. of Competitive Districts</td>
+                      <td>{data.numCompetitiveDistricts}</td>
+                    </tr>
+                    <tr>
+                      <td>No. of Majority-Minority Districts</td>
+                      <td>{data.numMajMinDistricts}</td>
+                    </tr>
+                    <tr>
+                      <td>No. of Influence Districts</td>
+                      <td>{data.numInfluenceDistricts}</td>
+                    </tr>
+                    <tr>
+                      <td>No. of Split counties</td>
+                      <td>{data.numSplitCounties}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div id="single-other-info"
+                  style={{ display: 'flex', flexDirection: 'row' }}>
+                  {data.seatShare}
+                  {/* {data.efficiencyGap}
             {data.polsbyPopper}
             {data.planId} */}
                   
