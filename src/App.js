@@ -1,22 +1,22 @@
-import './App.css';
-import './styles/boxWhisker.css'
-import './styles/graphModal.css';
-import './styles/informationTab.css';
-import './styles/planSummary.css';
-import './styles/voteSeatShare.css';
-import { InformationTab } from './components/InformationTab';
-import { StatePlans } from './components/StatePlans';
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css';
-import React, { useEffect, useState, useRef } from 'react';
-import USstatesGJSONdata from './data/stateBoundaries.json'
-import nvPlan0GJSON from './data/nv_plan0.json'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import MenuBar from './components/MenuBar';
-import SidePanel from './components/SidePanel';
-import axios from 'axios';
+import "./App.css";
+import "./styles/boxWhisker.css";
+import "./styles/graphModal.css";
+import "./styles/informationTab.css";
+import "./styles/planSummary.css";
+import "./styles/voteSeatShare.css";
+import { InformationTab } from "./components/InformationTab";
+import { StatePlans } from "./components/StatePlans";
+import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import React, { useEffect, useState, useRef } from "react";
+import USstatesGJSONdata from "./data/stateBoundaries.json";
+import nvPlan0GJSON from "./data/nv_plan0.json";
+import "bootstrap/dist/css/bootstrap.min.css";
+import MenuBar from "./components/MenuBar";
+import SidePanel from "./components/SidePanel";
+import axios from "axios";
 import SlidingPane from "react-sliding-pane";
-
+import L from "leaflet";
 function App() {  
   const mapGJSONref = useRef();
   const [isSplit, setIsSplit] = useState(false);
@@ -40,6 +40,40 @@ function App() {
   const [cardSelected, setCardSelected] = useState(1);
   const [tempPlanId, setTempPlanId] = useState(null);
   const [planIdList, setPlanIdList] = useState(new Set());
+  const [showDemographics, setShowDemographics] = useState(false);
+  const [demoData, setDemoData] = useState(null);
+  const [demographicsLayer, setDemographicsLayer] = useState(null);
+  const [demoCategory, setDemoCategory] = useState("WHITE");
+
+  function getColor(d) {
+    return d > 100
+      ? "#FC4E2A"
+      : d > 50
+      ? "#FD8D3C"
+      : d > 20
+      ? "#FEB24C"
+      : d > 10
+      ? "#FED976"
+      : "#FFEDA0";
+  }
+
+  const precinctStyle = (feature) => {
+    return {
+      fillColor: getColor(feature.properties["p" + demoCategory]),
+      weight: 1,
+      opacity: 0.5,
+      color: "grey",
+      fillOpacity: 1,
+    };
+  };
+
+  const handleClickDemographics = () => {
+    setShowDemographics(!showDemographics);
+  };
+
+  const handleChangeDemoCategory = (e) => {
+    setDemoCategory(e.target.innerHTML);
+  };
 
   // fetch data from API to display US states
   useEffect(() => {
@@ -57,28 +91,31 @@ function App() {
 
   // show split-pane and zoom in on state when selected
   useEffect(() => {
-    if (mapGJSONref.current){
+    if (mapGJSONref.current) {
       // if a state has been selected, split pane should be open
-      if (currState != null){
-        if (!isSplit){
+      if (currState != null) {
+        if (!isSplit) {
           setIsSplit(true);
-        }
-        else{
+        } else {
           // split pane has been opened
           USmap.invalidateSize();
           // zoom in on the state
-          let state_bounds = mapGJSONref.current.getLayers().find((layer) => layer.feature.properties.STATE == currState.fipsCode).getBounds();
+          let state_bounds = mapGJSONref.current
+            .getLayers()
+            .find(
+              (layer) => layer.feature.properties.STATE == currState.fipsCode
+            )
+            .getBounds();
           USmap.flyToBounds(state_bounds);
         }
       }
       // else the split pane should be closed
-      else{
-        if (isSplit)
-          setIsSplit(false);
-        else{
+      else {
+        if (isSplit) setIsSplit(false);
+        else {
           // reset map view
           USmap.invalidateSize();
-          USmap.setView([38,-98], 5);
+          USmap.setView([38, -98], 5);
         }
       }
     }
@@ -86,8 +123,8 @@ function App() {
 
   // fetch state map and display it
   useEffect(() => {
-    if (mapGJSONref.current){
-      if (currState != null){
+    if (mapGJSONref.current) {
+      if (currState != null) {
         // fetch state map
         //  then stop the pannnig animation?
         //  then setMaxBounds on the state map
@@ -101,29 +138,73 @@ function App() {
   //   setPlanGJSON2(nvPlan0GJSON);
   // }, []);
 
-   // Get the district plan boundaries (default: plan=0)
-   const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
-   
-   useEffect(() => {
-    if (currState != null){
-    axios.get(`https://redistricting-fever.herokuapp.com/planBoundaries`, {params: {
-      planId: planId
-    }})
-      .then(res => {
-        console.log(res.data);
-        setPlanGJSON(res.data);
-      }) 
-      .catch ((Error) => {
-        //alert(Error);
-        setNullDataMsg(<p>Data Failed to Load.</p>);
-      })
+  const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
+
+  useEffect(() => {
+    if (currState != null) {
+      console.log("Loading Precinct Demographics");
+      axios
+        .get(`https://redistricting-fever.herokuapp.com/precinctDemographics`, {
+          params: {
+            stateFipsId: currState.fipsCode,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setDemoData(res.data);
+          console.log("Precinct Demographics Loaded");
+        })
+        .catch((Error) => {
+          setNullDataMsg(<p>Data Failed to Load.</p>);
+        });
+    }
+  }, [currState]);
+
+  useEffect(() => {
+    if (demoData) {
+      if (showDemographics) {
+        if (demographicsLayer) {
+          USmap.removeLayer(demographicsLayer);
+        }
+        setDemographicsLayer(L.geoJSON(demoData, { style: precinctStyle }));
+      } else {
+        USmap.removeLayer(demographicsLayer);
+      }
+    }
+  }, [showDemographics, demoCategory]);
+
+  useEffect(() => {
+    if (demographicsLayer) {
+      demographicsLayer.addTo(USmap).bringToBack();
+    }
+  }, [demographicsLayer]);
+
+  useEffect(() => {
+    if (currState != null) {
+      axios
+        .get(`https://redistricting-fever.herokuapp.com/planBoundaries`, {
+          params: {
+            planId: planId,
+          },
+        })
+        .then((res) => {
+          // console.log(res.data);
+          setPlanGJSON(res.data);
+        })
+        .catch((Error) => {
+          //alert(Error);
+          setNullDataMsg(<p>Data Failed to Load.</p>);
+        });
     }
   }, [planId]);
 
 
 
   return (
-    <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <div
+      className="App"
+      style={{ display: "flex", flexDirection: "column", height: "100vh" }}
+    >
       <MenuBar
         ref={mapGJSONref}
         
@@ -178,13 +259,13 @@ function App() {
           { // Show Map, when plot button is not selected
           <div style={{ flex: '3'}}>
             <MapContainer
-              center={[38, -98]} 
-              zoom={5} 
-              minZoom={4} 
-              maxZoom={7}
+              center={[38, -98]}
+              zoom={5}
+              minZoom={4}
+              maxZoom={14}
               zoomSnap={0.25}
               whenCreated={setUSMap}
-              style={{ height: '100%', width: '100%' }}
+              style={{ height: "100%", width: "100%" }}
             >
               <TileLayer
                 url="http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
@@ -196,8 +277,8 @@ function App() {
               {
                 
               }
-              {isSplit && <GeoJSON key={planId} data={planGJSON}/>}
-              {isSplit && <GeoJSON key={planId+2} data={planGJSON2}/>}
+              {isSplit && <GeoJSON key={planId} data={planGJSON} style={{ fillOpacity: 0 }}/> }
+              {isSplit && <GeoJSON key={planId+2} data={planGJSON2} style={{ fillOpacity: 0 }}/>}
             </MapContainer>
           </div>
           

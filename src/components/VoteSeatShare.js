@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
-import dummyData from "./seats-votes.json";
 
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
 export const VoteSeatShare = (props) => {
-  const [data, setData] = useState(dummyData);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     axios
       .get(`https://redistricting-fever.herokuapp.com/voteSeatShare`, {
         params: {
-          planId: props.planId,
+          planId: 320,
         },
       })
       .then((res) => {

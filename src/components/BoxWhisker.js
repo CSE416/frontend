@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
-// import dummyData from "./placeholder.json";
-import dummyData from "./ALL.json";
-import planData from "./800.json";
 
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
 export const BoxWhisker = (props) => {
-  let planData = {
-    x: [0, 1, 2, 3],
-    y: [0.37065, 0.47064, 0.52528, 0.67706],
-    name: "Plan 1",
-    type: "scatter",
-    mode: "markers",
-    marker: {
-      color: "#734E46",
-      opacity: 0.8,
-    },
-  };
+  // let planData = {
+  //   x: [0, 1, 2, 3],
+  //   y: [0.37065, 0.47064, 0.52528, 0.67706],
+  //   name: "Plan 1",
+  //   type: "scatter",
+  //   mode: "markers",
+  //   marker: {
+  //     color: "#734E46",
+  //     opacity: 0.8,
+  //   },
+  // };
 
   const constructPlanDataPlot = () => {
     let xrange = [];
@@ -27,7 +24,7 @@ export const BoxWhisker = (props) => {
     planData.forEach((district) => {
       console.log(district);
       xrange.push(district["districtId"] - 1);
-      yrange.push(district[category]);
+      yrange.push(district["p" + category]);
     });
     let planDataPlot = {
       x: xrange,
@@ -44,8 +41,9 @@ export const BoxWhisker = (props) => {
     return planDataPlot;
   };
 
-  const [category, setCategory] = useState("BLACK");
-  const [data, setData] = useState(dummyData);
+  const [category, setCategory] = useState("WHITE");
+  const [data, setData] = useState(null);
+  const [planData, setPlanData] = useState(null);
 
   let xaxis = {
     title: {
@@ -77,6 +75,21 @@ export const BoxWhisker = (props) => {
       })
       .then((res) => {
         setData(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`https://redistricting-fever.herokuapp.com/planDemographics`, {
+        params: {
+          planId: 320,
+        },
+      })
+      .then((res) => {
+        setPlanData(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -120,11 +133,11 @@ export const BoxWhisker = (props) => {
 
     districts.forEach((district) => {
       // console.log(district);
-      minArr.push(district["whislo"]);
-      maxArr.push(district["whishi"]);
-      medianArr.push(district["med"]);
-      lowerQuartileArr.push(district["q1"]);
-      upperQuartileArr.push(district["q3"]);
+      minArr.push(100 * (district["whislo"]));
+      maxArr.push(100 * (district["whishi"]));
+      medianArr.push(100 * (district["med"]));
+      lowerQuartileArr.push(100 * (district["q1"]));
+      upperQuartileArr.push(100 * (district["q3"]));
     });
 
     let boxTrace = {
@@ -138,8 +151,8 @@ export const BoxWhisker = (props) => {
     };
 
     plotData.push(boxTrace);
-    // plotData.push(constructPlanDataPlot());
-    plotData.push(planData);
+    plotData.push(constructPlanDataPlot());
+    // plotData.push(planData);
     return plotData;
   };
 
@@ -150,7 +163,7 @@ export const BoxWhisker = (props) => {
   return (
     <div id="box-whisker-container"
           style={{flex:1}}>
-      {data ? (
+      {data && planData ? (
         <>
           <div className="category-dropdown">
             <button

@@ -98,6 +98,9 @@ export const StatePlans= (props) => {
       .catch ((Error) => {
         setNullDataMsg(<p>Data Failed to Load.</p>);
       })
+      .catch((Error) => {
+        setNullDataMsg(<p>Data Failed to Load.</p>);
+      });
   }, []);
   
   // Dropdown For table and card mode
@@ -318,9 +321,7 @@ export const StatePlans= (props) => {
         </TableHead>
               <TableBody sx={{fontSize:'10', padding:'0.5em'}}>
                 {rows.map((row) => (
-                  <TableRow
-                    key={row.tag}
-                    sx={{ border: 0 }}>
+                  <TableRow key={row.tag} sx={{ border: 0 }}>
                     <TableCell component="th" scope="row">
                       {row.tag}
                     </TableCell>
