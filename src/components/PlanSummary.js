@@ -167,6 +167,7 @@ const rows=[];
               <b>Districts Infos:</b>
             </Typography>
             <table id="districtInfo">
+              <tbody>
               <tr>
                 <td>No. of Districts</td>
                 <td>{data.numDistricts}</td>
@@ -187,6 +188,7 @@ const rows=[];
                 <td>No. of Split counties</td>
                 <td>{data.numSplitCounties}</td>
               </tr>
+              </tbody>
             </table>
           </div>
             <div id="single-other-info"

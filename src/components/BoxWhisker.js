@@ -22,7 +22,6 @@ export const BoxWhisker = (props) => {
     let xrange = [];
     let yrange = [];
     planData.forEach((district) => {
-      console.log(district);
       xrange.push(district["districtId"] - 1);
       yrange.push(district["p" + category]);
     });
@@ -158,6 +157,7 @@ export const BoxWhisker = (props) => {
 
   const handleClick = (e) => {
     setCategory(e.target.innerHTML);
+    props.handleChangeDemoCategory(e);
   };
 
   return (
@@ -191,6 +191,10 @@ export const BoxWhisker = (props) => {
               })}
             </div>
           </div>
+          <div>
+          <button onClick={props.handleClickDemographics}>See Demographics</button>
+          </div>
+          
           
           <Plot
             data={constructPlotData(data[category])}
@@ -219,7 +223,7 @@ export const BoxWhisker = (props) => {
           {/* <p style={{ clear: "both" }}>
             Average Districting for Plan 1: {calcAvgDist()}
           </p> */}
-          <button onClick={props.handleClickDemographics}>See Demographics</button>
+          
         </>
       ) : (
         <p>Box and Whisker Data failed to load.</p>

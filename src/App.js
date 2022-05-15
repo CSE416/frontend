@@ -17,20 +17,20 @@ import SidePanel from "./components/SidePanel";
 import axios from "axios";
 import SlidingPane from "react-sliding-pane";
 import L from "leaflet";
-function App() {  
+function App() {
   const mapGJSONref = useRef();
   const [isSplit, setIsSplit] = useState(false);
   const [isPlanSelected, setIsPlanSelected] = useState(false);
   const [isPlotSelected, setIsPlotSelected] = useState(false);
   const [defaultPlan, setDefaultPlan] = useState({
     defaultPlanId: 0,
-    defaultPlanName: '',
-    defaultPlanStatus: ''
+    defaultPlanName: "",
+    defaultPlanStatus: "",
   });
   const [planLabel, setPlanLabel] = useState([]);
   const [planId, setPlanId] = useState(0);
-  const [planName, setPlanName] = useState('');
-  const [planStatus, setPlanStatus] = useState('');
+  const [planName, setPlanName] = useState("");
+  const [planStatus, setPlanStatus] = useState("");
 
   const [currState, setcurrState] = useState(null);
   const [USmap, setUSMap] = useState(null);
@@ -61,10 +61,30 @@ function App() {
     return {
       fillColor: getColor(feature.properties["p" + demoCategory]),
       weight: 1,
-      opacity: 0.5,
+      opacity: 0.7,
       color: "grey",
       fillOpacity: 1,
     };
+  };
+
+  var legend = L.control({ position: "bottomleft" });
+
+  legend.onAdd = function (USmap) {
+    var div = L.DomUtil.create("div", "info legend"),
+      grades = [0, 10, 20, 50, 100],
+      labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+      div.innerHTML +=
+        '<i style="background:' +
+        getColor(grades[i] + 1) +
+        '"></i> ' +
+        grades[i] +
+        (grades[i + 1] ? "&ndash;" + grades[i + 1] + "%" + "<br>" : "% +");
+    }
+
+    return div;
   };
 
   const handleClickDemographics = () => {
@@ -165,10 +185,20 @@ function App() {
       if (showDemographics) {
         if (demographicsLayer) {
           USmap.removeLayer(demographicsLayer);
+          const legend = document.getElementsByClassName("info legend")[0];
+          if (legend) {
+            legend.remove();
+          }
         }
         setDemographicsLayer(L.geoJSON(demoData, { style: precinctStyle }));
       } else {
-        USmap.removeLayer(demographicsLayer);
+        if (demographicsLayer) {
+          USmap.removeLayer(demographicsLayer);
+        }
+        const legend = document.getElementsByClassName("info legend")[0];
+        if (legend) {
+          legend.remove();
+        }
       }
     }
   }, [showDemographics, demoCategory]);
@@ -176,6 +206,7 @@ function App() {
   useEffect(() => {
     if (demographicsLayer) {
       demographicsLayer.addTo(USmap).bringToBack();
+      legend.addTo(USmap);
     }
   }, [demographicsLayer]);
 
@@ -198,8 +229,6 @@ function App() {
     }
   }, [planId]);
 
-
-
   return (
     <div
       className="App"
@@ -207,7 +236,6 @@ function App() {
     >
       <MenuBar
         ref={mapGJSONref}
-        
         isPlanSelected={isPlanSelected}
         isPlotSelected={isPlotSelected}
         setIsPlanSelected={setIsPlanSelected}
@@ -226,40 +254,53 @@ function App() {
         currState={currState}
         planLabel={planLabel}
         defaultLabel={[planLabel[0]]}
-        
         planIdList={planIdList}
-        
-        
+
         //planStatus={planStatus}
       />
-      <div style={{ flex: '1', display: 'flex' }}>
-        { // inital state: show districting plan cards
-        isSplit && !isPlanSelected && <div style={{ flex: '3' ,overflow: 'auto'}}> 
-          <StatePlans 
-            setIsPlanSelected={setIsPlanSelected} 
-            setPlanId={setPlanId} 
-            setPlanName={setPlanName} 
-            setPlanStatus={setPlanStatus}
-            setDefaultPlan={setDefaultPlan}
-            setPlanLabel={setPlanLabel}
-            setCardSelected={setCardSelected}
-            stateFipsId={currState.fipsCode}
-            cardSelected={cardSelected}
-            planIdList={planIdList}
-            setPlanIdList={setPlanIdList}
-            defaultPlan={defaultPlan}/>  
-        </div>}
+      <div style={{ flex: "1", display: "flex" }}>
+        {
+          // inital state: show districting plan cards
+          isSplit && !isPlanSelected && (
+            <div style={{ flex: "3", overflow: "auto" }}>
+              <StatePlans
+                setIsPlanSelected={setIsPlanSelected}
+                setPlanId={setPlanId}
+                setPlanName={setPlanName}
+                setPlanStatus={setPlanStatus}
+                setDefaultPlan={setDefaultPlan}
+                setPlanLabel={setPlanLabel}
+                setCardSelected={setCardSelected}
+                stateFipsId={currState.fipsCode}
+                cardSelected={cardSelected}
+                planIdList={planIdList}
+                setPlanIdList={setPlanIdList}
+                defaultPlan={defaultPlan}
+              />
+            </div>
+          )
+        }
 
-        { // When a plan is selected: show detailed information
-        isSplit && isPlanSelected && <div style={{ flex: '4' }}> 
-          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} handleClickDemographics={handleClickDemographics}/>
-        </div>
-   
-      }
+        {
+          // When a plan is selected: show detailed information
+          isSplit && isPlanSelected && (
+            <div style={{ flex: "4" }}>
+              <InformationTab
+                stateId={currState.fipsCode}
+                planId={planId}
+                setPlanName={setPlanName}
+                planIdList={planIdList}
+                handleClickDemographics={handleClickDemographics}
+                handleChangeDemoCategory={handleChangeDemoCategory}
+              />
+            </div>
+          )
+        }
 
-          { /* map part */ }
-          { // Show Map, when plot button is not selected
-          <div style={{ flex: '3'}}>
+        {/* map part */}
+        {
+          // Show Map, when plot button is not selected
+          <div style={{ flex: "3" }}>
             <MapContainer
               center={[38, -98]}
               zoom={5}
@@ -269,26 +310,26 @@ function App() {
               whenCreated={setUSMap}
               style={{ height: "100%", width: "100%" }}
             >
-              <TileLayer
-                url="http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
-              />
-              {USstatesGJSON && <GeoJSON
-                  data={USstatesGJSON}
-                  ref={mapGJSONref}
-              />}
-              {
-                
-              }
-              {isSplit && <GeoJSON key={planId} data={planGJSON} style={{ fillOpacity: 0 }}/> }
+              <TileLayer url="http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}" />
+              {USstatesGJSON && (
+                <GeoJSON data={USstatesGJSON} ref={mapGJSONref} />
+              )}
+              {}
+              {isSplit && ( planGJSON ? 
+                (<GeoJSON
+                  key={planId}
+                  data={planGJSON}
+                  style={{ fillOpacity: 0 }}
+                />) : ""
+              )}
             </MapContainer>
           </div>
-          
-          }
+        }
 
-          { // Show Plots, when plot button isselected
-          isPlotSelected && <div >
-            
-          </div>}
+        {
+          // Show Plots, when plot button isselected
+          isPlotSelected && <div></div>
+        }
       </div>
     </div>
   );
