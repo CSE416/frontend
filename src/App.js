@@ -251,13 +251,8 @@ function App() {
         </div>}
 
         { // When a plan is selected: show detailed information
-<<<<<<< HEAD
-        isSplit && isPlanSelected && <div style={{ flex: '4' }}> 
-          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} handleClickDemographics={handleClickDemographics}/>
-=======
         isSplit && isPlanSelected && <div style={{ flex: '1' }}> 
           <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} />
->>>>>>> 8d37ab7... added PlanMeasure tab in InformationTab. (removed from PlanSummary tab)
         </div>
    
       }

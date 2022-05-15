@@ -26,7 +26,6 @@ import RadarPlot from './RadarPlot';
 import { VoteSeatShare } from './VoteSeatShare';
 import { EffVotesChart } from './EffVotesChart';
 import { BoxWhisker } from './BoxWhisker';
-import { EffVotesChart } from './EffVotesChart';
 
 
 const themeTable = createTheme({
