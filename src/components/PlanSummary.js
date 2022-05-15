@@ -14,18 +14,10 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 
-//plot comp
 import Box from "@mui/material/Box";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Stack from '@mui/material/Stack';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import RadarPlot from './RadarPlot';
-import { VoteSeatShare } from './VoteSeatShare';
-import { EffVotesChart } from './EffVotesChart';
-import { BoxWhisker } from './BoxWhisker';
 
 
 const themeTable = createTheme({
@@ -101,16 +93,6 @@ export const PlanSummary = (props) => {
 
   const toggleDrawer = (open) => (event) => {
 
-  };
-
-  const [alignment, setAlignment] = useState('radar');
-
-  const handleChange = (
-    event,
-    newAlignment
-  ) => {
-    setAlignment(newAlignment);
-    return (<div>hi</div>);
   };
   function createData(tag, value1, value2) {
     return { tag, value1, value2 };
@@ -262,42 +244,6 @@ export const PlanSummary = (props) => {
           </ThemeProvider>
             </div>
           </div>}
-
-
-        {// plots
-          <Box sx={{width: '50vw', height:'90vh', maxHeight: 600, overflow: 'auto', m:'0.5em'}}>
-          <ToggleButtonGroup sx={{marginBottom:'0px'}}
-                  color="primary"
-                  value={alignment}
-                  exclusive
-                  onChange={handleChange}
-                  size='small'
-                >
-                  <ToggleButton value="radar">Radar</ToggleButton>
-                  <ToggleButton value="voteSeat">Vote/Seat Share</ToggleButton>
-                  <ToggleButton value="efficiencyGap">Efficiency Gap</ToggleButton>
-                  <ToggleButton value="polsbyPopper">Polsby-Popper</ToggleButton>
-                
-                </ToggleButtonGroup>
-                {(alignment==="radar") && <div style={{align:'center'}}>
-                <RadarPlot width={'60%'} height={'40%'} 
-                          planIdList={props.planIdList}
-                          planId={props.planId}/>
-              </div>}
-
-              {(alignment === "voteSeat") && <div>
-                <VoteSeatShare width={500} height={300}
-                  planId={props.planId} />
-              </div>}
-
-              {(alignment==="efficiencyGap") && <div>
-                <EffVotesChart planId={props.planId} />
-              </div>}
-
-              {(alignment==="polsbyPopper") && <div>
-              </div>}
-            </Box>
-          }
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
 
