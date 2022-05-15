@@ -252,8 +252,10 @@ function App() {
 
         { // When a plan is selected: show detailed information
         isSplit && isPlanSelected && <div style={{ flex: '4' }}> 
-          <InformationTab stateId={currState} planId={planId} setPlanName={setPlanName} planIdList={planIdList} />
-        </div>}
+          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} />
+        </div>
+   
+      }
 
           { /* map part */ }
           { // Show Map, when plot button is not selected
