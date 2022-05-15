@@ -177,7 +177,8 @@ export const StatePlans = (props) => {
             flexDirection: "column"
           }}>
           <div id="card-row-1"
-            style={{ flex: 1, display: 'flex', flexDirection: 'row' }}>
+            style={{ flex: 1}}> 
+            <div style={{display: 'flex', flexDirection: 'row' }}>
             <PlanComparisonCard class='plan1'
               planId={planData[0].planId}
               planName={planData[0].planName}
@@ -223,9 +224,10 @@ export const StatePlans = (props) => {
               planIdList={props.planIdList}
               setPlanIdList={props.setPlanIdList}
               checkStatus={false} />
-          </div>
+          </div></div>
           <div id="card-row-2"
-            style={{ flex: 1, display: 'flex', flexDirection: 'row' }}>
+            style={{ flex: 1}}>
+            <div style={{display: 'flex', flexDirection: 'row' }}>
             <PlanComparisonCard class='plan3'
               planId={planData[2].planId}
               planName={planData[2].planName}
@@ -271,7 +273,7 @@ export const StatePlans = (props) => {
               planIdList={props.planIdList}
               setPlanIdList={props.setPlanIdList}
               checkStatus={false} />
-          </div>
+          </div></div>
         </Paper>) : nullDataMsg}
 
       {(planData && (mode == 'Table')) ? (
