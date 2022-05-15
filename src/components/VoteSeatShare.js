@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
-import dummyData from "./results.json";
+import dummyData from "./seats-votes.json";
 
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
@@ -32,8 +32,8 @@ export const VoteSeatShare = (props) => {
 
     points.forEach((point) => {
       rangeData.push(point[0]);
-      republicanData.push(point[1]);
-      democraticData.push(point[2]);
+      democraticData.push(point[1]);
+      republicanData.push(point[2]);
     });
 
     let democraticPlot = {

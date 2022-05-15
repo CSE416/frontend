@@ -9,25 +9,25 @@ const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
 export const BoxWhisker = (props) => {
-  // let planData = {
-  //   x: [0, 1, 2, 3],
-  //   y: [0.37065, 0.47064, 0.52528, 0.67706],
-  //   name: "Plan 1",
-  //   type: "scatter",
-  //   mode: "markers",
-  //   marker: {
-  //     color: "#734E46",
-  //     opacity: 0.8,
-  //   },
-  // };
+  let planData = {
+    x: [0, 1, 2, 3],
+    y: [0.37065, 0.47064, 0.52528, 0.67706],
+    name: "Plan 1",
+    type: "scatter",
+    mode: "markers",
+    marker: {
+      color: "#734E46",
+      opacity: 0.8,
+    },
+  };
 
   const constructPlanDataPlot = () => {
     let xrange = [];
     let yrange = [];
     planData.forEach((district) => {
       console.log(district);
-      xrange.push(district["districtId"]);
-      yrange.push(district["p" + category] / 100);
+      xrange.push(district["districtId"] - 1);
+      yrange.push(district[category]);
     });
     let planDataPlot = {
       x: xrange,
@@ -102,14 +102,11 @@ export const BoxWhisker = (props) => {
 
   const constructPlotData = (districts) => {
     let plotData = [],
-      xrange = [],
       minArr = [],
       maxArr = [],
       medianArr = [],
       lowerQuartileArr = [],
       upperQuartileArr = [];
-
-    let i = 1;
 
     // for (let districtId in districts) {
     //   let box = districts[districtId];
@@ -123,13 +120,11 @@ export const BoxWhisker = (props) => {
 
     districts.forEach((district) => {
       // console.log(district);
-      xrange.push(i);
       minArr.push(district["whislo"]);
       maxArr.push(district["whishi"]);
       medianArr.push(district["med"]);
       lowerQuartileArr.push(district["q1"]);
       upperQuartileArr.push(district["q3"]);
-      i += 1;
     });
 
     let boxTrace = {
@@ -140,12 +135,11 @@ export const BoxWhisker = (props) => {
       upperfence: maxArr,
       name: "Recom Ensemble",
       type: "box",
-      x: xrange,
     };
 
     plotData.push(boxTrace);
-    plotData.push(constructPlanDataPlot());
-    // plotData.push(planData);
+    // plotData.push(constructPlanDataPlot());
+    plotData.push(planData);
     return plotData;
   };
 
