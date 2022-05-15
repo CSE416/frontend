@@ -258,34 +258,49 @@ function App() {
 
         //planStatus={planStatus}
       />
-      <div style={{ flex: '1', display: 'flex' }}>
-        { // inital state: show districting plan cards
-        isSplit && !isPlanSelected && <div style={{ flex: '1' ,overflow: 'auto'}}> 
-          <StatePlans 
-            setIsPlanSelected={setIsPlanSelected} 
-            setPlanId={setPlanId} 
-            setPlanName={setPlanName} 
-            setPlanStatus={setPlanStatus}
-            setDefaultPlan={setDefaultPlan}
-            setPlanLabel={setPlanLabel}
-            setCardSelected={setCardSelected}
-            stateFipsId={currState.fipsCode}
-            cardSelected={cardSelected}
-            planIdList={planIdList}
-            setPlanIdList={setPlanIdList}
-            defaultPlan={defaultPlan}/>  
-        </div>}
+      <div style={{ flex: "1", display: "flex" }}>
+        {
+          // inital state: show districting plan cards
+          isSplit && !isPlanSelected && (
+            <div style={{ flex: "3", overflow: "auto" }}>
+              <StatePlans
+                setIsPlanSelected={setIsPlanSelected}
+                setPlanId={setPlanId}
+                setPlanName={setPlanName}
+                setPlanStatus={setPlanStatus}
+                setDefaultPlan={setDefaultPlan}
+                setPlanLabel={setPlanLabel}
+                setCardSelected={setCardSelected}
+                stateFipsId={currState.fipsCode}
+                cardSelected={cardSelected}
+                planIdList={planIdList}
+                setPlanIdList={setPlanIdList}
+                defaultPlan={defaultPlan}
+              />
+            </div>
+          )
+        }
 
-        { // When a plan is selected: show detailed information
-        isSplit && isPlanSelected && <div style={{ flex: '1' }}> 
-          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} />
-        </div>
-   
-      }
+        {
+          // When a plan is selected: show detailed information
+          isSplit && isPlanSelected && (
+            <div style={{ flex: "4" }}>
+              <InformationTab
+                stateId={currState.fipsCode}
+                planId={planId}
+                setPlanName={setPlanName}
+                planIdList={planIdList}
+                handleClickDemographics={handleClickDemographics}
+                handleChangeDemoCategory={handleChangeDemoCategory}
+              />
+            </div>
+          )
+        }
 
-          { /* map part */ }
-          { // Show Map, when plot button is not selected
-          <div style={{ flex: '1'}}>
+        {/* map part */}
+        {
+          // Show Map, when plot button is not selected
+          <div style={{ flex: "3" }}>
             <MapContainer
               center={[38, -98]}
               zoom={5}
