@@ -11,7 +11,8 @@ export const Measures2 = () => {
 
   let accordionContent = {
     "Polsby Popper": panel1,
-    "Efficiency Gap": panel2,
+    "vot sea†share plot": panel2
+
   };
 
   const [expanded, setExpanded] = useState(false);

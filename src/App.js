@@ -16,30 +16,30 @@ import MenuBar from './components/MenuBar';
 import SidePanel from './components/SidePanel';
 import axios from 'axios';
 import SlidingPane from "react-sliding-pane";
-//plot comp
-import Box from "@mui/material/Box";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Stack from '@mui/material/Stack';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import RadarPlot from './components/RadarPlot';
-import { VoteSeatShare } from './components/VoteSeatShare';
-import { BoxWhisker } from './components/BoxWhisker';
 
 function App() {  
   const mapGJSONref = useRef();
   const [isSplit, setIsSplit] = useState(false);
   const [isPlanSelected, setIsPlanSelected] = useState(false);
   const [isPlotSelected, setIsPlotSelected] = useState(false);
+  const [defaultPlan, setDefaultPlan] = useState({
+    defaultPlanId: 0,
+    defaultPlanName: '',
+    defaultPlanStatus: ''
+  });
+  const [planLabel, setPlanLabel] = useState([]);
   const [planId, setPlanId] = useState(0);
   const [planName, setPlanName] = useState('');
   const [planStatus, setPlanStatus] = useState('');
+
   const [currState, setcurrState] = useState(null);
   const [USmap, setUSMap] = useState(null);
   const [USstatesGJSON, setUSstatesGJSON] = useState(null);
   const [planGJSON, setPlanGJSON] = useState(null);
+  const [planGJSON2, setPlanGJSON2] = useState(null);
+  const [cardSelected, setCardSelected] = useState(1);
+  const [tempPlanId, setTempPlanId] = useState(null);
+  const [planIdList, setPlanIdList] = useState(new Set());
 
   // fetch data from API to display US states
   useEffect(() => {
@@ -97,9 +97,9 @@ function App() {
   }, [currState]);
 
   // display district boundaries // dummy
-  useEffect(() => {
-    setPlanGJSON(nvPlan0GJSON);
-  }, []);
+  // useEffect(() => {
+  //   setPlanGJSON2(nvPlan0GJSON);
+  // }, []);
 
    // Get the district plan boundaries (default: plan=0)
    const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
@@ -120,55 +120,63 @@ function App() {
     }
   }, [planId]);
 
-  //plot componet
 
-  const toggleDrawer = (open) => (event) => {
-    setIsPlotSelected(open);
-  };
-
-  const [alignment, setAlignment] = useState('radar');
-
-  const handleChange = (
-    event,
-    newAlignment
-  ) => {
-    setAlignment(newAlignment);
-    return (<div>hi</div>);
-  };
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <MenuBar
         ref={mapGJSONref}
-        planName={planName}
+        
         isPlanSelected={isPlanSelected}
         isPlotSelected={isPlotSelected}
         setIsPlanSelected={setIsPlanSelected}
         setcurrState={setcurrState}
-        currState={currState}
-        planStatus={planStatus}
+        setPlanId={setPlanId}
+        setPlanName={setPlanName}
+        setPlanStatus={setPlanStatus}
         setIsPlotSelected={setIsPlotSelected}
+        setCardSelected={setCardSelected}
+        setPlanIdList={setPlanIdList}
+        //stateFipsId={currState.fipsCode}
+        planName={planName}
+        planStatus={planStatus}
+        planId={planId}
+        defaultPlan={defaultPlan}
+        currState={currState}
+        planLabel={planLabel}
+        defaultLabel={[planLabel[0]]}
+        
+        planIdList={planIdList}
+        
+        
         //planStatus={planStatus}
       />
       <div style={{ flex: '1', display: 'flex' }}>
         { // inital state: show districting plan cards
-        isSplit && !isPlanSelected && <div style={{ flex: '1', maxHeight: '100%' ,overflowY: 'scroll'}}> 
+        isSplit && !isPlanSelected && <div style={{ flex: '3' ,overflow: 'auto'}}> 
           <StatePlans 
             setIsPlanSelected={setIsPlanSelected} 
             setPlanId={setPlanId} 
             setPlanName={setPlanName} 
             setPlanStatus={setPlanStatus}
-            stateFipsId={currState.fipsCode}/>       
+            setDefaultPlan={setDefaultPlan}
+            setPlanLabel={setPlanLabel}
+            setCardSelected={setCardSelected}
+            stateFipsId={currState.fipsCode}
+            cardSelected={cardSelected}
+            planIdList={planIdList}
+            setPlanIdList={setPlanIdList}
+            defaultPlan={defaultPlan}/>  
         </div>}
 
         { // When a plan is selected: show detailed information
-        isSplit && isPlanSelected && <div style={{ flex: '1' }}> 
-          <InformationTab stateId={currState} planId={planId} setPlanName={setPlanName} />
+        isSplit && isPlanSelected && <div style={{ flex: '4' }}> 
+          <InformationTab stateId={currState} planId={planId} setPlanName={setPlanName} planIdList={planIdList} />
         </div>}
 
           { /* map part */ }
           { // Show Map, when plot button is not selected
-          <div style={{ flex: '1'}}>
+          <div style={{ flex: '3'}}>
             <MapContainer
               center={[38, -98]} 
               zoom={5} 
@@ -189,6 +197,7 @@ function App() {
                 
               }
               {isSplit && <GeoJSON key={planId} data={planGJSON}/>}
+              {isSplit && <GeoJSON key={planId+2} data={planGJSON2}/>}
             </MapContainer>
           </div>
           
@@ -196,40 +205,7 @@ function App() {
 
           { // Show Plots, when plot button isselected
           isPlotSelected && <div >
-            <SwipeableDrawer 
-           variant='persistent'
-           sx={{position: 'relative'}}
-              BackdropProps={{ style: { opacity: 0 } }}
-              anchor="right"
-              open={isPlotSelected}
-              onClose={toggleDrawer(false)}
-              onOpen={toggleDrawer(true)}
-              PaperProps={{ style: { position: "fixed", top: 70, left: 600, m: 0 }}}
-            >
-              <Box sx={{ width: 700,backgroundColor: 'e0e0e0'}}>
-                <Typography variant='h6'>Nevada</Typography>
-                </Box>
-                <Box sx={{ width: 700, height: 700,backgroundColor:'#eeeeee', maxHeight: 600, overflow: 'auto'}}>
-                <ToggleButtonGroup sx={{margin:'20px'}}
-                  color="primary"
-                  value={alignment}
-                  exclusive
-                  onChange={handleChange}
-                >
-                  <ToggleButton value="radar">Radar</ToggleButton>
-                  <ToggleButton value="voteSeat">Vote/Seat Share</ToggleButton>
-                  <ToggleButton value="BoxWhisker">Box and Whisker</ToggleButton>
-                  <ToggleButton value="seawulf">Seawulf Ensemble</ToggleButton>
-                
-                </ToggleButtonGroup>
-                {(alignment==="radar") && <div>
-                <RadarPlot />
-              </div>}
-              </Box>
-              
-
-              
-            </SwipeableDrawer>
+            
           </div>}
       </div>
     </div>

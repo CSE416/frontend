@@ -80,7 +80,10 @@ export const VoteSeatShare = (props) => {
   };
 
   return (
-    <div id="vote-seat-container">
+    <div id="vote-seat-container"
+        style={{display:'flex', flexDirection:"column"}}>
+      <div id="vote-seat-plot"
+        style={{flex:1}}>
       <Plot
         data={constructPlotData(data.points)}
         config={{
@@ -90,17 +93,20 @@ export const VoteSeatShare = (props) => {
           responsive: true,
         }}
         layout={{
-          width: 700,
-          height: 500,
-          title: "Vote-Seat Share Curve",
+          width: props.width,
+          height: props.height,
+          legend:{"orientation": "h"},
           xaxis: xaxis,
           yaxis: yaxis,
         }}
       />
-      <div id="vote-seat-measure-container">
-        <p>Bias: {data["bias"]}</p>
-        <p>Symmetry: {data["symmetry"]}</p>
-        <p>Responsiveness: {data["responsiveness"]}</p>
+      </div>
+      <p></p>
+      <div id="vote-seat-measure-container"
+            style={{flex:1}}>
+        Bias: {data["bias"]}
+        Symmetry: {data["symmetry"]}
+        Responsiveness: {data["responsiveness"]}
       </div>
     </div>
   );

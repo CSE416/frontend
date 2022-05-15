@@ -44,7 +44,7 @@ export const BoxWhisker = (props) => {
     return planDataPlot;
   };
 
-  const [category, setCategory] = useState("WHITE");
+  const [category, setCategory] = useState("BLACK");
   const [data, setData] = useState(dummyData);
 
   let xaxis = {
@@ -148,7 +148,8 @@ export const BoxWhisker = (props) => {
   };
 
   return (
-    <div id="box-whisker-container">
+    <div id="box-whisker-container"
+          style={{flex:1}}>
       {data ? (
         <>
           <div className="category-dropdown">
@@ -160,7 +161,7 @@ export const BoxWhisker = (props) => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {category}
+              race: {category}
             </button>
             <div className="dropdown-menu">
               {Object.keys(data).map((category) => {
@@ -171,12 +172,13 @@ export const BoxWhisker = (props) => {
                     type="button"
                     onClick={handleClick}
                   >
-                    {category}
+                    {category} 
                   </button>
                 );
               })}
             </div>
           </div>
+          
           <Plot
             data={constructPlotData(data[category])}
             config={{
@@ -186,11 +188,19 @@ export const BoxWhisker = (props) => {
               responsive: true,
             }}
             layout={{
-              width: 700,
-              height: 500,
-              title: category,
+              //autosize: true,
+              margin:{
+                t: '1em',
+                r: '1em'
+              },
+              // width: '80%',
+              // height: 500,
+              title: "Box and Whisker Plot for Minority: " + category,
               xaxis: xaxis,
               yaxis: yaxis,
+              legend:{
+                orientation: 'h'
+              }
             }}
           />
           {/* <p style={{ clear: "both" }}>
