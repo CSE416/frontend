@@ -21,7 +21,8 @@ export const InformationTab = (props) => {
     
     "Demographic data":<BoxWhisker stateId={props.stateId}
                                     isSingleId={props.planIdList.size==1} 
-                                    planIdList={props.planIdList} />,
+                                    planIdList={props.planIdList} 
+                                    handleClickDemographics={props.handleClickDemographics} />,
     "Seawulf Ensemble": <SeaWulfPlot stateId={props.stateId}
                                       isSingleId={props.planIdList.size==1} 
                                       planIdList={props.planIdList} />

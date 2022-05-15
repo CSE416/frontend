@@ -25,6 +25,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import RadarPlot from './RadarPlot';
 import { VoteSeatShare } from './VoteSeatShare';
 import { BoxWhisker } from './BoxWhisker';
+import { EffVotesChart } from './EffVotesChart';
 
 const themeTable = createTheme({
   overrides: {
@@ -264,7 +265,7 @@ const rows=[];
                 >
                   <ToggleButton value="radar">Radar</ToggleButton>
                   <ToggleButton value="voteSeat">Vote/Seat Share</ToggleButton>
-                  <ToggleButton value="efficienyGap">Efficiency Gap</ToggleButton>
+                  <ToggleButton value="efficiencyGap">Efficiency Gap</ToggleButton>
                   <ToggleButton value="polsbyPopper">Polsby-Popper</ToggleButton>
                 
                 </ToggleButtonGroup>
@@ -280,11 +281,10 @@ const rows=[];
               </div>}
 
               {(alignment==="efficiencyGap") && <div>
-                
+                <EffVotesChart planId={props.planId} />
               </div>}
 
               {(alignment==="polsbyPopper") && <div>
-                
               </div>}
               </Box>}
 

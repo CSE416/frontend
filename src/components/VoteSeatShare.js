@@ -79,34 +79,40 @@ export const VoteSeatShare = (props) => {
   };
 
   return (
-    <div id="vote-seat-container"
-        style={{display:'flex', flexDirection:"column"}}>
-      <div id="vote-seat-plot"
-        style={{flex:1}}>
-      <Plot
-        data={constructPlotData(data.points)}
-        config={{
-          scrollZoom: true,
-          editable: false,
-          displayModeBar: false,
-          responsive: true,
-        }}
-        layout={{
-          width: props.width,
-          height: props.height,
-          legend:{"orientation": "h"},
-          xaxis: xaxis,
-          yaxis: yaxis,
-        }}
-      />
-      </div>
-      <p></p>
-      <div id="vote-seat-measure-container"
-            style={{flex:1}}>
-        Bias: {data["bias"]}
-        Symmetry: {data["symmetry"]}
-        Responsiveness: {data["responsiveness"]}
-      </div>
+    <div
+      id="vote-seat-container"
+      style={{ display: "flex", flexDirection: "column" }}
+    >
+      {data ? (
+        <>
+          <div id="vote-seat-plot" style={{ flex: 1 }}>
+            <Plot
+              data={constructPlotData(data.points)}
+              config={{
+                scrollZoom: true,
+                editable: false,
+                displayModeBar: false,
+                responsive: true,
+              }}
+              layout={{
+                width: props.width,
+                height: props.height,
+                legend: { orientation: "h" },
+                xaxis: xaxis,
+                yaxis: yaxis,
+              }}
+            />
+          </div>
+          <p></p>
+          <div id="vote-seat-measure-container" style={{ flex: 1 }}>
+            Bias: {data["bias"]}
+            Symmetry: {data["symmetry"]}
+            Responsiveness: {data["responsiveness"]}
+          </div>
+        </>
+      ) : (
+        <p> Vote Seat Share data cannot be loaded. </p>
+      )}
     </div>
   );
 };

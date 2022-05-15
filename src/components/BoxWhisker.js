@@ -219,6 +219,7 @@ export const BoxWhisker = (props) => {
           {/* <p style={{ clear: "both" }}>
             Average Districting for Plan 1: {calcAvgDist()}
           </p> */}
+          <button onClick={props.handleClickDemographics}>See Demographics</button>
         </>
       ) : (
         <p>Box and Whisker Data failed to load.</p>

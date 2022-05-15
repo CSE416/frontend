@@ -252,7 +252,7 @@ function App() {
 
         { // When a plan is selected: show detailed information
         isSplit && isPlanSelected && <div style={{ flex: '4' }}> 
-          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} />
+          <InformationTab stateId={currState.fipsCode} planId={planId} setPlanName={setPlanName} planIdList={planIdList} handleClickDemographics={handleClickDemographics}/>
         </div>
    
       }
@@ -280,7 +280,6 @@ function App() {
                 
               }
               {isSplit && <GeoJSON key={planId} data={planGJSON} style={{ fillOpacity: 0 }}/> }
-              {isSplit && <GeoJSON key={planId+2} data={planGJSON2} style={{ fillOpacity: 0 }}/>}
             </MapContainer>
           </div>
           
