@@ -23,7 +23,7 @@ export const InformationTab = (props) => {
                               planId={props.planId} 
                               isSingleId={props.planIdList.size==1} 
                               planIdList={props.planIdList}/>,
-    "Demographic data":<BoxWhisker stateId={props.stateId}
+    "Box and Whisker":<BoxWhisker stateId={props.stateId}
                                     isSingleId={props.planIdList.size==1} 
                                     planIdList={props.planIdList} 
                                     handleClickDemographics={props.handleClickDemographics} 
@@ -35,9 +35,12 @@ export const InformationTab = (props) => {
   }
 
   return (
+    
     <div id="information-tab-container" 
+    
     style={{width:'100%', height:'90vh', margin:'1px', padding:'0.5px',overflow:'auto'}}>
-      <Tabs
+      
+      {console.log(props.planIdList)}<Tabs
         defaultActiveKey={Object.keys(tabContent)[0]}
         transition={Fade}
         id="information-tab"

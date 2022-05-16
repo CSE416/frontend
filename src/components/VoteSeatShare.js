@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
+import { Typography } from "@mui/material";
 
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
@@ -61,9 +62,9 @@ export const VoteSeatShare = (props) => {
     title: {
       text: "Vote Share",
       font: {
-        family: "Courier New, monospace",
+        family: "arial, monospace",
         size: 12,
-        color: "#7f7f7f",
+        color: "black",
       },
     },
   };
@@ -71,9 +72,9 @@ export const VoteSeatShare = (props) => {
     title: {
       text: "Seat Share",
       font: {
-        family: "Courier New, monospace",
+        family: "arial, monospace",
         size: 12,
-        color: "#7f7f7f",
+        color: "black",
       },
     },
   };
@@ -97,17 +98,24 @@ export const VoteSeatShare = (props) => {
               layout={{
                 width: props.width,
                 height: props.height,
-                legend: { orientation: "h" },
+                legend: { orientation: "v" },
                 xaxis: xaxis,
                 yaxis: yaxis,
+                margin:{
+                  t:10,
+                  b:30,
+                  
+                }
+                
               }}
             />
           </div>
           <p></p>
           <div id="vote-seat-measure-container" style={{ flex: 1 }}>
-            Bias: {(100 * data["partisanBias"]).toFixed(2)} %
-            Symmetry: {(100 * data["symmetry"]).toFixed(2)} %
-            Responsiveness: {(100 * data["responsiveness"]).toFixed(2)} %
+            <Typography><b>Plot Data?</b></Typography>
+            <Typography>Bias: {(100 * data["partisanBias"]).toFixed(2)} %</Typography>
+            <Typography>Symmetry: {(100 * data["symmetry"]).toFixed(2)} %</Typography>
+            <Typography>Responsiveness: {(100 * data["responsiveness"]).toFixed(2)} %</Typography>
           </div>
         </>
       ) : (

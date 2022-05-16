@@ -77,9 +77,9 @@ export const EffVotesChart = (props) => {
     title: {
       text: "Total Votes Across Districts",
       font: {
-        family: "Courier New, monospace",
+        family: "arial, monospace",
         size: 12,
-        color: "#7f7f7f",
+        color: "black",
       },
     },
   };
@@ -88,9 +88,9 @@ export const EffVotesChart = (props) => {
     title: {
       text: "Parties",
       font: {
-        family: "Courier New, monospace",
+        family: "arial, monospace",
         size: 12,
-        color: "#7f7f7f",
+        color: "black",
       },
     },
   };
@@ -107,8 +107,8 @@ export const EffVotesChart = (props) => {
             responsive: true,
           }}
           layout={{
-            width: 650,
-            height: 300,
+            width: 600,
+            height: props.height,
             title: "Efficient and Inefficient Votes",
             barmode: "stack",
             xaxis: xaxis,

@@ -65,8 +65,8 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
             { // Reset button -> make it x later?
                 props.currState &&
                 <Button variant="contained"
-                    size="small"
-                    sx={{ maxHeight: '2rem', my: '1em' }}
+                    size="medium"
+                    sx={{ m: '1em', textTransform:'none' }}// maxHeight: '2rem',
                     onClick={() => {
                         props.setIsPlanSelected(false);
                         props.setPlanId(props.defaultPlan.defaultPlanId);
@@ -74,9 +74,9 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         props.setPlanStatus(props.defaultPlan.defaultPlanStatus);
                         props.setCardSelected(1);
                         props.setPlanIdList(new Set([props.defaultPlan.defaultPlanId]));
-
                     }}
-                >Reset</Button>
+                >Reset
+                </Button>
             }
 
             {/* {props.currState &&
@@ -108,7 +108,7 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         />
                     )} />
             } */}
-            {props.currState &&
+            {/* {props.currState &&
                 <Button variant="contained"
                     size="small"
                     sx={{ maxHeight: '2rem',maxWidth: '8em', my: '1em', flex: 1, textTransform: "none" }}
@@ -121,7 +121,7 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                     }}>
                     See Details
                 </Button>
-            }
+            } */}
 
             {props.currState &&
                 // title
@@ -131,11 +131,12 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         m: '1em',
                         fontSize: '0.875rem',
                         fontWeight: '500',
-                    }}>{statusFormat(props.status)}</Box>
+                        backgroundColor: (props.planStatus=='INLITIGATION')?'#C5E1A5' : '#e0e0e0'
+                    }}>{statusFormat(props.planStatus)}</Box>
 
                     <ThemeProvider theme={theme}>
                         <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}>
-                            <span>{props.planName}{props.planIdList}</span></Typography>
+                            <span>{props.planName}</span></Typography>
 
                     </ThemeProvider>
                 </div>}

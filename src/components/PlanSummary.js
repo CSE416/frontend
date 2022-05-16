@@ -64,9 +64,10 @@ export const PlanSummary = (props) => {
 
   const rows = [];
   useEffect(() => {
+    
     axios.get(`https://redistricting-fever.herokuapp.com/getPlan`, {
       params: {
-        planId: props.planId
+        planId: 320//props.planId
       }
     })
       .then(res => {
@@ -123,20 +124,22 @@ export const PlanSummary = (props) => {
                     p: 0.4, px: 0.5, m: 1,
                     fontSize: '0.875rem',
                     fontWeight: '500',
+                    backgroundColor: (data.planStatus == 'INLITIGATION') ? '#C5E1A5' : '#e0e0e0'
                   }}>
                   {data.planStatus}
                 </Box>
                 <ThemeProvider theme={theme}>
-                  <Typography variant="h6" id="plan-name"
+                  <Typography variant="h6" id="plan-name" 
+                  m={1}
                     sx={{
                       b: '0.1em', fontWeight: '700',
-                      ml: '0'
+                      
                     }}>
                     {data.planName}
                   </Typography>
                 </ThemeProvider>
               </div>
-
+            <div style={{display:'flex', flexDirection:"column"}}>
               <div id="single-plan-info-container"
                 style={{
                   flex: 1,
@@ -155,7 +158,13 @@ export const PlanSummary = (props) => {
                     <b>Proposed Date:</b> {data.proposedDate.slice(0, 10)}
                   </Typography>
                   <Typography>
+                    <b>Polsby Popper (Compactness)</b>: {data.polsbyPopper}
+                  </Typography>
+                  <Typography>
                     <b>Population Equality</b>: {data.populationEquality}
+                  </Typography>
+                  <Typography>
+                    <b>Efficiency Gap</b>: {data.efficiencyGap}
                   </Typography>
                   <Typography>
                     <b>Partisan Lean:</b> Democrats +{data.partisanLean}
@@ -209,6 +218,10 @@ export const PlanSummary = (props) => {
                   
                 </div>
               </div>
+              <div style={{flex:1}}>
+                heuy
+                </div>
+            </div>
             </div>}
 
           {/*for table!

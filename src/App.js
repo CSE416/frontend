@@ -37,7 +37,7 @@ function App() {
   const [USstatesGJSON, setUSstatesGJSON] = useState(null);
   const [planGJSON, setPlanGJSON] = useState(null);
   const [planGJSON2, setPlanGJSON2] = useState(null);
-  const [cardSelected, setCardSelected] = useState(1);
+  const [cardSelected, setCardSelected] = useState(null);
   const [tempPlanId, setTempPlanId] = useState(null);
   const [planIdList, setPlanIdList] = useState(new Set());
   const [showDemographics, setShowDemographics] = useState(false);

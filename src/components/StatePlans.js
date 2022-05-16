@@ -7,22 +7,13 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 
-// import Table from "@mui/material/Table";
-// import TableBody from "@mui/material/TableBody";
-// import TableCell from "@mui/material/TableCell";
-// import TableContainer from "@mui/material/TableContainer";
-// import TableHead from "@mui/material/TableHead";
-// import TableRow from "@mui/material/TableRow";
-// import Box from "@mui/material/Box";
-
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu, { MenuProps } from "@mui/material/Menu";
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormControl from '@mui/material/FormControl';
-// import Select, { SelectChangeEvent } from '@mui/material/Select';
-// import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { textAlign } from '@mui/system';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 // const StyledMenu = styled((props) => (
 //   <Menu
@@ -66,7 +57,9 @@ export const StatePlans = (props) => {
   // get planSummary cards for all the districting plans of the state
   const [nullDataMsg, setNullDataMsg] = useState(<p> </p>);
   const [planData, setPlanData] = useState(null);
+  const [checkStatus, setCheckStatus] = useState(null);
 
+  const [compare, setCompare] = useState(false);
   useEffect(() => {
     axios.get(`https://redistricting-fever.herokuapp.com/getAllPlans`, {
       params: {
@@ -85,7 +78,8 @@ export const StatePlans = (props) => {
           defaultPlanName: res.data[0].planName,
           defaultPlanStatus: res.data[0].planStatus
         })
-
+        props.setCardSelected(res.data[0].planId);
+        setCheckStatus(res.data[0].planId);
         // props.setPlanLabel(
         //   [{ id: res.data[0].planId, name: res.data[0].planName, status: res.data[0].planStatus },
         //   { id: res.data[1].planId, name: res.data[1].planName, status: res.data[1].planStatus },
@@ -103,6 +97,9 @@ export const StatePlans = (props) => {
   }, []);
 
 
+  const handleChangeCompare=(event)=>{
+    setCompare((prev)=>!prev);
+  }
   return (
     <div class="state-plans-container"
       style={{ height: '100%', margin: '10px' }}>
@@ -133,96 +130,145 @@ export const StatePlans = (props) => {
         </StyledMenu>
       </div> */}
 
+      <div stlye={{ display: 'flex', flexDirection: 'column'}}>
+       
+        {/* <Button variant="contained"
+          size="small"
+          sx={{ maxHeight: '2rem', my: '1em', textTransform: "none" }}
+          onClick={() => {
+            setCompare(true);
+          }}>
+
+          Compare District Plans
+        </Button> */}
+         <div style={{flex:1}}>
+        <FormGroup>
+          <FormControlLabel control={
+            <Switch
+            checked={compare}
+            onChange={handleChangeCompare}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+            } label="Compare District Plans" />
+        </FormGroup>
+        </div>
+        <div style={{ flex: 1 }}>
+        {(compare) && <div>
+        
+          <Button variant="contained"
+            size="medium"
+            sx={{
+              maxHeight: '2em',
+              my: '0.4em',
+              mr: '2em',
+              flex: 1, textTransform: "none"
+            }}
+            onClick={() => {
+              props.setIsPlanSelected(true);
+              props.setPlanId(props.planId);
+              props.setPlanName(props.planName);
+              props.setPlanStatus(props.planStatus);
+
+              console.log(props.planIdList);
+              console.log(props.planId);
+            }}>
+            Compare chosen plans
+          </Button>
+        </div>}</div>
+      </div>
+
+
       {(planData) ? (
         <Paper class="plan-summary-card-container"
           sx={{
             height: '100%',
             width: '100%',
-            overflow:"auto",
-            display:"flex",
+            overflow: "auto",
+            display: "flex",
             //flexWrap: 'wrap',
             flexDirection: "row"
           }}>
           {/* <div id="card-row-1"
             style={{ flex: 1}}>  */}
-            {/* <div style={{display: 'flex', flexDirection: 'row' }}> */}
-            <PlanComparisonCard class='plan1'
-              data={planData[0]}
-              planId={planData[0].planId}
-              planName={planData[0].planName}
-              status={planData[0].planStatus}
-              
-              partisanLean='3.4'//{data.partisanLean}
-              
-              setIsPlanSelected={props.setIsPlanSelected}
-              setPlanId={props.setPlanId}
-              setPlanName={props.setPlanName}
-              setPlanStatus={props.setPlanStatus}
-              //setTempPlanId={props.setTempPlanId}
-              color={1}
-              cardSelected={props.cardSelected}
-              setCardSelected={props.setCardSelected}
-              planIdList={props.planIdList}
-              setPlanIdList={props.setPlanIdList}
-              checkStatus={true} />
+          {/* <div style={{display: 'flex', flexDirection: 'row' }}> */}
+          <PlanComparisonCard class='plan1'
+            compare={compare}
+            data={planData[0]}
+            planId={planData[0].planId}
+            planName={planData[0].planName}
+            status={planData[0].planStatus}
 
-            <PlanComparisonCard class='plan2'
+            partisanLean='3.4'//{data.partisanLean}
+
+            setIsPlanSelected={props.setIsPlanSelected}
+            setPlanId={props.setPlanId}
+            setPlanName={props.setPlanName}
+            setPlanStatus={props.setPlanStatus}
+            //setTempPlanId={props.setTempPlanId}
+            cardSelected={props.cardSelected}
+            setCardSelected={props.setCardSelected}
+            planIdList={props.planIdList}
+            setPlanIdList={props.setPlanIdList}
+            checkStatus={true} />
+
+          <PlanComparisonCard class='plan2'
+            compare={compare}
             data={planData[1]}
-              planId={planData[1].planId}
-              planName={planData[1].planName}
-              status={planData[1].planStatus}
-              
-              setIsPlanSelected={props.setIsPlanSelected}
-              setPlanId={props.setPlanId}
-              setPlanName={props.setPlanName}
-              setPlanStatus={props.setPlanStatus}
-              //setTempPlanId={props.setTempPlanId}
-              color={2}
-              cardSelected={props.cardSelected}
-              setCardSelected={props.setCardSelected}
-              planIdList={props.planIdList}
-              setPlanIdList={props.setPlanIdList}
-              checkStatus={false} />
+            planId={planData[1].planId}
+            planName={planData[1].planName}
+            status={planData[1].planStatus}
+
+            setIsPlanSelected={props.setIsPlanSelected}
+            setPlanId={props.setPlanId}
+            setPlanName={props.setPlanName}
+            setPlanStatus={props.setPlanStatus}
+            //setTempPlanId={props.setTempPlanId}
+            cardSelected={props.cardSelected}
+            setCardSelected={props.setCardSelected}
+            planIdList={props.planIdList}
+            setPlanIdList={props.setPlanIdList}
+            checkStatus={false} />
           {/* </div> */}
           {/* </div> */}
           {/* <div id="card-row-2"
             style={{ flex: 1}}> */}
-            {/* <div style={{display: 'flex', flexDirection: 'row' }}> */}
-            <PlanComparisonCard class='plan3'
+          {/* <div style={{display: 'flex', flexDirection: 'row' }}> */}
+          <PlanComparisonCard class='plan3'
+            compare={compare}
             data={planData[2]}
-              planId={planData[2].planId}
-              planName={planData[2].planName}
-              status={planData[2].planStatus}
-              
-              setIsPlanSelected={props.setIsPlanSelected}
-              setPlanId={props.setPlanId}
-              setPlanName={props.setPlanName}
-              setPlanStatus={props.setPlanStatus}
-              //setTempPlanId={props.setTempPlanId}
-              color={3}
-              cardSelected={props.cardSelected}
-              setCardSelected={props.setCardSelected}
-              planIdList={props.planIdList}
-              setPlanIdList={props.setPlanIdList}
-              checkStatus={false} />
+            planId={planData[2].planId}
+            planName={planData[2].planName}
+            status={planData[2].planStatus}
 
-            <PlanComparisonCard class='plan4'
+            setIsPlanSelected={props.setIsPlanSelected}
+            setPlanId={props.setPlanId}
+            setPlanName={props.setPlanName}
+            setPlanStatus={props.setPlanStatus}
+            //setTempPlanId={props.setTempPlanId}
+            cardSelected={props.cardSelected}
+            setCardSelected={props.setCardSelected}
+            planIdList={props.planIdList}
+            setPlanIdList={props.setPlanIdList}
+            checkStatus={false} />
+
+          <PlanComparisonCard class='plan4'
+            compare={compare}
             data={planData[3]}
-              planId={planData[3].planId}
-              planName={planData[3].planName}
-              status={planData[3].planStatus}
-              
-              setIsPlanSelected={props.setIsPlanSelected}
-              setPlanId={props.setPlanId}
-              setPlanName={props.setPlanName}
-              setPlanStatus={props.setPlanStatus}
-              //setTempPlanId={props.setTempPlanId}
-              color={4}
-              cardSelected={props.cardSelected}
-              setCardSelected={props.setCardSelected}
-              planIdList={props.planIdList}
-              setPlanIdList={props.setPlanIdList}
-              checkStatus={false} />
+            planId={planData[3].planId}
+            planName={planData[3].planName}
+            status={planData[3].planStatus}
+
+            setIsPlanSelected={props.setIsPlanSelected}
+            setPlanId={props.setPlanId}
+            setPlanName={props.setPlanName}
+            setPlanStatus={props.setPlanStatus}
+            //setTempPlanId={props.setTempPlanId}
+
+            cardSelected={props.cardSelected}
+            setCardSelected={props.setCardSelected}
+            planIdList={props.planIdList}
+            setPlanIdList={props.setPlanIdList}
+            checkStatus={false} />
           {/* </div> */}
           {/* </div> */}
         </Paper>) : nullDataMsg}

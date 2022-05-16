@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
-
+import Button from '@mui/material/Button';
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
@@ -48,9 +48,9 @@ export const BoxWhisker = (props) => {
     title: {
       text: "District Id",
       font: {
-        family: "Courier New, monospace",
+        family: "arial, monospace",
         size: 12,
-        color: "#7f7f7f",
+        color: "black",
       },
     },
   };
@@ -58,9 +58,9 @@ export const BoxWhisker = (props) => {
     title: {
       text: category,
       font: {
-        family: "Courier New, monospace",
+        family: "arial, monospace",
         size: 12,
-        color: "#7f7f7f",
+        color: "black",
       },
     },
   };
@@ -175,7 +175,11 @@ export const BoxWhisker = (props) => {
               aria-expanded="false"
             >
               {category}
+            
             </button>
+
+            
+
             <div className="dropdown-menu">
               {Object.keys(data).map((category) => {
                 return (
@@ -192,7 +196,15 @@ export const BoxWhisker = (props) => {
             </div>
           </div>
           <div>
-          <button onClick={props.handleClickDemographics}>See Demographics</button>
+          {/* <button onClick={props.handleClickDemographics}>See Demographics</button> */}
+          <Button variant="contained"
+                    size="medium"
+                    sx={{ m: '1em', textTransform:'none' }}// maxHeight: '2rem',
+                    onClick={
+                      props.handleClickDemographics
+                         }
+                >See Demographic
+                </Button>
           </div>
           
           
@@ -216,7 +228,7 @@ export const BoxWhisker = (props) => {
               xaxis: xaxis,
               yaxis: yaxis,
               legend:{
-                orientation: 'h'
+                orientation: 'v'
               }
             }}
           />

@@ -11,7 +11,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 export const PlanMeasure = (props) => {
 
-    const [alignment, setAlignment] = useState('voteSeat');
+    const [alignment, setAlignment] = useState('radar');
 
     const handleChange = (
         event,
@@ -31,25 +31,25 @@ export const PlanMeasure = (props) => {
                 onChange={handleChange}
                 size='small'
               >
-                
+                <ToggleButton value="radar">Radar</ToggleButton>
                 <ToggleButton value="voteSeat">Vote/Seat Share</ToggleButton>
                 <ToggleButton value="efficiencyGap">Efficiency Gap</ToggleButton>
-                {/* <ToggleButton value="polsbyPopper">Polsby-Popper</ToggleButton> */}
+                <ToggleButton value="polsbyPopper">Polsby-Popper</ToggleButton>
 
               </ToggleButtonGroup>
-              {/* {(alignment === "radar") && <div style={{ align: 'center' }}>
+              {(alignment === "radar") && <div style={{ align: 'center' }}>
                 <RadarPlot width={'60%'} height={'40%'}
                   planIdList={props.planIdList}
                   planId={props.planId} />
-              </div>} */}
+              </div>}
 
               {(alignment === "voteSeat") && <div>
-                <VoteSeatShare width={600} height={350}
-                  planId={props.planId} isSingleId={true}/>
+                <VoteSeatShare width={500} height={300}
+                  planId={props.planId} />
               </div>}
 
               {(alignment === "efficiencyGap") && <div>
-                <EffVotesChart height={350}/>
+                <EffVotesChart />
               </div>}
 
               {(alignment === "polsbyPopper") && <div>
