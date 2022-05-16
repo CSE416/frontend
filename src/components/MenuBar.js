@@ -17,16 +17,17 @@ const theme = createTheme({
         fontSize: 12,
     },
 });
-//theme = responsiveFontSizes(theme);
-const top100Films = [
-    { title: 'The Shawshank Redemption', year: 1994 },
-    { title: 'The Godfather', year: 1972 },
-    { title: 'The Godfather: Part II', year: 1974 },
-    { title: 'The Dark Knight', year: 2008 },
-    { title: '12 Angry Men', year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: 'Pulp Fiction', year: 1994 }];
 
+const statusFormat = (status) => {
+    let formated = "";
+    if (status === "INLITIGATION") {
+      formated = "In Litigation";
+    }
+    else {
+      formated = "Proposed"
+    };
+    return formated;
+  };
 
 const MenuBar = React.forwardRef((props, mapGJSONref) => {
 
@@ -130,7 +131,7 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         m: '1em',
                         fontSize: '0.875rem',
                         fontWeight: '500',
-                    }}>{props.planStatus} </Box>
+                    }}>{statusFormat(props.status)}</Box>
 
                     <ThemeProvider theme={theme}>
                         <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}>

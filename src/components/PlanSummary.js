@@ -64,7 +64,7 @@ export const PlanSummary = (props) => {
 
   const rows = [];
   useEffect(() => {
-    axios.get(`https://redistricting-fever.herokuapp.com/planMeasures`, {
+    axios.get(`https://redistricting-fever.herokuapp.com/getPlan`, {
       params: {
         planId: props.planId
       }
@@ -173,8 +173,8 @@ export const PlanSummary = (props) => {
                       <td>{data.numDistricts}</td>
                     </tr>
                     <tr>
-                      <td>No. of District change</td>
-                      <td>{data.districNumChange}</td>
+                      <td>Changes in No. of Districts</td>
+                      <td>{data.districtNumChange}</td>
                     </tr>
                     <tr>
                       <td>No. of Competitive Districts</td>
@@ -189,9 +189,14 @@ export const PlanSummary = (props) => {
                       <td>{data.numInfluenceDistricts}</td>
                     </tr>
                     <tr>
+                      <td>No. of Coalition Districts</td>
+                      <td>{data.coalitionDistricts}</td>
+                    </tr>
+                    <tr>
                       <td>No. of Split counties</td>
                       <td>{data.numSplitCounties}</td>
                     </tr>
+                    
                     </tbody>
                   </table>
                 </div>

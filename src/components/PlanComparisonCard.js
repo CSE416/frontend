@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
+import '../styles/planComparisonCard.css';
 import {
   createTheme,
   ThemeProvider,
@@ -24,6 +25,17 @@ const theme2 = createTheme({
     fontSize: 10,
   },
 });
+
+const statusFormat = (status) => {
+  let formated = "";
+  if (status === "INLITIGATION") {
+    formated = "In Litigation";
+  }
+  else {
+    formated = "Proposed"
+  };
+  return formated;
+};
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -56,23 +68,23 @@ export const PlanComparisonCard = (props) => {
 
   }
 
-  return (
+  return (<div>
+    {
+    console.log(props.cardSelected)}
+    {console.log(props.color)
+    }
     <Card class="plan-summary-card"
       align='left'
+      
       sx={{
-        flex: 1,
-        width:'50%',
-        //height:'50%'
-        //m: 0.5, p: 0.5,
-        //border: 3,
-        //borderColor: (props.cardSelected == props.color) ? '#e0e0e0' : 'white'
+      backgroundColor: (props.cardSelected == props.color) ? '#BBDEFB' : 'white',
+      borderColor: (props.cardSelected == props.color) ? '#BBDEFB' : 'black'
       }} >
       <div id="card-top"
         style={{
-          //display: 'flex', flexDirection: 'row',
-          backgroundColor: (props.cardSelected == props.color) ? '#e0e0e0' : 'white'
+          display: 'flex', flexDirection: 'row',
         }}>
-        <div id="card-checkbox" //style={{ flex: 1 }}
+        <div id="card-checkbox" style={{ flex: 1 }}
         >
           <Checkbox
             {...label}
@@ -82,24 +94,40 @@ export const PlanComparisonCard = (props) => {
             onChange={handleChange}
           />
         </div>
-      </div>
-
-      <div id="card-title"
-        style={{
-          flex: 5, display: 'flex', flexDirection: 'row',
-          marginTop: '0.5em', marginBottom: '0.5em', marginLeft: '0em'
-        }}>
-        <ThemeProvider theme={theme} >
-          <Box sx={{
-            border: '1px solid', borderRadius: 1, p: 0.5, m: 0.5,
-            fontSize: '0.5rem',
-            fontWeight: '500',
-            textAlign: 'center',
-          }} alignItems="center">{props.status} </Box>
-          <Typography gutterBottom variant="h6" component="div" sx={{ flex: 1, fontWeight: '700', mx: 1 }}>
-            {props.planName}
-          </Typography>
-        </ThemeProvider>
+        <div id="card-title"
+          style={{
+            flex: 5, display: 'flex', flexDirection: 'row',
+            marginTop: '0.5em', marginBottom: '0.5em', marginLeft: '0em'
+          }}>
+          <ThemeProvider theme={theme} >
+            <Box sx={{
+              border: '1px solid', borderRadius: 1, p: 0.5, m: 0.5,
+              fontSize: '0.7rem',
+              fontWeight: '560',
+              textAlign: 'center',
+            }} alignItems="center">{statusFormat(props.status)} </Box>
+            <Typography variant="h6" component="div" 
+                      sx={{ flex: 1, fontWeight: '700', mx: 1 
+                      , my:0.5}}>
+              {props.planName}
+            </Typography>
+          </ThemeProvider>
+          <Button variant="outlined"
+                    size="small"
+                    sx={{ maxHeight: '1.5em',maxWidth: '8em', 
+                    my: '0.4em', 
+                    mr:'2em',
+                    flex: 1, textTransform: "none" }}
+                    onClick={() => {
+                        props.setIsPlanSelected(true);
+                        props.setPlanId(props.planId);
+                        props.setPlanName(props.planName);
+                        props.setPlanStatus(props.planStatus);
+                        //console.log(props.planIdList)
+                    }}>
+                    See Details
+                </Button>
+        </div>
       </div>
 
       <CardActionArea onClick={() => {
@@ -109,24 +137,42 @@ export const PlanComparisonCard = (props) => {
         props.setPlanStatus(props.status);
         props.setCardSelected(props.color);
       }}>
-        <CardContent sx={{ p: 0.2, px: 0.5 }}>
+        
           <ThemeProvider id="card-summary" theme={theme}>
+          <CardContent sx={{ p: 0.2, px: 0.5, display:'flex', flexDirection:'row' }}>
+          <div style={{flex:1}}>
             <Typography sx={{
               fontSize: '0.9rem',
               fontWeight: '500',
-            }}>
-              Proposed by: Nevada Democrats</Typography>
+                 }}>
+              Proposed by: {props.data.proposedBy}
+              </Typography>
+              
+              <Typography>
+                No. of Competitive Districts: {props.data.numCompetitiveDistricts}
+              </Typography>
+              <Typography>
+              No. of Majority Minority Districts: {props.data.numMajMinDistricts}
+            </Typography>
+              </div>
+              <div sytle={{flex:1}}>
+              <Typography>
+               Compactness(PolsbyPopper): {props.data.polsbyPopper}
+              </Typography>
+              <Typography>
+                Efficiency Gap: {props.data.efficiencyGap}
+              </Typography>
             <Typography>
               Partisan Split
             </Typography>
 
-            <Typography>
-              Number of Split counties: 3
-            </Typography>
+           
+            </div>
+            </CardContent>
           </ThemeProvider>
-        </CardContent>
+        
       </CardActionArea>
-    </Card>
+    </Card></div>
   );
 
 }
