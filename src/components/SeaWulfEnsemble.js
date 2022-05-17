@@ -35,7 +35,7 @@ export const SeaWulfPlot = (props) => {
 
   useEffect(() => {
     axios
-      .get(`https://redistricting-fever.herokuapp.com/seawulfHistograms`, {
+      .get(`localhost:8080/seawulfHistograms`, {
         params: {
           stateFipsId: props.stateId,
         },

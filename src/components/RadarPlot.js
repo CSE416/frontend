@@ -32,10 +32,14 @@ export const RadarPlot = (props) => {
     const [radarData, setRadarData] = useState([4.4,4,5,6]);
     //const [layout, setLayout] = useState(null)
     //const [data, setData]
+    const idList = [];
+    props.planIdList.forEach(id => idList.push(id));
+
     useEffect(() => {
-        axios.get(`https://redistricting-fever.herokuapp.com/radarPlot`, {params: {
-        planId: props.planId
-        }})
+        axios.get(`http://localhost:8080/getAllPlans`, {params: {
+        //planId: props.planId
+          stateFipsId: props.stateFipsId  
+      }})
         .then(res => {
             setRadarData(res.data); 
         }) 

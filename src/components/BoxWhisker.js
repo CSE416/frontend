@@ -79,7 +79,7 @@ export const BoxWhisker = (props) => {
 
   useEffect(() => {
     axios
-      .get(`https://redistricting-fever.herokuapp.com/boxWhisker`, {
+      .get(`http://localhost:8080/boxWhisker`, {
         params: {
           stateFipsId: props.stateId,
         },
@@ -94,7 +94,7 @@ export const BoxWhisker = (props) => {
 
   useEffect(() => {
     axios
-      .get(`https://redistricting-fever.herokuapp.com/planDemographics`, {
+      .get(`http://localhost:8080/planDemographics`, {
         params: {
           planId: 320,
         },

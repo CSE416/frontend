@@ -62,7 +62,7 @@ export const StatePlans = (props) => {
   
   //const [mode, stMode]
   useEffect(() => {
-    axios.get(`https://redistricting-fever.herokuapp.com/getAllPlans`, {
+    axios.get(`http://localhost:8080/getAllPlans`, {
       params: {
         stateFipsId: props.stateFipsId
       }

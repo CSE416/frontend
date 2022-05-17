@@ -50,7 +50,7 @@ export const PlanSummary = (props) => {
   const rows = [];
   useEffect(() => {
 
-    axios.get(`https://redistricting-fever.herokuapp.com/getPlan`, {
+    axios.get(`http://localhost:8080/getPlan`, {
       params: {
         planId: props.planId
       }

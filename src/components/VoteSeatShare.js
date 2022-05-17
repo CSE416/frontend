@@ -11,7 +11,7 @@ export const VoteSeatShare = (props) => {
 
   useEffect(() => {
     axios
-      .get(`https://redistricting-fever.herokuapp.com/voteSeatShare`, {
+      .get(`http://localhost:8080/voteSeatShare`, {
         params: {
           planId: props.planId,
         },

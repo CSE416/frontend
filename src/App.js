@@ -181,7 +181,7 @@ function App() {
     if (currState != null) {
       console.log("Loading Precinct Demographics");
       axios
-        .get(`https://redistricting-fever.herokuapp.com/precinctDemographics`, {
+        .get(`http://localhost:8080/precinctDemographics`, {
           params: {
             stateFipsId: currState.fipsCode,
           },
@@ -230,7 +230,7 @@ function App() {
   useEffect(() => {
     if (currState != null) {
       axios
-        .get(`https://redistricting-fever.herokuapp.com/planBoundaries`, {
+        .get(`http://localhost:8080/planBoundaries`, {
           params: {
             planId: planId,
           },
@@ -355,7 +355,8 @@ function App() {
           (tableMode) && <div style={{flex:1}}>
             <RadarPlot width={'60%'} height={'60%'}
                   planIdList={planIdList}
-                  planId={planId} />
+                  planId={planId}
+                  stateFipsId={currState.fipsCode} />
             </div>
         }
 

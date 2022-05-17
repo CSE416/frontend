@@ -12,7 +12,7 @@ export const EffVotesChart = (props) => {
 
   useEffect(() => {
     axios
-      .get(`https://redistricting-fever.herokuapp.com/getPlan`, {
+      .get(`http://localhost:8080/getPlan`, {
         params: {
           planId: 320,
         },
