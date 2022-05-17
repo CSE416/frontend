@@ -112,16 +112,10 @@ export const VoteSeatShare = (props) => {
           </div>
           <p></p>
           <div id="vote-seat-measure-container" style={{ flex: 1 }}>
-<<<<<<< HEAD
             <Typography><b>Plot Data?</b></Typography>
             <Typography>Bias: {(100 * data["partisanBias"]).toFixed(2)} %</Typography>
             <Typography>Symmetry: {(100 * data["symmetry"]).toFixed(2)} %</Typography>
             <Typography>Responsiveness: {(100 * data["responsiveness"]).toFixed(2)} %</Typography>
-=======
-            Bias: {(100 * data["partisanBias"]).toFixed(2)} %
-            Symmetry: {(100 * data["symmetry"]).toFixed(2)} %
-            Responsiveness: {(100 * data["responsiveness"]).toFixed(2)} %
->>>>>>> c3c2eb5 (updated box whisker)
           </div>
         </>
       ) : (
