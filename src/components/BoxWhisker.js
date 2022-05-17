@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
 import Button from "@mui/material/Button";
+import avg from "./avg.json";
+import { Typography } from "@mui/material";
+
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
@@ -19,15 +22,15 @@ export const BoxWhisker = (props) => {
   // };
 
   const optionsDict = {
-    "White": "WHITE",
+    White: "WHITE",
     "African American": "BLACK",
     "American Indian and Alaska Native": "AIAN",
-    "Asian": "ASIAN",
+    Asian: "ASIAN",
     "Native Hawaiian and Other Pacific Islander": "NHOPI",
     "Two or More Races": "2RACE",
     "Hispanic or Latino": "HISPANIC",
-    "Democratic": "DEM",
-    "Republican": "REP",
+    Democratic: "DEM",
+    Republican: "REP",
   };
 
   const constructPlanDataPlot = () => {
@@ -55,6 +58,7 @@ export const BoxWhisker = (props) => {
   const [category, setCategory] = useState("White");
   const [data, setData] = useState(null);
   const [planData, setPlanData] = useState(null);
+  const [avgDst, setAvgDst] = useState(null);
 
   let xaxis = {
     title: {
@@ -96,7 +100,7 @@ export const BoxWhisker = (props) => {
     axios
       .get(`http://localhost:8080/planDemographics`, {
         params: {
-          planId: 320,
+          planId: props.planId,
         },
       })
       .then((res) => {
@@ -106,6 +110,22 @@ export const BoxWhisker = (props) => {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`https://redistricting-fever.herokuapp.com/averageDistricting`, {
+        params: {
+          planId: props.planId,
+        },
+      })
+      .then((res) => {
+        setAvgDst(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
 
   // const constructPlotData = (districts) => {
   //   let plotData = [],
@@ -172,10 +192,10 @@ export const BoxWhisker = (props) => {
     setCategory(e.target.innerHTML);
     props.handleChangeDemoCategory(e);
   };
-  
+
   useEffect(() => {
     console.log(category);
-  }, [category])
+  }, [category]);
 
   return (
     <div id="box-whisker-container" style={{ flex: 1 }}>
@@ -247,8 +267,10 @@ export const BoxWhisker = (props) => {
             }}
           />
           {/* <p style={{ clear: "both" }}>
-            Average Districting for Plan 1: {calcAvgDist()}
+            {"Average Districting for Plan 1: " + 
+            100 * avg[optionsDict[category]]).toFixed(2) + "%"}
           </p> */}
+          <Typography style={{textAlign: "center"}}>Average Districting for Plan {props.planId % 10}: {(100 * avg[optionsDict[category]]).toFixed(2)} %</Typography>
         </>
       ) : (
         <p>Box and Whisker Data failed to load.</p>

@@ -25,6 +25,7 @@ export const InformationTab = (props) => {
                               planIdList={props.planIdList}/>,
     "Box and Whisker":<BoxWhisker stateId={props.stateId}
                                     isSingleId={props.planIdList.size==1} 
+                                    planId={props.planId}
                                     planIdList={props.planIdList} 
                                     handleClickDemographics={props.handleClickDemographics} 
                                     handleChangeDemoCategory={props.handleChangeDemoCategory}

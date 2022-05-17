@@ -17,11 +17,8 @@ import SidePanel from "./components/SidePanel";
 import axios from "axios";
 import SlidingPane from "react-sliding-pane";
 import L from "leaflet";
-<<<<<<< HEAD
 import { RadarPlot} from './components/RadarPlot';
 
-=======
->>>>>>> c3c2eb5 (updated box whisker)
 function App() {
   const mapGJSONref = useRef();
   const [isSplit, setIsSplit] = useState(false);
