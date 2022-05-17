@@ -19,27 +19,27 @@ export const BoxWhisker = (props) => {
   // };
 
   const optionsDict = {
-    White: "WHITE",
+    "White": "WHITE",
     "African American": "BLACK",
     "American Indian and Alaska Native": "AIAN",
-    Asian: "Asian",
+    "Asian": "ASIAN",
     "Native Hawaiian and Other Pacific Islander": "NHOPI",
     "Two or More Races": "2RACE",
     "Hispanic or Latino": "HISPANIC",
-    Democratic: "DEM",
-    Republican: "REP",
+    "Democratic": "DEM",
+    "Republican": "REP",
   };
 
   const constructPlanDataPlot = () => {
-    let xrange = [];
     let yrange = [];
     planData.forEach((district) => {
-      xrange.push(district["districtId"]);
+      // xrange.push(district["districtId"]);
       yrange.push(district["p" + optionsDict[category]]);
     });
+
     let planDataPlot = {
-      x: xrange,
-      y: yrange,
+      x: Array.from({ length: planData.length }, (_, i) => i + 1),
+      y: yrange.sort((a, b) => a - b),
       name: "Plan 1",
       type: "scatter",
       mode: "markers",
@@ -172,6 +172,10 @@ export const BoxWhisker = (props) => {
     setCategory(e.target.innerHTML);
     props.handleChangeDemoCategory(e);
   };
+  
+  useEffect(() => {
+    console.log(category);
+  }, [category])
 
   return (
     <div id="box-whisker-container" style={{ flex: 1 }}>
