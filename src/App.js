@@ -43,7 +43,19 @@ function App() {
   const [showDemographics, setShowDemographics] = useState(false);
   const [demoData, setDemoData] = useState(null);
   const [demographicsLayer, setDemographicsLayer] = useState(null);
-  const [demoCategory, setDemoCategory] = useState("WHITE");
+  const [demoCategory, setDemoCategory] = useState("White");
+
+  const optionsDict = {
+    "White" : "WHITE",
+    "African American" : "BLACK",
+    "American Indian and Alaska Native" : "AIAN",
+    "Asian" : "Asian",
+    "Native Hawaiian and Other Pacific Islander" : "NHOPI",
+    "Two or More Races" : "2RACE",
+    "Hispanic or Latino" : "HISPANIC",
+    "Democratic" : "DEM",
+    "Republican" : "REP"
+  }
 
   function getColor(d) {
     return d > 100
@@ -59,7 +71,7 @@ function App() {
 
   const precinctStyle = (feature) => {
     return {
-      fillColor: getColor(feature.properties["p" + demoCategory]),
+      fillColor: getColor(feature.properties["p" + optionsDict[demoCategory]]),
       weight: 1,
       opacity: 0.7,
       color: "grey",

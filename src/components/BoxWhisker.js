@@ -18,12 +18,24 @@ export const BoxWhisker = (props) => {
   //   },
   // };
 
+  const optionsDict = {
+    "White" : "WHITE",
+    "African American" : "BLACK",
+    "American Indian and Alaska Native" : "AIAN",
+    "Asian" : "Asian",
+    "Native Hawaiian and Other Pacific Islander" : "NHOPI",
+    "Two or More Races" : "2RACE",
+    "Hispanic or Latino" : "HISPANIC",
+    "Democratic" : "DEM",
+    "Republican" : "REP"
+  }
+
   const constructPlanDataPlot = () => {
     let xrange = [];
     let yrange = [];
     planData.forEach((district) => {
-      xrange.push(district["districtId"] - 1);
-      yrange.push(district["p" + category]);
+      xrange.push(district["districtId"]);
+      yrange.push(district["p" + optionsDict[category]]);
     });
     let planDataPlot = {
       x: xrange,
@@ -40,7 +52,7 @@ export const BoxWhisker = (props) => {
     return planDataPlot;
   };
 
-  const [category, setCategory] = useState("WHITE");
+  const [category, setCategory] = useState("White");
   const [data, setData] = useState(null);
   const [planData, setPlanData] = useState(null);
 
@@ -56,7 +68,7 @@ export const BoxWhisker = (props) => {
   };
   let yaxis = {
     title: {
-      text: category,
+      text: category + "%",
       font: {
         family: "arial, monospace",
         size: 12,
@@ -147,6 +159,7 @@ export const BoxWhisker = (props) => {
       upperfence: maxArr,
       name: "Recom Ensemble",
       type: "box",
+      x: Array.from({length: districts.length}, (_, i) => i + 1)
     };
 
     plotData.push(boxTrace);
@@ -181,7 +194,7 @@ export const BoxWhisker = (props) => {
             
 
             <div className="dropdown-menu">
-              {Object.keys(data).map((category) => {
+              {Object.keys(optionsDict).map((category) => {
                 return (
                   <button
                     key={category}
@@ -209,7 +222,7 @@ export const BoxWhisker = (props) => {
           
           
           <Plot
-            data={constructPlotData(data[category])}
+            data={constructPlotData(data[optionsDict[category]])}
             config={{
               scrollZoom: true,
               editable: false,
