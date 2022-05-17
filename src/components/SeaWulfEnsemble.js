@@ -35,7 +35,7 @@ export const SeaWulfPlot = (props) => {
 
   useEffect(() => {
     axios
-      .get(`localhost:8080/seawulfHistograms`, {
+      .get(`http://localhost:8080/seawulfHistograms`, {
         params: {
           stateFipsId: props.stateId,
         },

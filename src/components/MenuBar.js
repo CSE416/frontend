@@ -14,18 +14,21 @@ import {
 
 const theme = createTheme({
     typography: {
-        fontSize: 12,
+        fontSize: 13,
     },
 });
 
 const statusFormat = (status) => {
     let formated = "";
     if (status === "INLITIGATION") {
-      formated = "In Litigation";
+      formated = "In Litigation ";
     }
-    else {
-      formated = "Proposed"
-    };
+    else if (status === "PROPOSED"){
+      formated = "Proposed ";
+    }
+    // else{
+    //     formated= "";
+    // };
     return formated;
   };
 
@@ -36,11 +39,32 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
         <div className="menu-bar"
             style={{ display: 'block', display: 'flex', width: '100%', hieght: '0.5em', flexDirection: 'row', gap: '3em' }}>
 
-            {mapGJSONref.current &&
+            {mapGJSONref.current && true &&
                 // Choose State  
                 <Autocomplete
                     sx={{ width: '10em', hieght: '1em', margin: '1em', marginTop: '0.57m', marginBottom: '0.5em' }}
-                    onChange={(event, value) => { props.setcurrState(value ? { name: value.name, fipsCode: value.fipsCode } : null) }}
+                    onChange={(event, value, reason) => { 
+                        
+
+                        if (reason==="clear"){
+                            props.setIsPlanSelected(false);
+                            props.setIsSplit(false);
+                            props.setcurrState(null);
+                            props.setIsPlanSelected(false);
+                            props.setPlanId(null);
+                            props.setPlanName(null);
+                            props.setPlanStatus(null);
+                            props.setCardSelected(null);
+                            props.setPlanIdList(new Set());
+                            props.setCompare(false);
+                            props.setTableMode(false);
+
+                        }
+                        else{
+                            props.setcurrState(value ? { name: value.name, fipsCode: value.fipsCode } : null);
+                            props.setPlanId(parseInt(value.fipsCode+'0'));
+                        }
+                    }}
                     id="state-select"
                     options={mapGJSONref.current.getLayers().map((layer) => ({ name: layer.feature.properties.NAME, fipsCode: layer.feature.properties.STATE }))}
                     autoHighlight
@@ -63,7 +87,8 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         </TextField>
                     )} />
             }
-            { // Reset button -> make it x later?
+            { (props.setIsPlanSelected)&&
+            // Reset button -> make it x later?
                 props.currState &&
                 <Button variant="contained"
                     size="medium"
@@ -77,9 +102,9 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         props.setPlanIdList(new Set([props.defaultPlan.defaultPlanId]));
                         props.setCompare(false);
                         props.setTableMode(false);
-
+                            
                     }}
-                >Reset
+                >Back to District Plans List
                 </Button>
             }
 
@@ -127,26 +152,28 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                 </Button>
             } */}
 
-            {(props.currState && (!props.comepare)) &&
+            {props.currState && (!props.compare)&&
                 // title
-                <div style={{ margin: 1, display: 'flex' }}>
+                <div style={{ margin: 1, display: 'flex', alignItems:'baseline' }}>
                     <Box sx={{
                         border: '1px solid', borderRadius: 1, p: 0.4, px: 0.5,
                         m: '1em',
                         fontSize: '0.875rem',
                         maxHeight: '3em',
                         fontWeight: '500',
-                        backgroundColor: (props.planStatus=='INLITIGATION')?'#C5E1A5' : '#e0e0e0'
+                        backgroundColor: (props.planStatus=='INLITIGATION')?'#a5d6a7' : '#e0e0e0'
                     }}>{statusFormat(props.planStatus)}</Box>
 
                     <ThemeProvider theme={theme}>
-                        <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}>
-                            <span>{props.planName}</span></Typography>
+                        {/* <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '600' }}>
+                            <span>{statusFormat(props.planStatus)} </span></Typography> */}
+                            <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '600' }}>
+                            <span>{props.planName} </span></Typography>
 
                     </ThemeProvider>
                 </div>}
 
-                {(props.currState && (props.compare)) &&
+                {/* {(props.currState && (props.compare)) &&
                 // title
                 <div style={{ margin: 1, display: 'flex' }}>
                     {/* <Box sx={{
@@ -155,14 +182,14 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         fontSize: '0.875rem',
                         fontWeight: '500',
                         backgroundColor: (props.planStatus=='INLITIGATION')?'#C5E1A5' : '#e0e0e0'
-                    }}>{statusFormat(props.planStatus)}</Box> */}
+                    }}>{statusFormat(props.planStatus)}</Box> }
 
                     <ThemeProvider theme={theme}>
                         <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}>
                             <span>Choose District Plans to Compare</span></Typography>
 
                     </ThemeProvider>
-                </div>}
+                </div>*/} 
 
             {/* {!props.isPlanSelected && <div>
                 <Button variant="contained" 

@@ -134,7 +134,7 @@ export const StatePlans = (props) => {
         </StyledMenu>
       </div> */}
 
-      <div stlye={{ display: 'flex', flexDirection: 'column'}}>
+      <div id="toggle" style={{ display: 'flex', flexDirection: 'row'}}>
        
         {/* <Button variant="contained"
           size="small"
@@ -156,8 +156,8 @@ export const StatePlans = (props) => {
             } label="Compare District Plans" />
         </FormGroup>
         </div>
-        <div style={{ flex: 1 }}>
-        {(props.compare && !props.tableMode) && <div>
+        
+        {(props.compare && !props.tableMode) && <div style={{lex: 1}}>
         
           <Button variant="contained"
             size="medium"
@@ -165,7 +165,7 @@ export const StatePlans = (props) => {
               maxHeight: '2em',
               my: '0.4em',
               mr: '2em',
-              flex: 1, textTransform: "none"
+              ftextTransform: "none"
             }}
             onClick={() => {
               //props.setIsPlanSelected(true);
@@ -180,7 +180,7 @@ export const StatePlans = (props) => {
             Compare chosen plans
           </Button>
         </div>}
-        </div>
+       
       </div>
 
 

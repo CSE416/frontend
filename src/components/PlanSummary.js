@@ -123,7 +123,7 @@ export const PlanSummary = (props) => {
                       <b>Proposed By:</b> {data.proposedBy}
                     </Typography>
                     <Typography>
-                      <b>Proposed Date:</b> {data.proposedDate.slice(0, 10)}
+                      <b>Proposed Date:</b> {(data.proposedDate!=null) ? data.proposedDate.slice(0, 10): ""}
                     </Typography>
                     <Typography>
                       <b>Polsby Popper (Compactness)</b>: {data.polsbyPopper}
@@ -179,7 +179,7 @@ export const PlanSummary = (props) => {
                   </div>
                   <div id="single-other-info"
                     style={{ display: 'flex', flexDirection: 'row' }}>
-                    {data.seatShare}
+                    
                     {/* {data.efficiencyGap}
             {data.polsbyPopper}
             {data.planId} */}
@@ -188,7 +188,7 @@ export const PlanSummary = (props) => {
                 </div>
 
                 <div style={{ flex: 1 }}>
-                  heuy
+                 
                 </div>
               </div>
             </div>}

@@ -71,7 +71,6 @@ export const CompareTable = (props) => {
             createData1("No. of Influence Districts", props.data[i].numInfluenceDistricts),
             createData1("No. of Majority-Minority Districts", props.data[i].numMajMinDistricts),
             createData1("Polsby Popper", props.data[i].polsbyPopper),
-            createData1("Partisan Lean", props.data[i].partisanLean),
             createData1("Efficiency Gap", props.data[i].efficiencyGap)
         ];
     } else if (props.planIdList.size === 2){
@@ -85,14 +84,14 @@ export const CompareTable = (props) => {
             createData2("No. of Influence Districts", props.data[i].numInfluenceDistricts, props.data[j].numInfluenceDistricts),
             createData2("No. of Majority-Minority Districts", props.data[i].numMajMinDistricts, props.data[j].numMajMinDistricts),
             createData2("Polsby Popper", props.data[i].polsbyPopper, props.data[j].polsbyPopper),
-            createData2("Partisan Lean", props.data[i].partisanLean, props.data[j].partisanLean),
+            
             createData2("Efficiency Gap", props.data[i].efficiencyGap, props.data[j].efficiencyGap)
         ];
     }
 
     return (<div>
         <ThemeProvider theme={themeTable}>
-            <TableContainer component={Paper} sx={{ padding: "none" }}>
+            <TableContainer component={Paper} sx={{ padding: "none"}}>
                 <Table sx={{ width: '100%' }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -107,7 +106,7 @@ export const CompareTable = (props) => {
                                 <TableCell component="th" scope="row">
                                     {r.tag}
                                 </TableCell>
-                                <TableCell align="right">{r.value1}</TableCell>
+                                <TableCell>{r.value1}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>}
@@ -121,8 +120,8 @@ export const CompareTable = (props) => {
                                 <TableCell component="th" scope="row">
                                     {r.tag}
                                 </TableCell>
-                                <TableCell align="right">{r.value1}</TableCell>
-                                <TableCell align="right">{r.value2}</TableCell>
+                                <TableCell align="left">{r.value1}</TableCell>
+                                <TableCell align="left">{r.value2}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>}

@@ -91,11 +91,7 @@ function App() {
       grades = [0, 10, 20, 50, 100],
       labels = [];
 
-<<<<<<< HEAD
     // loop through our density intervals and generate a label with a colored square for eaㅌㅗ interval
-=======
-    // loop through our density intervals and generate a label with a colored square for each interval
->>>>>>> c3c2eb5 (updated box whisker)
     for (var i = 0; i < grades.length; i++) {
       div.innerHTML +=
         '<i style="background:' +
@@ -170,6 +166,7 @@ function App() {
         //  then stop the pannnig animation?
         //  then setMaxBounds on the state map
         //  and set Zoom levels
+        setPlanId(parseInt(currState.fipsCode+'0'));
       }
     }
   }, [currState]);
@@ -276,10 +273,11 @@ function App() {
         planLabel={planLabel}
         defaultLabel={[planLabel[0]]}
         planIdList={planIdList}
-<<<<<<< HEAD
         setCompare={setCompare}
         compare={compare}
         setTableMode={setTableMode}
+        setIsSplit={setIsSplit}
+
 
       //planStatus={planStatus}
       />
@@ -288,16 +286,6 @@ function App() {
           // inital state: show districting plan cards
           isSplit && !isPlanSelected && (
             <div style={{ flex: 2, overflow: "auto" }}>
-=======
-
-        //planStatus={planStatus}
-      />
-      <div style={{ flex: "1", display: "flex" }}>
-        {
-          // inital state: show districting plan cards
-          isSplit && !isPlanSelected && (
-            <div style={{ flex: "3", overflow: "auto" }}>
->>>>>>> c3c2eb5 (updated box whisker)
               <StatePlans
                 setIsPlanSelected={setIsPlanSelected}
                 setPlanId={setPlanId}
@@ -311,13 +299,10 @@ function App() {
                 planIdList={planIdList}
                 setPlanIdList={setPlanIdList}
                 defaultPlan={defaultPlan}
-<<<<<<< HEAD
                 setCompare={setCompare}
                 setTableMode={setTableMode}
                 compare={compare}
                 tableMode={tableMode}
-=======
->>>>>>> c3c2eb5 (updated box whisker)
               />
             </div>
           )
@@ -326,11 +311,7 @@ function App() {
         {
           // When a plan is selected: show detailed information
           isSplit && isPlanSelected && (
-<<<<<<< HEAD
             <div style={{ flex: "2" }}>
-=======
-            <div style={{ flex: "4" }}>
->>>>>>> c3c2eb5 (updated box whisker)
               <InformationTab
                 stateId={currState.fipsCode}
                 planId={planId}
@@ -338,25 +319,16 @@ function App() {
                 planIdList={planIdList}
                 handleClickDemographics={handleClickDemographics}
                 handleChangeDemoCategory={handleChangeDemoCategory}
-<<<<<<< HEAD
                 showDemographics = {showDemographics}
-=======
->>>>>>> c3c2eb5 (updated box whisker)
               />
             </div>
           )
         }
 
         {/* map part */}
-<<<<<<< HEAD
         {(!tableMode) &&
           // Show Map, when plot button is not selected
           <div style={{ flex: "2" }}>
-=======
-        {
-          // Show Map, when plot button is not selected
-          <div style={{ flex: "3" }}>
->>>>>>> c3c2eb5 (updated box whisker)
             <MapContainer
               center={[38, -98]}
               zoom={5}
@@ -370,13 +342,8 @@ function App() {
               {USstatesGJSON && (
                 <GeoJSON data={USstatesGJSON} ref={mapGJSONref} />
               )}
-<<<<<<< HEAD
               { }
               {isSplit && (planGJSON ?
-=======
-              {}
-              {isSplit && ( planGJSON ? 
->>>>>>> c3c2eb5 (updated box whisker)
                 (<GeoJSON
                   key={planId}
                   data={planGJSON}
@@ -385,7 +352,6 @@ function App() {
               )}
             </MapContainer>
           </div>
-<<<<<<< HEAD
        
         }
         { //when table, put radar
@@ -395,8 +361,6 @@ function App() {
                   planId={planId}
                   stateFipsId={currState.fipsCode} />
             </div>
-=======
->>>>>>> c3c2eb5 (updated box whisker)
         }
 
         {

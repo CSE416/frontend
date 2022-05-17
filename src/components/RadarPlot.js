@@ -48,6 +48,68 @@ export const RadarPlot = (props) => {
         })
     }, []);
 
+    const plan1 = [];
+    const plan2 = [];
+
+    var maxPol=0;
+    var minPol=1;
+    for (let i=0;i<4;i++){
+      if (radarData[i].polsbyPopper >= maxPol){
+        maxPol=radarData[i].polsbyPopper;
+      }
+      if (radarData[i].polsbyPopper < minPol){
+        minPol = radarData[i].polsbyPopper;
+      }
+    }
+    maxPol = parseFloat(maxPol.toFixed(1));
+    minPol = parseFloat(minPol.toFixed(1));
+   var polRange=100/(maxPol-minPol);
+    if (props.planIdList.size === 2) {
+      let i = idList[0] % 10;
+      let j = idList[1] % 10;
+      let c=radarData[i].polsbyPopper;
+      let val1= polRange*(c-minPol);
+      plan1.push(val1);
+      let c2=radarData[j].polsbyPopper;
+      let val2= polRange*(c2-minPol);
+      plan2.push(val2);
+  } 
+  
+    var maxEff=0;
+    var minEff=1;
+    for (let i=0;i<4;i++){
+      if (radarData[i].efficiencyGap >= maxEff){
+        maxPol=radarData[i].efficiencyGap;
+      }
+      if (radarData[i].efficiencyGap < minEff){
+        minPol = radarData[i].efficiencyGap;
+      }
+    }
+    maxEff = parseFloat(maxEff.toFixed(1));
+    minEff = parseFloat(minEff.toFixed(1));
+   var effRange=100/(maxEff-minEff);
+    if (props.planIdList.size === 2) {
+      let i = idList[0] % 10;
+      let j = idList[1] % 10;
+      let c=radarData[i].efficiencyGap;
+      let val1= effRange*(c-minEff);
+      plan1.push(val1);
+      let c2=radarData[j].polsbyPopper;
+      let val2= effRange*(c2-minEff);
+      plan2.push(val2);
+  } 
+
+  var ii = idList[0] % 10;
+  var jj = idList[1] % 10;
+  var iMaj = (radarData[ii].numCompetitiveDistricts / radarData[ii].numDistricts)*100;
+  var jMaj = (radarData[jj].numCompetitiveDistricts / radarData[jj].numDistricts)*100;
+  plan1.push(iMaj);
+  plan2.push(jMaj);
+  
+  var icom = (radarData[ii].numMajMinDistricts / radarData[ii].numDistricts)*100;
+  var jcom = (radarData[jj].numMajMinDistricts / radarData[jj].numDistricts)*100;
+  plan1.push(icom);
+  plan2.push(jcom);
     // const data = {
     //     labels: ['Compactness', 'Majority-minority','Population equality', 'efficiency Gap' ],
     //     datasets: [
@@ -61,50 +123,47 @@ export const RadarPlot = (props) => {
     //     ],
     //   };
     
-      var value=[];
+ 
       var label=["Compactness", 
                   "efficiency Gap", 
-                  "Competitive Districts",  
-                  "Partisan Bias",
+                  "Competitive Districts", 
+                  "Majority-Minority Districts" 
                   //"what"
                 ];//,"numSplitCounties","populationEquality"];
       
-      value.push(parseFloat(radarData["polsbyPopper"])*100);
-      value.push(100-(parseFloat(radarData["efficiencyGap"])*100));
-      value.push(40);//parseFloat(radarData["numCompetitiveDistricts"])); //FIX divide by the num of districts? 
-      value.push(60);//parseFloat(radarData["numMajMinDistricts"])); //FIX make it  partisan bias
-      value.push(60);
+  
       //value.push(radarData["numSplitCounties"]);
       //value.push(radarData["populationEquality"]);
 
-    const data = [{
-      type: 'scatterpolar',
-      r: value,
-      theta: label,
-      fill: 'toself',
-      textposition: "top right",
+    // const data = [{
+    //   type: 'scatterpolar',
+    //   r: value,
+    //   theta: label,
+    //   fill: 'toself',
+    //   textposition: "top right",
       
-      marker:{
-        // colorbar:{
-        //   ticklabeloverflow:"allow"
-        // },
-        //orientation: "h"
-      }
-    }]
+    //   marker:{
+    //     // colorbar:{
+    //     //   ticklabeloverflow:"allow"
+    //     // },
+    //     //orientation: "h"
+    //   }
+    // }]
 
     const data2 = [
       {
         type: 'scatterpolar',
-        r: [39, 28, 8, 7, 28, 39],
-        theta: ['A','B','C', 'D', 'E', 'A'],
-        fill: 'toself'
+        r: plan1,
+        theta: label,
+        fill: 'toself',
+        name: radarData[ii].planName
       },
       {
         type: 'scatterpolar',
-        r: [1.5, 10, 39, 31, 15, 1.5],
-        theta: ['A','B','C', 'D', 'E', 'A'],
+        r: plan2,
+        theta: label,
         fill: 'toself',
-        name: 'Group B'
+        name: radarData[jj].planName
         }
     ]
 
@@ -152,7 +211,7 @@ export const RadarPlot = (props) => {
   // } }}/>
   //Plotly.newPlot("myDiv", data, layout)
     return(<div style={{flex:1, alignContent:'center'}}>
-        <Plot data={data}
+        <Plot data={data2}
         layout ={layout}/>
     </div>
     );

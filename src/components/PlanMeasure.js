@@ -24,16 +24,19 @@ export const PlanMeasure = (props) => {
     return(
         <div style={{textAlign:'center'}}>
             <Box sx={{ width: '50vw', height: '90vh', maxHeight: 600, overflow: 'auto', m: '0.5em' }}>
-              <ToggleButtonGroup sx={{ marginBottom: '0px' }}
+              <ToggleButtonGroup sx={{ marginBottom: '0px', textTransform:'none' }}
                 color="primary"
                 value={alignment}
                 exclusive
                 onChange={handleChange}
                 size='small'
+                
               >
                 
-                <ToggleButton value="voteSeat">Vote/Seat Share</ToggleButton>
-                <ToggleButton value="efficiencyGap">Efficiency Gap</ToggleButton>
+                <ToggleButton value="voteSeat"
+                  sx={{textTransform:'none' }}>Vote/Seat Share</ToggleButton>
+                <ToggleButton value="efficiencyGap"
+                sx={{textTransform:'none' }}>Efficient/Inefficient Votes</ToggleButton>
                 {/* <ToggleButton value="polsbyPopper">Polsby-Popper</ToggleButton> */}
 
               </ToggleButtonGroup>

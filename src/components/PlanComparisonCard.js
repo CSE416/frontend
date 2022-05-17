@@ -130,7 +130,7 @@ export const PlanComparisonCard = (props) => {
               props.setIsPlanSelected(true);
               props.setPlanId(props.planId);
               props.setPlanName(props.planName);
-              props.setPlanStatus(props.planStatus);
+              props.setPlanStatus(props.status);
 
               //console.log(props.planIdList)
             }}>
@@ -157,7 +157,7 @@ export const PlanComparisonCard = (props) => {
                 fontSize: '0.9rem',
                 fontWeight: '500',
               }}>
-                <b>Proposed by:</b> {props.data.proposedBy}
+                Proposed by: {props.data.proposedBy}
               </Typography>
 
               <Typography>
@@ -173,9 +173,6 @@ export const PlanComparisonCard = (props) => {
               </Typography>
               <Typography>
                 Efficiency Gap: {props.data.efficiencyGap}
-              </Typography>
-              <Typography>
-                Partisan Split
               </Typography>
 
 
