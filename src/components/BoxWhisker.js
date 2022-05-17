@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 const Plotly = window.Plotly;
 const Plot = createPlotlyComponent(Plotly);
 
@@ -19,16 +19,16 @@ export const BoxWhisker = (props) => {
   // };
 
   const optionsDict = {
-    "White" : "WHITE",
-    "African American" : "BLACK",
-    "American Indian and Alaska Native" : "AIAN",
-    "Asian" : "Asian",
-    "Native Hawaiian and Other Pacific Islander" : "NHOPI",
-    "Two or More Races" : "2RACE",
-    "Hispanic or Latino" : "HISPANIC",
-    "Democratic" : "DEM",
-    "Republican" : "REP"
-  }
+    White: "WHITE",
+    "African American": "BLACK",
+    "American Indian and Alaska Native": "AIAN",
+    Asian: "Asian",
+    "Native Hawaiian and Other Pacific Islander": "NHOPI",
+    "Two or More Races": "2RACE",
+    "Hispanic or Latino": "HISPANIC",
+    Democratic: "DEM",
+    Republican: "REP",
+  };
 
   const constructPlanDataPlot = () => {
     let xrange = [];
@@ -144,11 +144,11 @@ export const BoxWhisker = (props) => {
 
     districts.forEach((district) => {
       // console.log(district);
-      minArr.push(100 * (district["whislo"]));
-      maxArr.push(100 * (district["whishi"]));
-      medianArr.push(100 * (district["med"]));
-      lowerQuartileArr.push(100 * (district["q1"]));
-      upperQuartileArr.push(100 * (district["q3"]));
+      minArr.push(100 * district["whislo"]);
+      maxArr.push(100 * district["whishi"]);
+      medianArr.push(100 * district["med"]);
+      lowerQuartileArr.push(100 * district["q1"]);
+      upperQuartileArr.push(100 * district["q3"]);
     });
 
     let boxTrace = {
@@ -159,7 +159,7 @@ export const BoxWhisker = (props) => {
       upperfence: maxArr,
       name: "Recom Ensemble",
       type: "box",
-      x: Array.from({length: districts.length}, (_, i) => i + 1)
+      x: Array.from({ length: districts.length }, (_, i) => i + 1),
     };
 
     plotData.push(boxTrace);
@@ -174,8 +174,7 @@ export const BoxWhisker = (props) => {
   };
 
   return (
-    <div id="box-whisker-container"
-          style={{flex:1}}>
+    <div id="box-whisker-container" style={{ flex: 1 }}>
       {data && planData ? (
         <>
           <div className="category-dropdown">
@@ -188,10 +187,7 @@ export const BoxWhisker = (props) => {
               aria-expanded="false"
             >
               {category}
-            
             </button>
-
-            
 
             <div className="dropdown-menu">
               {Object.keys(optionsDict).map((category) => {
@@ -202,25 +198,26 @@ export const BoxWhisker = (props) => {
                     type="button"
                     onClick={handleClick}
                   >
-                    {category} 
+                    {category}
                   </button>
                 );
               })}
             </div>
           </div>
           <div>
-          {/* <button onClick={props.handleClickDemographics}>See Demographics</button> */}
-          <Button variant="contained"
-                    size="medium"
-                    sx={{ m: '1em', textTransform:'none' }}// maxHeight: '2rem',
-                    onClick={
-                      props.handleClickDemographics
-                         }
-                >See Demographic
-                </Button>
+            {/* <button onClick={props.handleClickDemographics}>See Demographics</button> */}
+            <Button
+              variant="contained"
+              size="medium"
+              sx={{ m: "1em", textTransform: "none" }} // maxHeight: '2rem',
+              onClick={props.handleClickDemographics}
+            >
+              {props.showDemographics
+                ? "Hide Demographics"
+                : "Show Demographics"}
+            </Button>
           </div>
-          
-          
+
           <Plot
             data={constructPlotData(data[optionsDict[category]])}
             config={{
@@ -231,24 +228,23 @@ export const BoxWhisker = (props) => {
             }}
             layout={{
               //autosize: true,
-              margin:{
-                t: '1em',
-                r: '1em'
+              margin: {
+                t: "1em",
+                r: "1em",
               },
               // width: '80%',
               // height: 500,
               title: "Box and Whisker Plot for Minority: " + category,
               xaxis: xaxis,
               yaxis: yaxis,
-              legend:{
-                orientation: 'v'
-              }
+              legend: {
+                orientation: "v",
+              },
             }}
           />
           {/* <p style={{ clear: "both" }}>
             Average Districting for Plan 1: {calcAvgDist()}
           </p> */}
-          
         </>
       ) : (
         <p>Box and Whisker Data failed to load.</p>

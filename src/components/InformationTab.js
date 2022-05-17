@@ -27,7 +27,8 @@ export const InformationTab = (props) => {
                                     isSingleId={props.planIdList.size==1} 
                                     planIdList={props.planIdList} 
                                     handleClickDemographics={props.handleClickDemographics} 
-                                    handleChangeDemoCategory={props.handleChangeDemoCategory}/>,
+                                    handleChangeDemoCategory={props.handleChangeDemoCategory}
+                                    showDemographics={props.showDemographics}/>,
     "Seawulf Ensemble": <SeaWulfPlot stateId={props.stateId}
                                       isSingleId={props.planIdList.size==1} 
                                       planIdList={props.planIdList} />

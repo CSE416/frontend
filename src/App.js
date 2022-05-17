@@ -304,6 +304,7 @@ function App() {
                 planIdList={planIdList}
                 handleClickDemographics={handleClickDemographics}
                 handleChangeDemoCategory={handleChangeDemoCategory}
+                showDemographics = {showDemographics}
               />
             </div>
           )
