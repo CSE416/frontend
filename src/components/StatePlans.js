@@ -6,6 +6,7 @@ import {
   createTheme,
   ThemeProvider,
 } from '@mui/material/styles';
+import { CompareTable } from './CompareTable';
 
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -58,8 +59,8 @@ export const StatePlans = (props) => {
   const [nullDataMsg, setNullDataMsg] = useState(<p> </p>);
   const [planData, setPlanData] = useState(null);
   const [checkStatus, setCheckStatus] = useState(null);
-
-  const [compare, setCompare] = useState(false);
+  
+  //const [mode, stMode]
   useEffect(() => {
     axios.get(`https://redistricting-fever.herokuapp.com/getAllPlans`, {
       params: {
@@ -94,11 +95,14 @@ export const StatePlans = (props) => {
       .catch((Error) => {
         setNullDataMsg(<p>Data Failed to Load.</p>);
       });
-  }, []);
+  }, [props.stateFipsId]);
 
 
   const handleChangeCompare=(event)=>{
-    setCompare((prev)=>!prev);
+    props.setCompare((prev)=>!prev);
+    if (props.tableMode){
+      props.setTableMode(false);
+    }
   }
   return (
     <div class="state-plans-container"
@@ -145,7 +149,7 @@ export const StatePlans = (props) => {
         <FormGroup>
           <FormControlLabel control={
             <Switch
-            checked={compare}
+            checked={props.compare}
             onChange={handleChangeCompare}
             inputProps={{ 'aria-label': 'controlled' }}
           />
@@ -153,7 +157,7 @@ export const StatePlans = (props) => {
         </FormGroup>
         </div>
         <div style={{ flex: 1 }}>
-        {(compare) && <div>
+        {(props.compare && !props.tableMode) && <div>
         
           <Button variant="contained"
             size="medium"
@@ -164,21 +168,23 @@ export const StatePlans = (props) => {
               flex: 1, textTransform: "none"
             }}
             onClick={() => {
-              props.setIsPlanSelected(true);
+              //props.setIsPlanSelected(true);
               props.setPlanId(props.planId);
               props.setPlanName(props.planName);
               props.setPlanStatus(props.planStatus);
+              props.setTableMode(true);
 
               console.log(props.planIdList);
               console.log(props.planId);
             }}>
             Compare chosen plans
           </Button>
-        </div>}</div>
+        </div>}
+        </div>
       </div>
 
 
-      {(planData) ? (
+      {(planData && (!props.tableMode)) ? (
         <Paper class="plan-summary-card-container"
           sx={{
             height: '100%',
@@ -192,7 +198,7 @@ export const StatePlans = (props) => {
             style={{ flex: 1}}>  */}
           {/* <div style={{display: 'flex', flexDirection: 'row' }}> */}
           <PlanComparisonCard class='plan1'
-            compare={compare}
+            compare={props.compare}
             data={planData[0]}
             planId={planData[0].planId}
             planName={planData[0].planName}
@@ -212,7 +218,7 @@ export const StatePlans = (props) => {
             checkStatus={true} />
 
           <PlanComparisonCard class='plan2'
-            compare={compare}
+            compare={props.compare}
             data={planData[1]}
             planId={planData[1].planId}
             planName={planData[1].planName}
@@ -234,7 +240,7 @@ export const StatePlans = (props) => {
             style={{ flex: 1}}> */}
           {/* <div style={{display: 'flex', flexDirection: 'row' }}> */}
           <PlanComparisonCard class='plan3'
-            compare={compare}
+            compare={props.compare}
             data={planData[2]}
             planId={planData[2].planId}
             planName={planData[2].planName}
@@ -252,7 +258,7 @@ export const StatePlans = (props) => {
             checkStatus={false} />
 
           <PlanComparisonCard class='plan4'
-            compare={compare}
+            compare={props.compare}
             data={planData[3]}
             planId={planData[3].planId}
             planName={planData[3].planName}
@@ -273,88 +279,12 @@ export const StatePlans = (props) => {
           {/* </div> */}
         </Paper>) : nullDataMsg}
 
-      {/* {(planData && (mode === 'Table')) ? (
+      {(planData && (props.tableMode)) ? (
         <div class="plan-summary-table-container"
           style={{ flex: 1, width: '100%', height: '100%'}}>
-          <ThemeProvider theme={themeTable}>
-            <TableContainer component={Paper} sx={{ padding: "none" }}>
-              <Table sx={{ width: '100%' }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell align="right">plan1
-                      <Button size="small" sx={{
-                        fontSize: '0.65rem',
-                        fontWeight: '800',
-                      }}
-                        style={{ textTransform: "none", alignItems: 'right' }}
-                        onClick={() => {
-                          props.setIsPlanSelected(true); //FIX name
-                          props.setPlanId(props.planId);
-                          props.setPlanName(props.name);
-                          props.setPlanStatus(props.status);
-                        }}>Show Details <span> &#10097;</span> </Button>
-
-                    </TableCell>
-                    <TableCell align="right">plan2
-                      <Button size="small" sx={{
-                        fontSize: '0.65rem',
-                        fontWeight: '800',
-                      }}
-                        style={{ textTransform: "none", alignItems: 'right' }}
-                        onClick={() => {
-                          props.setIsPlanSelected(true);
-                          props.setPlanId(props.planId);
-                          props.setPlanName(props.name);
-                          props.setPlanStatus(props.status);
-                        }}>Show Details <span> &#10097;</span> </Button>
-                    </TableCell>
-                    <TableCell align="right">plan3
-                      <Button size="small" sx={{
-                        fontSize: '0.65rem',
-                        fontWeight: '800',
-                      }}
-                        style={{ textTransform: "none", alignItems: 'right' }}
-                        onClick={() => {
-                          props.setIsPlanSelected(true);
-                          props.setPlanId(props.planId);
-                          props.setPlanName(props.name);
-                          props.setPlanStatus(props.status);
-                        }}>Show Details <span> &#10097;</span> </Button>
-                    </TableCell>
-                    <TableCell align="right">Plan4
-                      <Button size="small" sx={{
-                        fontSize: '0.65rem',
-                        fontWeight: '800',
-                      }}
-                        style={{ textTransform: "none", alignItems: 'right' }}
-                        onClick={() => {
-                          props.setIsPlanSelected(true);
-                          props.setPlanId(props.planId);
-                          props.setPlanName(props.name);
-                          props.setPlanStatus(props.status);
-                        }}>Show Details <span> &#10097;</span> </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody sx={{ fontSize: '10', padding: '0.5em' }}>
-                  {rows.map((row) => (
-                    <TableRow key={row.tag} sx={{ border: 0 }}>
-                      <TableCell component="th" scope="row">
-                        {row.tag}
-                      </TableCell>
-                      <TableCell align="right">{row.value1}</TableCell>
-                      <TableCell align="right">{row.value2}</TableCell>
-                      <TableCell align="right">{row.value3}</TableCell>
-                      <TableCell align="right">{row.value4}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </ThemeProvider>
+          <CompareTable data={planData} planIdList={props.planIdList}/>
         </div>
-      ) : nullDataMsg} */}
+      ) : nullDataMsg}
     </div>);
 
 }

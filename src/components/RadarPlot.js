@@ -27,7 +27,7 @@ ChartJS.register(
   const Plotly = window.Plotly;
   const Plot = createPlotlyComponent(Plotly);
 
-const RadarPlot = (props) => {
+export const RadarPlot = (props) => {
     const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
     const [radarData, setRadarData] = useState([4.4,4,5,6]);
     //const [layout, setLayout] = useState(null)
@@ -109,10 +109,10 @@ const RadarPlot = (props) => {
       width: props.width,
       height: props.height,
       margin: {
-        l: 10,
-        r: 10,
-        b: 5,
-        t: 5,
+        l: 50,
+        r: 50,
+        b: 45,
+        t: 100,
       },
       plot_bgcolor: 'none',
       polar: {
@@ -153,4 +153,3 @@ const RadarPlot = (props) => {
     </div>
     );
 };
-export default RadarPlot;

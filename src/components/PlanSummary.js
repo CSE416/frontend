@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import Stack from '@mui/material/Stack';
 
 
+
 const themeTable = createTheme({
   overrides: {
     MuiTableBody: {
@@ -44,53 +45,26 @@ export const PlanSummary = (props) => {
   const [nullDataMsg, setNullDataMsg] = useState(<p>Loading...</p>);
   const [data, setData] = useState(null);
   const [two, setTwo] = useState(true);
-
-  // const dummyPlanSummary = {
-  //   plan_name : "Republic Plan",
-  //   proposed_by: "Nevada Republicans",
-  //   proposed_date: new Date("11/13/2021"),
-  //   status: "Tabled",
-  //   num_of_districts: 4,
-  //   district_num_change: 0,
-  //   num_of_competitve_districts: 0,
-  //   num_of_split_counties: 0,
-  //   partisan_lean: 0,
-  //   population_equality: 0.02
-  // };
-
-  //data = dummyPlanSummary;
-  //props.setPlanName("Democratic Plan");
   const tempId = 0;
 
   const rows = [];
   useEffect(() => {
-    
+
     axios.get(`https://redistricting-fever.herokuapp.com/getPlan`, {
       params: {
-        planId: 320//props.planId
+        planId: props.planId
       }
     })
       .then(res => {
         setData(res.data);
         console.log(res.data);
         props.setPlanName(res.data.planName);
-        rows = [
 
-          createData("Proposed By", res.data.proposedBy),
-          createData("Proposed Date", data.proposedDate),
-          createData("Status", data.planStatus),
-          createData("Number of Districts", data.numOfDistricts),
-          createData("Change in Number of Districts", data.districNnumChange),
-          createData("Number of Competitive Districts", data.numOfCompetitiveDistricts),
-          createData("Number of Split Counties", data.numSplitCounties),
-          createData("Partisan Lean", data.partisanLean),
-          createData("Population Equality", data.populationEquality)
-        ];
       })
       .catch((Error) => {
         setNullDataMsg(<p>Data Failed to Load.</p>);
       })
-  }, [tempId]);
+  }, []);
 
   const toggleDrawer = (open) => (event) => {
 
@@ -98,25 +72,16 @@ export const PlanSummary = (props) => {
   function createData(tag, value1, value2) {
     return { tag, value1, value2 };
   }
-  const row = [
-    createData("Status", "In Litigaion", "Proposed"),
-    createData("Population Equality", "0.5", "0.7"),
-    createData("Compactness", "0", "0"),
-    createData("Efficiency Gap", "0", "0"),
-    createData("Number of Competitive Districts", "2", "2"),
-    createData("Number of Maj-Min Districts", "2", "2"),
-    createData("Number of Split Counties", "0", "0"),
-    createData("Partisan Split", "R+1", "R+1"),
-    createData("Population Equality", "0.5", "0.7")
-  ];
+
   return (
-    <div style={{}}>
+    <div >
       {(data) ? (
         <div id="plan-summary-container">
+
           { // Single Plan detail Summary
             (props.isSingleId) && <div>
               <div id="single-title"
-                style={{ margin: 1, display: 'flex', alignItems: 'flex-start', justifyContent:"flex-start" }}>
+                style={{ margin: 1, display: 'flex', alignItems: 'flex-start', justifyContent: "flex-start" }}>
                 <Box id="status-tag"
                   sx={{
                     border: '1px solid',
@@ -129,99 +94,103 @@ export const PlanSummary = (props) => {
                   {data.planStatus}
                 </Box>
                 <ThemeProvider theme={theme}>
-                  <Typography variant="h6" id="plan-name" 
-                  m={1}
+                  <Typography variant="h6" id="plan-name"
+                    m={1}
                     sx={{
                       b: '0.1em', fontWeight: '700',
-                      
+
                     }}>
                     {data.planName}
                   </Typography>
                 </ThemeProvider>
               </div>
-            <div style={{display:'flex', flexDirection:"column"}}>
-              <div id="single-plan-info-container"
-                style={{
-                  flex: 1,
-                  fontSize: '10px',
-                  textAlign: 'left',
-                  margin: '1em',
-                  display:"flex",
-                  flexDirection:"row"
-                }}>
-                <div id="single-plan-generalInfo"
-                  style={{ flex:1, display: 'flex', flexDirection: 'column' }}>
-                  <Typography>
-                    <b>Proposed By:</b> {data.proposedBy}
-                  </Typography>
-                  <Typography>
-                    <b>Proposed Date:</b> {data.proposedDate.slice(0, 10)}
-                  </Typography>
-                  <Typography>
-                    <b>Polsby Popper (Compactness)</b>: {data.polsbyPopper}
-                  </Typography>
-                  <Typography>
-                    <b>Population Equality</b>: {data.populationEquality}
-                  </Typography>
-                  <Typography>
-                    <b>Efficiency Gap</b>: {data.efficiencyGap}
-                  </Typography>
-                  <Typography>
-                    <b>Partisan Lean:</b> Democrats +{data.partisanLean}
-                  </Typography>
-                </div>
-                <div id="single-plan-districtInfo-table"
-                      style={{flex:1}}>
-                  <Typography>
-                    <b>Districts Infos:</b>
-                  </Typography>
-                  <table id="districtInfo">
-                    <tbody>
-                    <tr>
-                      <td>No. of Districts</td>
-                      <td>{data.numDistricts}</td>
-                    </tr>
-                    <tr>
-                      <td>Changes in No. of Districts</td>
-                      <td>{data.districtNumChange}</td>
-                    </tr>
-                    <tr>
-                      <td>No. of Competitive Districts</td>
-                      <td>{data.numCompetitiveDistricts}</td>
-                    </tr>
-                    <tr>
-                      <td>No. of Majority-Minority Districts</td>
-                      <td>{data.numMajMinDistricts}</td>
-                    </tr>
-                    <tr>
-                      <td>No. of Influence Districts</td>
-                      <td>{data.numInfluenceDistricts}</td>
-                    </tr>
-                    <tr>
-                      <td>No. of Coalition Districts</td>
-                      <td>{data.coalitionDistricts}</td>
-                    </tr>
-                    <tr>
-                      <td>No. of Split counties</td>
-                      <td>{data.numSplitCounties}</td>
-                    </tr>
-                    
-                    </tbody>
-                  </table>
-                </div>
-                <div id="single-other-info"
-                  style={{ display: 'flex', flexDirection: 'row' }}>
-                  {data.seatShare}
-                  {/* {data.efficiencyGap}
+              <div style={{ display: 'flex', flexDirection: "column" }}>
+                
+                <div id="single-plan-info-container"
+                  style={{
+                    flex: 1,
+                    fontSize: '10px',
+                    textAlign: 'left',
+                    margin: '1em',
+                    display: "flex",
+                    flexDirection: "row"
+                  }}>
+
+
+                  <div id="single-plan-generalInfo"
+                    style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    <Typography>
+                      <b>Proposed By:</b> {data.proposedBy}
+                    </Typography>
+                    <Typography>
+                      <b>Proposed Date:</b> {data.proposedDate.slice(0, 10)}
+                    </Typography>
+                    <Typography>
+                      <b>Polsby Popper (Compactness)</b>: {data.polsbyPopper}
+                    </Typography>
+                    <Typography>
+                      <b>Population Equality</b>: {data.populationEquality}
+                    </Typography>
+                    <Typography>
+                      <b>Efficiency Gap</b>: {data.efficiencyGap}
+                    </Typography>
+                    <Typography>
+                      <b>Partisan Lean:</b> Democrats +{data.partisanLean}
+                    </Typography>
+                  </div>
+                  <div id="single-plan-districtInfo-table"
+                    style={{ flex: 1 }}>
+                    <Typography>
+                      <b>Districts Infos:</b>
+                    </Typography>
+                    <table id="districtInfo">
+                      <tbody>
+                        <tr>
+                          <td>No. of Districts</td>
+                          <td>{data.numDistricts}</td>
+                        </tr>
+                        <tr>
+                          <td>Changes in No. of Districts</td>
+                          <td>{data.districtNumChange}</td>
+                        </tr>
+                        <tr>
+                          <td>No. of Competitive Districts</td>
+                          <td>{data.numCompetitiveDistricts}</td>
+                        </tr>
+                        <tr>
+                          <td>No. of Majority-Minority Districts</td>
+                          <td>{data.numMajMinDistricts}</td>
+                        </tr>
+                        <tr>
+                          <td>No. of Influence Districts</td>
+                          <td>{data.numInfluenceDistricts}</td>
+                        </tr>
+                        <tr>
+                          <td>No. of Coalition Districts</td>
+                          <td>{data.coalitionDistricts}</td>
+                        </tr>
+                        <tr>
+                          <td>No. of Split counties</td>
+                          <td>{data.numSplitCounties}</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div id="single-other-info"
+                    style={{ display: 'flex', flexDirection: 'row' }}>
+                    {data.seatShare}
+                    {/* {data.efficiencyGap}
             {data.polsbyPopper}
             {data.planId} */}
-                  
+
+                  </div>
+                </div>
+
+                <div style={{ flex: 1 }}>
+                  heuy
                 </div>
               </div>
-              <div style={{flex:1}}>
-                heuy
-                </div>
-            </div>
             </div>}
 
           {/*for table!
@@ -241,11 +210,12 @@ export const PlanSummary = (props) => {
             !(props.isSingleId) &&
             <div style={{ flex: 1, fontSize: '10px' }}>
               <div style={{ flex: 1, width: '100%', height: '100%', overflow: 'auto' }}>
+                {/* <CompareTable/> */}
                 {/* {props.planIdList.forEach((id)=>{
               tempId = id;
 
             })} */}
-                <ThemeProvider theme={themeTable}>
+                {/* <ThemeProvider theme={themeTable}>
                   <TableContainer component={Paper} sx={{ padding: "none" }}>
                     <Table sx={{ width: '100%' }} aria-label="simple table">
                       <TableHead>
@@ -270,7 +240,7 @@ export const PlanSummary = (props) => {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                </ThemeProvider>
+                </ThemeProvider> */}
               </div>
             </div>}
 

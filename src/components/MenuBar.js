@@ -47,6 +47,7 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                     autoComplete
                     clearOnEscape
                     includeInputInList
+                    
                     getOptionLabel={(option) => option.name}
                     isOptionEqualToValue={(option, value) => parseInt(option.fipsCode) == parseInt(value.fipsCode)}
                     renderOption={(props, option) => (
@@ -72,8 +73,11 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                         props.setPlanId(props.defaultPlan.defaultPlanId);
                         props.setPlanName(props.defaultPlan.defaultPlanName);
                         props.setPlanStatus(props.defaultPlan.defaultPlanStatus);
-                        props.setCardSelected(1);
+                        props.setCardSelected(props.defaultPlan.defaultPlanId);
                         props.setPlanIdList(new Set([props.defaultPlan.defaultPlanId]));
+                        props.setCompare(false);
+                        props.setTableMode(false);
+
                     }}
                 >Reset
                 </Button>
@@ -123,13 +127,14 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                 </Button>
             } */}
 
-            {props.currState &&
+            {(props.currState && (!props.comepare)) &&
                 // title
                 <div style={{ margin: 1, display: 'flex' }}>
                     <Box sx={{
                         border: '1px solid', borderRadius: 1, p: 0.4, px: 0.5,
                         m: '1em',
                         fontSize: '0.875rem',
+                        maxHeight: '3em',
                         fontWeight: '500',
                         backgroundColor: (props.planStatus=='INLITIGATION')?'#C5E1A5' : '#e0e0e0'
                     }}>{statusFormat(props.planStatus)}</Box>
@@ -137,6 +142,24 @@ const MenuBar = React.forwardRef((props, mapGJSONref) => {
                     <ThemeProvider theme={theme}>
                         <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}>
                             <span>{props.planName}</span></Typography>
+
+                    </ThemeProvider>
+                </div>}
+
+                {(props.currState && (props.compare)) &&
+                // title
+                <div style={{ margin: 1, display: 'flex' }}>
+                    {/* <Box sx={{
+                        border: '1px solid', borderRadius: 1, p: 0.4, px: 0.5,
+                        m: '1em',
+                        fontSize: '0.875rem',
+                        fontWeight: '500',
+                        backgroundColor: (props.planStatus=='INLITIGATION')?'#C5E1A5' : '#e0e0e0'
+                    }}>{statusFormat(props.planStatus)}</Box> */}
+
+                    <ThemeProvider theme={theme}>
+                        <Typography variant="h6" id="plan-name" sx={{ b: '0.1em', fontWeight: '700' }}>
+                            <span>Choose District Plans to Compare</span></Typography>
 
                     </ThemeProvider>
                 </div>}

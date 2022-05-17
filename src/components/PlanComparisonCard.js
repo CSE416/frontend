@@ -105,6 +105,7 @@ export const PlanComparisonCard = (props) => {
               fontSize: '0.7rem',
               fontWeight: '560',
               textAlign: 'center',
+              maxHeight: '3em',
               backgroundColor: (props.status == 'INLITIGATION') ? '#C5E1A5' : '#e0e0e0'
             }} alignItems="center">
               {statusFormat(props.status)}
@@ -148,7 +149,7 @@ export const PlanComparisonCard = (props) => {
 
       }}>
 
-        <ThemeProvider id="card-summary" theme={theme}>
+        <ThemeProvider theme={theme}>
           <CardContent
             sx={{ p: 0.2, px: 0.5, display: 'flex', flexDirection: 'row' }}>
             <div style={{ flex: -1, width: '50%' }}>

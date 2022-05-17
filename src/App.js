@@ -17,6 +17,8 @@ import SidePanel from "./components/SidePanel";
 import axios from "axios";
 import SlidingPane from "react-sliding-pane";
 import L from "leaflet";
+import { RadarPlot} from './components/RadarPlot';
+
 function App() {
   const mapGJSONref = useRef();
   const [isSplit, setIsSplit] = useState(false);
@@ -57,16 +59,19 @@ function App() {
     "Republican" : "REP"
   }
 
+  const [tableMode, setTableMode] = useState(false);
+  const [compare, setCompare] = useState(false);
+
   function getColor(d) {
     return d > 100
       ? "#FC4E2A"
       : d > 50
-      ? "#FD8D3C"
-      : d > 20
-      ? "#FEB24C"
-      : d > 10
-      ? "#FED976"
-      : "#FFEDA0";
+        ? "#FD8D3C"
+        : d > 20
+          ? "#FEB24C"
+          : d > 10
+            ? "#FED976"
+            : "#FFEDA0";
   }
 
   const precinctStyle = (feature) => {
@@ -86,7 +91,7 @@ function App() {
       grades = [0, 10, 20, 50, 100],
       labels = [];
 
-    // loop through our density intervals and generate a label with a colored square for each interval
+    // loop through our density intervals and generate a label with a colored square for eaㅌㅗ interval
     for (var i = 0; i < grades.length; i++) {
       div.innerHTML +=
         '<i style="background:' +
@@ -231,7 +236,7 @@ function App() {
           },
         })
         .then((res) => {
-          // console.log(res.data);
+          console.log(planId);
           setPlanGJSON(res.data);
         })
         .catch((Error) => {
@@ -267,14 +272,17 @@ function App() {
         planLabel={planLabel}
         defaultLabel={[planLabel[0]]}
         planIdList={planIdList}
+        setCompare={setCompare}
+        compare={compare}
+        setTableMode={setTableMode}
 
-        //planStatus={planStatus}
+      //planStatus={planStatus}
       />
-      <div style={{ flex: "1", display: "flex" }}>
+      <div style={{ flex: 2, display: "flex" }}>
         {
           // inital state: show districting plan cards
           isSplit && !isPlanSelected && (
-            <div style={{ flex: "3", overflow: "auto" }}>
+            <div style={{ flex: 2, overflow: "auto" }}>
               <StatePlans
                 setIsPlanSelected={setIsPlanSelected}
                 setPlanId={setPlanId}
@@ -288,6 +296,10 @@ function App() {
                 planIdList={planIdList}
                 setPlanIdList={setPlanIdList}
                 defaultPlan={defaultPlan}
+                setCompare={setCompare}
+                setTableMode={setTableMode}
+                compare={compare}
+                tableMode={tableMode}
               />
             </div>
           )
@@ -296,7 +308,7 @@ function App() {
         {
           // When a plan is selected: show detailed information
           isSplit && isPlanSelected && (
-            <div style={{ flex: "4" }}>
+            <div style={{ flex: "2" }}>
               <InformationTab
                 stateId={currState.fipsCode}
                 planId={planId}
@@ -311,9 +323,9 @@ function App() {
         }
 
         {/* map part */}
-        {
+        {(!tableMode) &&
           // Show Map, when plot button is not selected
-          <div style={{ flex: "3" }}>
+          <div style={{ flex: "2" }}>
             <MapContainer
               center={[38, -98]}
               zoom={5}
@@ -327,8 +339,8 @@ function App() {
               {USstatesGJSON && (
                 <GeoJSON data={USstatesGJSON} ref={mapGJSONref} />
               )}
-              {}
-              {isSplit && ( planGJSON ? 
+              { }
+              {isSplit && (planGJSON ?
                 (<GeoJSON
                   key={planId}
                   data={planGJSON}
@@ -337,6 +349,14 @@ function App() {
               )}
             </MapContainer>
           </div>
+       
+        }
+        { //when table, put radar
+          (tableMode) && <div style={{flex:1}}>
+            <RadarPlot width={'60%'} height={'60%'}
+                  planIdList={planIdList}
+                  planId={planId} />
+            </div>
         }
 
         {
